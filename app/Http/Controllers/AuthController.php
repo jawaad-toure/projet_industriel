@@ -21,7 +21,7 @@ class AuthController extends BaseController
         $this->authRepository = $authRepository;
     }
 
-    public function showSignupForm(): View {
+    public function showSignupForm() {
         return view('signup');
     }
     
@@ -50,7 +50,6 @@ class AuthController extends BaseController
             'password.regex' => 'Votre mot de passe doit contenir au moins 1 minuscule, 1 majuscule, 1 chiffre et 1 caractère spécial.',
             'password_confirmed.required' => 'Vous devez confirmer le mot de passe.',
             'password_confirmed.same' => "Votre mot de passe n'est pas conforme."
-
         ];
 
         $validatedData = $request->validate($rules, $messages);
@@ -68,7 +67,39 @@ class AuthController extends BaseController
         return redirect()->route('signup.verify');
     }
 
-    public function showSigninForm(): View {
+    public function showSigninForm() {
         return view('signin');
+    }
+
+    public function signin(Request $request, AuthRepository $authRepository) {
+        $rules = [
+            'email' => ['required', 'email', 'exists:users,email'],
+            'password' => ['required']
+        ];
+
+        $messages = [
+            'email.required' => 'Vous devez saisir un e-mail.',
+            'email.email' => 'Vous devez saisir un e-mail valide.',
+            'email.exists' => "Cet utilisateur n'existe pas.",
+            'password.required' => "Vous devez saisir un mot de passe.",
+        ];
+
+        $validatedData = $request->validate($rules, $messages);
+
+        try {
+            $user = $this->authRepository->getUser($validatedData['email'], $validatedData['password']);
+            $request->session()->put('user', $user);
+        } catch (Exception $e) {
+            return redirect()->back()->withInput()->withErrors("Impossible de vous authentifier.");
+        }
+        return redirect()->route('dashboard.show');
+
+    }
+
+    public function showDashboard(Request $request) {
+        if(!$request->session()->has('user')) {
+            return redirect()->route('signin');
+        }
+        return view('dashboard');
     }
 }

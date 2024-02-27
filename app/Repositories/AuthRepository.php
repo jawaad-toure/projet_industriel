@@ -46,7 +46,7 @@ class AuthRepository
            throw new Exception("Utilisateur inconnu");
         }
         
-        $passwordHashed = $user['password'];
+        $passwordHashed = $user->password;
         
         $doPasswordsMatch = Hash::check($password, $passwordHashed);
         
@@ -54,6 +54,6 @@ class AuthRepository
            throw new Exception("Utilisateur inconnu");
         }
   
-        return ['id' => $user['id'], 'email' => $user['email']];
+        return ['id' => $user->id, 'email' => $user->email];
     }
 }

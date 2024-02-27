@@ -19,6 +19,10 @@ Route::post('/signup', [AuthController::class, 'signup'])->name('signup.post');
 Route::get('/signup/verify', [AuthController::class, 'showSignupVerify'])->name('signup.verify');
 
 Route::get('/signin', [AuthController::class, 'showSigninForm'])->name('signin.show');
+Route::post('/signin', [AuthController::class, 'signin'])->name('signin.post');
+
+
+Route::get('/dashboard', [AuthController::class, 'showDashboard'])->name('dashboard.show');
 
 Route::get('/', function () {
     return view('welcome');
