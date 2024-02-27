@@ -15,11 +15,11 @@ class AuthController extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-    public function showSignupForm() {
+    public function showSignupForm(): View {
         return view('signup');
     }
 
-    public function showSigninForm() {
+    public function showSigninForm(): View {
         return view('signin');
     }
 }
