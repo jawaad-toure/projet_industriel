@@ -24,6 +24,10 @@ class AuthController extends BaseController
     public function showSignupForm(): View {
         return view('signup');
     }
+    
+    public function showSignupVerify() {
+        return view('signup_verify');
+    }
 
     public function signup(Request $request, AuthRepository $authRepository) {
         $rules = [
@@ -56,7 +60,7 @@ class AuthController extends BaseController
             return redirect()->back()->withInput()->withErrors("Impossible de créer un compte.");
         }
 
-        return redirect()->route('signin.show')->with('success', 'Compte créé avec succès !');
+        return redirect()->route('signup.verify');
     }
 
     public function showSigninForm(): View {

@@ -10,10 +10,10 @@
                 <h5 class="my-0 font-weight-bold">The Cook Talk</h5>
 
                 <nav class="my-2 my-md-0 mr-md-3">
-                    <a class="p-2 text-dark" href="/">Recettes</a>
+                    <a class="p-2 text-dark" href="#">Recettes</a>
                 </nav>
                 
-                <a class="btn btn-outline-primary" href="/login">Connexion</a>
+                <a class="btn btn-outline-primary" href="/signin">Connexion</a>
             </div>
         </div>
         <div class="container">
