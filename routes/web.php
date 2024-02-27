@@ -15,7 +15,7 @@ use App\Http\Controllers\AuthController;
 */
 
 Route::get('/signup', [AuthController::class, 'showSignupForm'])->name('signup.show');
-Route::post('/signup', [AuthController::class, 'showSignupForm'])->name('signup.post');
+Route::post('/signup', [AuthController::class, 'signup'])->name('signup.post');
 
 Route::get('/signin', [AuthController::class, 'showSigninForm'])->name('signin.show');
 

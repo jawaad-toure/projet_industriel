@@ -8,7 +8,7 @@
 
         <h1 class="text-center py-4">Création de compte</h1>
 
-        <form method="POST" class="col-sm-4">
+        <form method="POST" action="{{route('signup.post')}}" class="col-sm-4">
             @csrf
             
             @if ($errors->any())
@@ -18,18 +18,31 @@
             @endif
 
             <div class="form-group my-4">
+                <input type="username" id="username" name="username" value="{{old('username')}}" placeholder="pseudonyme"
+                    aria-describedby="username_feedback" class="form-control @error('email') is-invalid @enderror"> 
+                
+                @error('username')
+                    <div id="username_feedback" class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                @enderror
+            </div>
+
+            <div class="form-group my-4">
                 <input type="email" id="email" name="email" value="{{old('email')}}" placeholder="email"
                     aria-describedby="email_feedback" class="form-control @error('email') is-invalid @enderror"> 
+                
                 @error('email')
-                <div id="email_feedback" class="invalid-feedback">
-                    {{ $message }}
-                </div>
+                    <div id="email_feedback" class="invalid-feedback">
+                        {{ $message }}
+                    </div>
                 @enderror
             </div>
 
             <div class="form-group my-4">
                 <input type="password" id="password" name="password" value="{{old('password')}}" placeholder="mot de passe"
                     aria-describedby="password_feedback" class="form-control @error('password') is-invalid @enderror">  
+                
                 @error('password')
                     <div id="password_feedback" class="invalid-feedback">
                         {{ $message }}
@@ -37,9 +50,15 @@
                 @enderror
             </div>
 
-            <div class="form-grou my-4p">
-                <input type="password" id="confirmed_password" name="confirmed_password" placeholder="confirmer mot de passe"
-                    aria-describedby="password_feedback" class="form-control @error('password') is-invalid @enderror">
+            <div class="form-group my-4p">
+                <input type="password" id="password_confirmation" name="password_confirmation" placeholder="confirmer mot de passe"
+                    aria-describedby="password_confirmation_feedback" class="form-control @error('password') is-invalid @enderror">  
+                
+                @error('password')
+                    <div id="password_feedback" class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                @enderror
             </div>
 
             <button type="submit" class="btn btn-primary btn-lg btn-block my-4">Créer mon compte</button>
