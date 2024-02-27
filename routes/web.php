@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -12,6 +13,10 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
+Route::get('/signup', [AuthController::class, 'showSignupForm'])->name('signup.show');
+
+Route::get('/signin', [AuthController::class, 'showSigninForm'])->name('signin.show');
 
 Route::get('/', function () {
     return view('welcome');
