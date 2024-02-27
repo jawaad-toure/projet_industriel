@@ -51,11 +51,11 @@
             </div>
 
             <div class="form-group my-4p">
-                <input type="password" id="password_confirmation" name="password_confirmation" placeholder="confirmer mot de passe"
-                    aria-describedby="password_confirmation_feedback" class="form-control @error('password') is-invalid @enderror">  
+                <input type="password" id="password_confirmed" name="password_confirmed" placeholder="confirmer mot de passe"
+                    aria-describedby="password_confirmed_feedback" class="form-control @error('password_confirmed') is-invalid @enderror">  
                 
-                @error('password')
-                    <div id="password_feedback" class="invalid-feedback">
+                @error('password_confirmed')
+                    <div id="password_confirmed_feedback" class="invalid-feedback">
                         {{ $message }}
                     </div>
                 @enderror

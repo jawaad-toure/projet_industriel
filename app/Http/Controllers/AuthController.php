@@ -33,7 +33,8 @@ class AuthController extends BaseController
         $rules = [
             'username' => ['required', 'string', 'unique:users,username'],
             'email' => ['required', 'email', 'unique:users,email'],
-            'password' => ['required', 'min:8', 'confirmed']
+            'password' => ['required', 'min:8', 'max:20', 'regex:/[a-z]/', 'regex:/[A-Z]/', 'regex:/[0-9]/', 'regex:/[@$!%*#?&]/'],
+            'password_confirmed' => ['required', 'same:password']
         ];
 
         $messages = [
@@ -45,7 +46,11 @@ class AuthController extends BaseController
             'email.unique' => "Cet utilisateur existe déjà.",
             'password.required' => 'Vous devez saisir un mot de passe.',
             'password.min' => "Votre mot de passe doit-être d'au moins 8 caractères.",
-            'password.confirmed' => 'Votre mot de passe de confirmation ne correspond pas.'
+            'password.max' => "Votre mot de passe doit-être d'au plus 20 caractères.",
+            'password.regex' => 'Votre mot de passe doit contenir au moins 1 minuscule, 1 majuscule, 1 chiffre et 1 caractère spécial.',
+            'password_confirmed.required' => 'Vous devez confirmer le mot de passe.',
+            'password_confirmed.same' => "Votre mot de passe n'est pas conforme."
+
         ];
 
         $validatedData = $request->validate($rules, $messages);
