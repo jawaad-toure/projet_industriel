@@ -19,7 +19,7 @@
 
             <div class="form-group my-4">
                 <input type="email" id="email" name="email" value="{{old('email')}}" placeholder="email"
-                    aria-describedby="email_feedback" class="form-control @error('email') is-invalid @enderror"> 
+                    aria-describedby="email_feedback" class="py-4 form-control shadow-none @error('email') is-invalid @enderror"> 
                 @error('email')
                 <div id="email_feedback" class="invalid-feedback">
                     {{ $message }}
@@ -29,7 +29,7 @@
 
             <div class="form-group my-4">
                 <input type="password" id="password" name="password" value="{{old('password')}}" placeholder="mot de passe"
-                    aria-describedby="password_feedback" class="form-control @error('password') is-invalid @enderror">  
+                    aria-describedby="password_feedback" class="py-4 form-control shadow-none @error('password') is-invalid @enderror">  
                 @error('password')
                     <div id="password_feedback" class="invalid-feedback">
                         {{ $message }}
@@ -37,7 +37,7 @@
                 @enderror
             </div>
 
-            <button type="submit" class="btn btn-primary btn-lg btn-block my-4">Se connecter</button>
+            <button type="submit" class="btn btn-primary shadow-none btn-lg btn-block my-4">Se connecter</button>
 
         </form>        
 

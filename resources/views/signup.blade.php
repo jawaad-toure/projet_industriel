@@ -4,7 +4,7 @@
 
 <div class="container">
 
-    <div class="row gy-4 d-flex flex-column align-items-center">
+    <div class="z-n1 row gy-4 d-flex flex-column align-items-center">
 
         <h1 class="text-center py-4">Création de compte</h1>
 
@@ -19,7 +19,7 @@
 
             <div class="form-group my-4">
                 <input type="username" id="username" name="username" value="{{old('username')}}" placeholder="pseudonyme"
-                    aria-describedby="username_feedback" class="form-control @error('email') is-invalid @enderror"> 
+                    aria-describedby="username_feedback" class="py-4 form-control shadow-none @error('email') is-invalid @enderror"> 
                 
                 @error('username')
                     <div id="username_feedback" class="invalid-feedback">
@@ -30,7 +30,7 @@
 
             <div class="form-group my-4">
                 <input type="email" id="email" name="email" value="{{old('email')}}" placeholder="email"
-                    aria-describedby="email_feedback" class="form-control @error('email') is-invalid @enderror"> 
+                    aria-describedby="email_feedback" class="py-4 form-control shadow-none @error('email') is-invalid @enderror"> 
                 
                 @error('email')
                     <div id="email_feedback" class="invalid-feedback">
@@ -41,7 +41,7 @@
 
             <div class="form-group my-4">
                 <input type="password" id="password" name="password" value="{{old('password')}}" placeholder="mot de passe"
-                    aria-describedby="password_feedback" class="form-control @error('password') is-invalid @enderror">  
+                    aria-describedby="password_feedback" class="py-4 form-control shadow-none @error('password') is-invalid @enderror">  
                 
                 @error('password')
                     <div id="password_feedback" class="invalid-feedback">
@@ -52,7 +52,7 @@
 
             <div class="form-group my-4p">
                 <input type="password" id="password_confirmed" name="password_confirmed" placeholder="confirmer mot de passe"
-                    aria-describedby="password_confirmed_feedback" class="form-control @error('password_confirmed') is-invalid @enderror">  
+                    aria-describedby="password_confirmed_feedback" class="py-4 form-control shadow-none @error('password_confirmed') is-invalid @enderror">  
                 
                 @error('password_confirmed')
                     <div id="password_confirmed_feedback" class="invalid-feedback">
@@ -61,7 +61,7 @@
                 @enderror
             </div>
 
-            <button type="submit" class="btn btn-primary btn-lg btn-block my-4">Créer mon compte</button>
+            <button type="submit" class="btn btn-primary shadow-none btn-lg btn-block my-4">Créer mon compte</button>
 
         </form>        
 

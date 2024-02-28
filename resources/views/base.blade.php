@@ -10,12 +10,33 @@
                 <h5 class="my-0 font-weight-bold">The Cook Talk</h5>
 
                 <nav class="my-2 my-md-0 mr-md-3">
-                    <a class="p-2 text-dark" href="#">Recettes</a>
+                    <div class="dropdown">
+                        <a class="p-2 text-dark text-decoration-none dropdown-toggle dropdown-toggle-split" href="#" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Recettes
+                        </a>
+
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">Plats</a></li>
+                            <li><a class="dropdown-item" href="#">Entrées</a></li>
+                            <li><a class="dropdown-item" href="#">Desserts</a></li>
+                            <li><a class="dropdown-item" href="#">Boissons</a></li>
+                        </ul>
+                    </div>
                 </nav>
-                
-                <a class="btn btn-outline-primary" href="/signin">Connexion</a>
+
+                @if (session()->has('user'))
+                    <div class="d-flex align-items-center justify-content-around">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <img src="resources/img/profile-icon.png" width="30" height="30" class="rounded-circle">
+                        </a>
+                        <a class="btn btn-secondary shadow-none" href="{{route('logout')}}">Déconnexion</a>
+                    </div>                    
+                @else                
+                    <a class="btn btn-outline-primary shadow-none" href="/signin">Connexion</a>
+                @endif
             </div>
         </div>
+
         <div class="container">
             @yield('content')
         </div>

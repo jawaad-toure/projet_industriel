@@ -98,8 +98,13 @@ class AuthController extends BaseController
 
     public function showDashboard(Request $request) {
         if(!$request->session()->has('user')) {
-            return redirect()->route('signin');
+            return redirect()->route('signin.show');
         }
         return view('dashboard');
+    }
+
+    public function logout(Request $request) {
+        $request->session()->forget('user');
+        return redirect()->route('signin.show');
     }
 }
