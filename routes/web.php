@@ -23,7 +23,7 @@ Route::post('/signin', [AuthController::class, 'signin'])->name('signin.post');
 
 Route::get('/dashboard', [AuthController::class, 'showDashboard'])->name('dashboard.show');
 
-Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::get('/', function () {
     return view('welcome');

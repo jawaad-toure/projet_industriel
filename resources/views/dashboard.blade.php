@@ -38,8 +38,8 @@
             </div>
 
             <div class="row">
-                <a class="col btn btn-secondary me-1" href="#" role="button">Modifier mes informations</a>
-                <a class="col btn btn-outline-danger ms-1" href="#" role="button">Supprimer mon compte</a>
+                <a class="col btn btn-secondary me-1" href="#" role="button">Modifier</a>
+                <a class="col btn btn-outline-danger ms-1" href="#" role="button">Supprimer</a>
             </div>
         </div>
 
