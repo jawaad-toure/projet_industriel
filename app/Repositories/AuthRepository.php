@@ -54,6 +54,17 @@ class AuthRepository
            throw new Exception("Utilisateur inconnu");
         }
   
-        return ['id' => $user->id, 'email' => $user->email];
+        return [
+            'id' => $user->id,
+            'firstname' => $user->firstname,
+            'lastname' => $user->lastname,
+            'birthdate' => $user->birthdate,
+            'username' => $user->username, 
+            'email' => $user->email,
+            'phone' => $user->phone,
+            'address' => $user->address,
+            'password' => $user->password,
+            'profile_picture' => $user->profile_picture
+        ];
     }
 }

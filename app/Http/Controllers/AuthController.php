@@ -22,11 +22,11 @@ class AuthController extends BaseController
     }
 
     public function showSignupForm() {
-        return view('signup');
+        return view('auth/signup');
     }
     
     public function showSignupVerify() {
-        return view('signup_verify');
+        return view('auth/signup_verify');
     }
 
     public function signup(Request $request, AuthRepository $authRepository) {
@@ -68,7 +68,7 @@ class AuthController extends BaseController
     }
 
     public function showSigninForm() {
-        return view('signin');
+        return view('auth/signin');
     }
 
     public function signin(Request $request, AuthRepository $authRepository) {
@@ -89,7 +89,7 @@ class AuthController extends BaseController
         try {
             $user = $this->authRepository->getUser($validatedData['email'], $validatedData['password']);
             $request->session()->put('user', $user);
-        } catch (Exception $e) {
+        } catch (Exception $exception) {
             return redirect()->back()->withInput()->withErrors("Impossible de vous authentifier.");
         }
         return redirect()->route('dashboard.show');

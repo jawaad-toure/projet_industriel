@@ -17,9 +17,9 @@
                 </div>
             @endif
 
-            <div class="form-group my-4">
+            <div class="form-group my-2">
                 <input type="email" id="email" name="email" value="{{old('email')}}" placeholder="email"
-                    aria-describedby="email_feedback" class="py-4 form-control shadow-none @error('email') is-invalid @enderror"> 
+                    aria-describedby="email_feedback" class="py-3 form-control shadow-none @error('email') is-invalid @enderror"> 
                 @error('email')
                 <div id="email_feedback" class="invalid-feedback">
                     {{ $message }}
@@ -27,9 +27,9 @@
                 @enderror
             </div>
 
-            <div class="form-group my-4">
+            <div class="form-group my-2">
                 <input type="password" id="password" name="password" value="{{old('password')}}" placeholder="mot de passe"
-                    aria-describedby="password_feedback" class="py-4 form-control shadow-none @error('password') is-invalid @enderror">  
+                    aria-describedby="password_feedback" class="py-3 form-control shadow-none @error('password') is-invalid @enderror">  
                 @error('password')
                     <div id="password_feedback" class="invalid-feedback">
                         {{ $message }}
@@ -37,7 +37,9 @@
                 @enderror
             </div>
 
-            <button type="submit" class="btn btn-primary shadow-none btn-lg btn-block my-4">Se connecter</button>
+            <div class="d-grid">
+                <button type="submit" class="btn btn-primary btn-lg shadow-none my-2">Se connecter</button>
+            </div>
 
         </form>        
 
