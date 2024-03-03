@@ -292,7 +292,8 @@ class AuthController extends BaseController
     public function deleteUser(Request $request, $userId)
     {
         $user = $this->authRepository->getUser($request->session()->get('user')['email']);
+        $request->session()->forget('user');
         $this->authRepository->deleteUser($user['email']);
-        $this->logout($request);      
+        return redirect()->route('signin.show');     
     }
 }
