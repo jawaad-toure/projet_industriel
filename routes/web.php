@@ -21,9 +21,12 @@ Route::get('/signup/verify', [AuthController::class, 'showSignupVerify'])->name(
 Route::get('/signin', [AuthController::class, 'showSigninForm'])->name('signin.show');
 Route::post('/signin', [AuthController::class, 'signin'])->name('signin.post');
 
-Route::get('/dashboard', [AuthController::class, 'showDashboard'])->name('dashboard.show');
-
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+Route::get('users/{userId}/dashboard', [AuthController::class, 'showUserDashboard'])->where('userId', '[0-9]+')->name('user.dashboard.show');
+Route::get('users/{userId}/informations', [AuthController::class, 'showUserInformationsForm'])->where('userId', '[0-9]+')->name('user.informations.show');
+Route::put('users/{userId}/informations', [AuthController::class, 'updateUserInformations'])->where('userId', '[0-9]+')->name('user.informations.update');
+Route::post('users/{userId}/dashboard', [AuthController::class, 'deleteUser'])->where('userId', '[0-9]+')->name('user.informations.delete');
 
 Route::get('/', function () {
     return view('welcome');

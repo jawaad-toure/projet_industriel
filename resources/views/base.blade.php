@@ -28,21 +28,20 @@
                     <div class="d-flex align-items-center justify-content-around">
                         <div class="dropdown">
                             <a class="text-dark text-decoration-none dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" data-bs-offset="10,24" aria-expanded="false">
-                                <img src="profile-icon.png" width="30" height="30" class="rounded-circle">
+                                <img src="{{ asset(session()->get('user')['profile_picture']) }}" width="30" height="30" class="rounded-circle">
                             </a>
 
                             <ul class="dropdown-menu dropdown-menu-end">
-                                <li><a class="dropdown-item" href="{{ route('dashboard.show') }}">Profil</a></li>
+                                <li><a class="dropdown-item" href="{{ route('user.dashboard.show', ['userId' => session()->get('user')['id']]) }}">Profil</a></li>
                                 <li><hr class="dropdown-divider"></li>
-                                <li>
-                                    <a class="dropdown-item text-danger" href="#">
-                                        <form method="POST" action="{{ route('logout') }}" class="d-grid">
-                                            @csrf
-                                            <button type="submit" class="btn btn-danger">
-                                                Déconnexion
-                                            </button>
-                                        </form>
-                                    </a>
+                                <li>                                    
+                                    <form method="POST" action="{{ route('logout') }}" class="d-grid">
+                                        @csrf
+
+                                        <button type="submit" class="dropdown-item text-danger">
+                                            Déconnexion
+                                        </button>
+                                    </form>                                    
                                 </li>
                             </ul>                            
                         </div>

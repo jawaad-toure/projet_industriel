@@ -12,9 +12,9 @@
             </div>
 
             <div class="d-flex mb-3">
-                <img src="resources/img/profile-icon.png" width="100" height="100" class="rounded mr-3" alt="profile picture">
+                <img src="{{ asset($user['profile_picture']) }}" width="200" height="200" class="rounded mr-3" alt="profile picture">
 
-                <div class="d-flex flex-column ml-3">
+                <div class="d-flex flex-column ms-4">
                     <div class="my-2">
                         <span class="fw-bold">Pseudonyme : </span>{{ session()->get('user')['username'] }}
                     </div>
@@ -24,7 +24,7 @@
                     </div>
 
                     <div class="my-2">
-                        <span class="fw-bold">Âge : </span>{{ session()->get('user')['birthdate'] }}
+                        <span class="fw-bold">Date de naissance : </span>{{ session()->get('user')['birthdate'] }}
                     </div>
 
                     <div class="my-2">
@@ -37,9 +37,22 @@
                 </div>
             </div>
 
-            <div class="row">
-                <a class="col btn btn-secondary me-1" href="#" role="button">Modifier</a>
-                <a class="col btn btn-outline-danger ms-1" href="#" role="button">Supprimer</a>
+            <div class="d-flex gap-2">
+                <a 
+                    class="btn btn-success me-1" 
+                    href="{{ route('user.informations.show', ['userId' => session()->get('user')['id']]) }}" role="button"
+                >
+                    Modifier
+                </a>
+                
+                <form 
+                    method="POST" 
+                    action="{{ route('user.informations.delete', ['userId' => session()->get('user')['id']]) }}" class="d-grid"
+                >
+                    @csrf
+                
+                    <button type="submit" class="btn btn-outline-danger ms-1" >Supprimer</button>
+                </form>
             </div>
         </div>
 
