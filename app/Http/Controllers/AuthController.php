@@ -70,6 +70,13 @@ class AuthController extends BaseController
 
     /** controllers functions */
 
+    /**
+     * Add user to DB
+     * 
+     * @param Request $request
+     * 
+     * @return view
+     */
     public function signup(Request $request)
     {
         $rules = [
@@ -97,7 +104,7 @@ class AuthController extends BaseController
         $validatedData = $request->validate($rules, $messages);
 
         DB::beginTransaction();
-        
+
         try {
             $this->authRepository->addUser($validatedData['username'], $validatedData['email'], $validatedData['password']);
             Mail::to($validatedData['email'])->send(new ConfirmSignupMail());
@@ -110,7 +117,13 @@ class AuthController extends BaseController
         return redirect()->route('signup.verify');
     }
 
-
+    /**
+     * Signin user
+     * 
+     * @param Request $request
+     * 
+     * @return view
+     */
     public function signin(Request $request)
     {
         $rules = [
@@ -140,84 +153,27 @@ class AuthController extends BaseController
         return redirect()->route('user.dashboard.show', ['userId' => $request->session()->get('user')['id']]);
     }
 
-    
+    /**
+     * Logout user
+     * 
+     * @param Request $request
+     * 
+     * @return view
+     */
     public function logout(Request $request)
     {
         $request->session()->forget('user');
         return redirect()->route('signin.show');
     }
 
-    
-    public function updateField(Request $request)
-    {
-        $rules = [
-            'firstname' => ['nullable', 'string'],
-            'lastname' => ['nullable', 'string'],
-            'birthdate' => ['nullable', 'date'],
-            'username' => ['nullable', 'string'],
-            'email' => ['nullable', 'email'],
-            'phone' => ['nullable', 'string'],
-            'address' => ['nullable', 'string']
-        ];
 
-        $messages = [
-            'firstname.string' => "Le prénom n'est pas valide.",
-            'lastname.string' => "Le nom n'est pas valide.",
-            'birthdate.date' => "La date de naissance n'est pas valide.",
-            'username.string' => "Le pseudonyme n'est pas valide.",
-            'email.email' => "L'email n'est pas valide.",
-            'phone.string' => "Le numéro de téléphone n'est pas valide."
-        ];
-
-        $validatedData = $request->validate($rules, $messages);
-
-        $user = $this->authRepository->getUser($validatedData['email']);
-
-        try {
-
-            foreach ($validatedData as $key => $value) {
-
-                if (isset($validatedData[$key]) && $value != $user[$key]) {
-                    if (in_array($key, array('email', 'username'))) {
-                        $request->validate(['$key' => ['unique:users,$key']]);
-                    }
-
-                    if (strcmp($key, "password") == 0) {
-                        $request->validate(['password_confirmed' => ['same:new_password']]);
-
-                        $value = $this->authRepository->hashNewPassword($user['email'], $value, $validatedData['new_password']);
-                    }
-
-                    if (strcmp($key, "avatar") == 0 && $request->hasFile($key)) {
-                        $file = $request->file('avatar');
-                        $extension = $file->getClientOriginalExtension();
-                        $filename = time() . '.' . $extension;
-                        $path = 'uploads/avatars/';
-                        $file->move($path, $filename);
-
-                        if (File::exists($user['avatar'])) {
-                            File::delete($user['avatar']);
-                        }
-
-                        $value = $path . $filename;
-                    }
-
-                    $this->authRepository->updateField($user['email'], $key, $value);
-                    $request->session()->put('user.' . $key, $value);
-
-                    if (strcmp($key, "password") == 0) {
-                        $this->logout($request);
-                    }
-                }
-            }
-        } catch (Exception $exception) {
-            return redirect()->back()->withInput()->withErrors("Impossible de faire la mise à jour.");
-        }
-
-        return redirect()->back();
-    }
-
-    
+    /**
+     * Update user firstname, lastname, username, address, phone, birthdate
+     * 
+     * @param Request $request
+     * 
+     * @return view
+     */
     public function updateInformations(Request $request)
     {
         $rules = [
@@ -256,7 +212,13 @@ class AuthController extends BaseController
         return redirect()->back();
     }
 
-    
+    /**
+     * Update user email
+     * 
+     * @param Request $request
+     * 
+     * @return view
+     */
     public function updateEmail(Request $request)
     {
         $rules = [
@@ -283,7 +245,13 @@ class AuthController extends BaseController
         return redirect()->back();
     }
 
-    
+    /**
+     * Update user password
+     * 
+     * @param Request $request
+     * 
+     * @return view
+     */
     public function updatePassword(Request $request)
     {
         $rules = [
@@ -317,7 +285,13 @@ class AuthController extends BaseController
         return redirect()->back();
     }
 
-    
+    /**
+     * Update user avatar
+     * 
+     * @param Request $request
+     * 
+     * @return view
+     */
     public function updateAvatar(Request $request)
     {
         $rules = [
@@ -354,7 +328,13 @@ class AuthController extends BaseController
         return redirect()->back();
     }
 
-    
+    /**
+     * Delete user avatar
+     * 
+     * @param Request $request
+     * 
+     * @return view
+     */
     public function deleteAvatar(Request $request)
     {
         ['email' => $userEmail, 'avatar' => $userAvatar] = $this->authRepository->getUser($request->session()->get('user')['email']);
@@ -366,7 +346,12 @@ class AuthController extends BaseController
         return redirect()->back();
     }
 
-    
+    /**
+     * Delete User whose id have been specified from DB
+     * 
+     * @param Request $request
+     * @param int $userId 
+     */
     public function deleteUser(Request $request, int $userId)
     {
         if (!$request->session()->has('user')) {
