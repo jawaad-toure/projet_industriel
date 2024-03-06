@@ -3,16 +3,14 @@
 namespace App\Repositories;
 
 use Exception;
-use App\Models\User;
+// use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class AuthRepository
 {
 
-    /**
-     * 
-     */
+    
     public function addUser(string $username, string $email, string $password): int
     {
         $passwordHashed = Hash::make($password);
@@ -27,9 +25,8 @@ class AuthRepository
         return $userId;
     }
 
-    /**
-     * 
-     */
+    
+    
     public function getUser(string $email): array
     {
         $user = DB::table("users")
@@ -50,33 +47,31 @@ class AuthRepository
             'phone' => $user->phone,
             'address' => $user->address,
             'password' => $user->password,
-            'profile_picture' => $user->profile_picture
+            'avatar' => $user->avatar ?? 'uploads/avatars/default_avatar.png'
         ];
     }
 
-    /**
-     * 
-     */
-    public function doPasswordsMatch(string $dbPassword, string $signinPassword): bool
+    
+    
+    public function doPasswordsMatch(string $dbPassword, string $password): bool
     {
-        if (Hash::check($signinPassword, $dbPassword))
-            return true;
-        return false;
+        return Hash::check($password, $dbPassword);
     }
 
-    /** 
-     * 
-     */
-    public function updateField(string $email, string $field, string $value)
+    
+    
+    public function updateField(string $email, string $field, string|null $value)
     {
         DB::table("users")
             ->where("email", $email)
             ->update([$field => $value]);
+
+        // User::where("email", $email)
+        //     ->update([$field => $value]);
     }
 
-    /**
-     * 
-     */
+    
+    
     public function hashNewPassword(string $email, string $oldPassword, string $newPassword)
     {
         $user = $this->getUser($email);
@@ -87,85 +82,16 @@ class AuthRepository
         return Hash::make($newPassword);
     }
 
-    /**
-     * 
-     */
-    public function deleteUser(string $email) 
+    
+    
+    public function deleteUser(int $userId) 
     {
         DB::table("users")
-            ->where("email", $email)
+            ->where("id", $userId)
             ->delete();
+
+        // User::where("id", $userId)
+        //     ->delete();
     }
 
-    /** codes repetition to delete */
-
-    // public function changeFirstname(string $email, string $newFirstname): void
-    // {
-    //     DB::table("users")
-    //         ->where("email", $email)
-    //         ->update(['firstname' => $newFirstname]);
-    // }
-
-    // public function changeLastname(string $email, string $newLastname): void
-    // {
-    //     DB::table("users")
-    //         ->where("email", $email)
-    //         ->update(['lastname' => $newLastname]);
-    // }
-
-    // public function changeBirthdate(string $email, string $newBirthdate): void
-    // {
-    //     DB::table("users")
-    //         ->where("email", $email)
-    //         ->update(['birthdate' => $newBirthdate]);
-    // }
-
-    // public function changeUsername(string $email, string $newUsername): void
-    // {
-    //     DB::table("users")
-    //         ->where("email", $email)
-    //         ->update(['username' => $newUsername]);
-    // }
-
-    // public function changeEmail(string $email, string $newEmail): void
-    // {
-    //     DB::table("users")
-    //         ->where("email", $email)
-    //         ->update(['email' => $newEmail]);
-    // }
-
-    // public function changePhone(string $email, string $newPhone): void
-    // {
-    //     DB::table("users")
-    //         ->where("email", $email)
-    //         ->update(['phone' => $newPhone]);
-    // }
-
-    // public function changeAddress(string $email, string $newAddress): void
-    // {
-    //     DB::table("users")
-    //         ->where("email", $email)
-    //         ->update(['address' => $newAddress]);
-    // }
-
-    // public function changePassword(string $email, string $oldPassword, string $newPassword): void
-    // {
-    //     $user = $this->getUser($email);
-
-    //     if (!$this->doPasswordsMatch($user['password'], $oldPassword))
-    //         throw new Exception("Mot de passe incorrect !");
-
-    //     $newPasswordHashed =  Hash::make($newPassword);
-
-    //     DB::table("users")
-    //         ->where("email", $email)
-    //         ->update(['password' => $newPasswordHashed]);
-    // }
-
-    // public function changeProfilPicture(string $email, string $newProfilePicture): void
-    // {
-    //     DB::table("users")
-    //         ->where("email", $email)
-    //         ->update(['profile_picture' => $newProfilePicture]);
-    // }
 }
