@@ -28,8 +28,8 @@
             </div>
 
             <div class="form-group my-2 d-flex flex-column">
-                <input type="password" id="password" name="password" placeholder="mot de passe" aria-describedby="password_feedback" class="py-3 form-control shadow-none @error('password') is-invalid @enderror" />
                 <a href="" class="align-self-end link-underline link-underline-opacity-0">Mot de passe oublié ?</a>
+                <input type="password" id="password" name="password" placeholder="mot de passe" aria-describedby="password_feedback" class="py-3 form-control shadow-none @error('password') is-invalid @enderror" />
                 @error('password')
                 <div id="password_feedback" class="invalid-feedback">
                     {{ $message }}
