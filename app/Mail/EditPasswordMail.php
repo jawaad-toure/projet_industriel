@@ -9,7 +9,7 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class ConfirmSignupMail extends Mailable
+class EditPasswordMail extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -28,7 +28,7 @@ class ConfirmSignupMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: "Validation d'adresse email",
+            subject: 'Modification de mot de passe',
         );
     }
 
@@ -38,8 +38,8 @@ class ConfirmSignupMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'mails.email_validation_content',
-            with: ["emailValidationUserId" => $this->userId],
+            view: 'mails.edit_password_content',
+            with: ["editPasswordUserId" => $this->userId],
         );
     }
 

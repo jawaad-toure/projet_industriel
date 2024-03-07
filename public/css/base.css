@@ -3,3 +3,8 @@
     background: none;
     color: inherit;
 }
+
+.hover-effect-disabled:hover {
+    background: none;
+    color: red;
+}

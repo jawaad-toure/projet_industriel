@@ -83,12 +83,11 @@ final class AuthRepository
      * 
      * @return boolean
      */
-    public function doPasswordsMatch(string $dbPassword, string $password): bool
+    public function doPasswordsMatch(string $dbPassword, string $password): void
     {
         if (!Hash::check($password, $dbPassword)) {
             throw new Exception("Mot de passe incorrect.");
         }
-        return true;
     }
 
     /**
@@ -133,13 +132,8 @@ final class AuthRepository
      * 
      * @return string 
      */
-    public function hashNewPassword(string $email, string $oldPassword, string $newPassword)
+    public function hashNewPassword(string $newPassword): string
     {
-        $user = $this->getUser($email);
-
-        if (!$this->doPasswordsMatch($user['password'], $oldPassword))
-            throw new Exception("Mot de passe incorrect !");
-
         return Hash::make($newPassword);
     }
 

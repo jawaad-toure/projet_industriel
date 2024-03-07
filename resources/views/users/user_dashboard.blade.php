@@ -189,10 +189,10 @@
                                     </div>
 
                                     <div class="form-group my-2">
-                                        <input type="password" name="password_confirmed" placeholder="confirmer nouveau mot de passe" aria-describedby="password_confirmed_feedback" class="py-3 form-control shadow-none @error('password_confirmed') is-invalid @enderror" />
+                                        <input type="password" name="new_password_confirmed" placeholder="confirmer nouveau mot de passe" aria-describedby="new_password_confirmed_feedback" class="py-3 form-control shadow-none @error('new_password_confirmed') is-invalid @enderror" />
 
-                                        @error('password_confirmed')
-                                        <div id="password_confirmed_feedback" class="invalid-feedback">
+                                        @error('new_password_confirmed')
+                                        <div id="new_password_confirmed_feedback" class="invalid-feedback">
                                             {{ $message }}
                                         </div>
                                         @enderror
@@ -213,7 +213,7 @@
                 <form method="POST" action="{{ route('logout') }}" class="d-grid">
                     @csrf
 
-                    <button type="submit" class="btn btn-warning text-white">
+                    <button type="submit" class="btn btn-outline-danger hover-effect-disabled">
                         Déconnexion
                     </button>
                 </form>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Exception;
 use Illuminate\Http\Request;
+use App\Mail\EditPasswordMail;
 use App\Mail\ConfirmSignupMail;
 use Illuminate\Support\Facades\DB;
 use App\Repositories\AuthRepository;
@@ -77,6 +78,11 @@ class AuthController extends BaseController
     public function showForgotPasswordForm()
     {
         return view('auth/forgot_password');
+    }
+
+    public function showEditPasswordForm(int $userId)
+    {
+        return view('auth/edit_password', ['userId' => $userId]);
     }
 
     /** controllers functions */
@@ -169,7 +175,7 @@ class AuthController extends BaseController
 
             if ($this->authRepository->isEmailVerifiedAtNull($user["id"])) {
                 $this->sendEmailValidation($request, $user["id"]);
-                return redirect()->route('signup.verify', ['userId' => $user["id"]]);
+                return redirect()->route('verify.show', ['userId' => $user["id"]]);
             }
 
             $request->session()->put('user', $user);
@@ -282,7 +288,7 @@ class AuthController extends BaseController
         $rules = [
             'password' => ['required'],
             'new_password' => ['required', 'min:8', 'max:20', 'regex:/[a-z]/', 'regex:/[A-Z]/', 'regex:/[0-9]/', 'regex:/[@$!%*#?&]/'],
-            'password_confirmed' => ['required', 'same:new_password']
+            'new_password_confirmed' => ['required', 'same:new_password']
         ];
 
         $messages = [
@@ -291,16 +297,17 @@ class AuthController extends BaseController
             'new_password.min' => "Le mot de passe doit-être d'au moins 8 caractères.",
             'new_password.max' => "Le mot de passe doit-être d'au plus 20 caractères.",
             'new_password.regex' => 'Le mot de passe doit contenir au moins 1 minuscule, 1 majuscule, 1 chiffre et 1 caractère spécial.',
-            'password_confirmed.required' => 'Vous devez confirmer le nouveau mot de passe.',
-            'password_confirmed.same' => "Votre mot de passe n'est pas conforme."
+            'new_password_confirmed.required' => 'Vous devez confirmer le nouveau mot de passe.',
+            'new_password_confirmed.same' => "Votre mot de passe n'est pas conforme."
         ];
 
         $validatedData = $request->validate($rules, $messages);
 
-        $user = $this->authRepository->getUser($userId);
-
+        
         try {
-            $newPasswordHashed = $this->authRepository->hashNewPassword($user['email'], $validatedData['password'], $validatedData['new_password']);
+            $user = $this->authRepository->getUser($userId);
+            $this->authRepository->doPasswordsMatch($validatedData['password'], $validatedData['new_password']);
+            $newPasswordHashed = $this->authRepository->hashNewPassword($validatedData['new_password']);
             $this->authRepository->updateField($user['email'], 'password', $newPasswordHashed);
             $this->logout($request);
         } catch (Exception $exception) {
@@ -388,20 +395,56 @@ class AuthController extends BaseController
     }
 
     /**
+     * Send email validation to user and redirect to email validation notification page 
+     * if not verified or send edit password mail if so 
      * 
+     * @param Request $request
      */
     public function forgotPassword(Request $request)
     {
         $rules = [
             'email' => ['required', 'email', 'exists:users,email'],
-            'password' => ['required', 'min:8', 'max:20', 'regex:/[a-z]/', 'regex:/[A-Z]/', 'regex:/[0-9]/', 'regex:/[@$!%*#?&]/'],
-            'password_confirmed' => ['required', 'same:password']
         ];
 
         $messages = [
             'email.required' => 'Vous devez saisir un e-mail.',
             'email.email' => 'Vous devez saisir un e-mail valide.',
             'email.exists' => "Cet utilisateur n'existe pas.",
+        ];
+
+        $validatedData = $request->validate($rules, $messages);
+
+        try {
+            $user = $this->authRepository->getUser($validatedData['email']);
+
+            if ($this->authRepository->isEmailVerifiedAtNull($user["id"])) {
+                $this->sendEmailValidation($request, $user["id"]);
+                return redirect()->route('verify.show', ['userId' => $user["id"]]);
+            }
+
+            Mail::to($user['email'])->send(new EditPasswordMail($user['id']));
+
+        } catch(Exception $exception) {
+            return redirect()->back()->withInput()->withErrors("Impossible de définir un nouveau mot de passe.");
+        }
+
+        return redirect()->back()->with('message',"Authentification réussie, verifiez votre boîte mail");
+    }
+
+    /**
+     * Edit password forgot
+     * 
+     * @param Request $request
+     * @param int $userId
+     */
+    public function editPassword(Request $request, int $userId)
+    {
+        $rules = [
+            'password' => ['required', 'min:8', 'max:20', 'regex:/[a-z]/', 'regex:/[A-Z]/', 'regex:/[0-9]/', 'regex:/[@$!%*#?&]/'],
+            'password_confirmed' => ['required', 'same:password']
+        ];
+
+        $messages = [
             'password.required' => 'Vous devez saisir un mot de passe.',
             'password.min' => "Votre mot de passe doit-être d'au moins 8 caractères.",
             'password.max' => "Votre mot de passe doit-être d'au plus 20 caractères.",
@@ -413,20 +456,13 @@ class AuthController extends BaseController
         $validatedData = $request->validate($rules, $messages);
 
         try {
-            $user = $this->authRepository->getUser($validatedData['email']);
-
-            if ($this->authRepository->isEmailVerifiedAtNull($user["id"])) {
-                $this->sendEmailValidation($request, $user["id"]);
-                return redirect()->route('signup.verify', ['userId' => $user["id"]]);
-            }
-
-            $newPasswordHashed = $this->authRepository->hashNewPassword($user['email'], $validatedData['password'], $validatedData['password_confirmed']);
+            $user = $this->authRepository->getUser($userId);
+            $newPasswordHashed = $this->authRepository->hashNewPassword($validatedData['password']);
             $this->authRepository->updateField($user['email'], 'password', $newPasswordHashed);
         } catch(Exception $exception) {
             return redirect()->back()->withInput()->withErrors("Impossible de définir un nouveau mot de passe.");
         }
 
-        return redirect()->route('signin.show');
-
+        return redirect()->back()->with('message', "Mot de passe modifé avec succès");
     }
 }
