@@ -1,0 +1,5 @@
+
+.active-effect-dislabled:active {
+    background: none;
+    color: inherit;
+}

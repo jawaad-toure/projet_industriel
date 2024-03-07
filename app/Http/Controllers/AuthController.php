@@ -300,8 +300,8 @@ class AuthController extends BaseController
         $user = $this->authRepository->getUser($userId);
 
         try {
-            $value = $this->authRepository->hashNewPassword($user['email'], $validatedData['password'], $validatedData['new_password']);
-            $this->authRepository->updateField($user['email'], 'password', $value);
+            $newPasswordHashed = $this->authRepository->hashNewPassword($user['email'], $validatedData['password'], $validatedData['new_password']);
+            $this->authRepository->updateField($user['email'], 'password', $newPasswordHashed);
             $this->logout($request);
         } catch (Exception $exception) {
             return redirect()->back()->withInput()->withErrors("Impossible de modifier le mot de passe.");
@@ -420,8 +420,8 @@ class AuthController extends BaseController
                 return redirect()->route('signup.verify', ['userId' => $user["id"]]);
             }
 
-            $value = $this->authRepository->hashNewPassword($user['email'], $validatedData['password'], $validatedData['password_confirmed']);
-            $this->authRepository->updateField($user['email'], 'password', $value);
+            $newPasswordHashed = $this->authRepository->hashNewPassword($user['email'], $validatedData['password'], $validatedData['password_confirmed']);
+            $this->authRepository->updateField($user['email'], 'password', $newPasswordHashed);
         } catch(Exception $exception) {
             return redirect()->back()->withInput()->withErrors("Impossible de définir un nouveau mot de passe.");
         }

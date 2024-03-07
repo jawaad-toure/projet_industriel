@@ -3,17 +3,13 @@
 
 <head>
     <title>The Cook Talk</title>
+    <!-- bootstrap cdn -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <!-- bootstrap icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <!-- personal css (public/css/base.css) -->
+    <link rel="stylesheet" href="{{ asset('css/base.css') }}">
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
-
-    <!-- addtionnal css to avoid active effect on button -->
-    <style type="text/css">
-        .active-effect-dislabled:active {
-            background: none;
-            color: inherit;
-        }
-    </style>
 
 </head>
 
@@ -30,7 +26,7 @@
                     </a>
 
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item active-effect-dislabled" href="#">Plats</a></li>
+                        <li><a class="dropdown-item c1 active-effect-dislabled" href="#">Plats</a></li>
                         <li><a class="dropdown-item active-effect-dislabled" href="#">Entrées</a></li>
                         <li><a class="dropdown-item active-effect-dislabled" href="#">Desserts</a></li>
                         <li><a class="dropdown-item active-effect-dislabled" href="#">Boissons</a></li>
@@ -78,19 +74,10 @@
         <a href="#" class="fs-5 fw-bold my-0 link-dark link-underline link-underline-opacity-0">© 2024 The Cook Talk</a>
     </div>
 
-    <!-- JavaScript -->
+    <!-- bootstrap javascript -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    
-    <!-- script to prevent modal from closing after submit -->
-    <!-- test on updateEmailModal but it does'nt work yet -->
-    <script>
-        $('#btnUpdateEmail').on('click', function() {
-            $('#updateEmailModal').modal({
-                backdrop: "static ",
-                keyboard: false
-            });
-        });
-    </script>
+    <!-- personal js (public/css/base.css) -->
+    <script src="{{ asset('js/base.js') }}"></script>
 </body>
 
 </html>
