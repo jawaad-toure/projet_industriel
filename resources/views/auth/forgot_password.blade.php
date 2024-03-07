@@ -6,14 +6,14 @@
 
     <div class="d-flex flex-column align-items-center">
 
-        <h1 class="text-center py-4">Ouverture de session</h1>
+        <h1 class="text-center py-4">Nouveau de mot de passe</h1>
 
-        <form method="POST" action="{{ route('signin.post') }}" class="col-sm-4">
+        <form method="POST" action="{{ route('forgot.password.post') }}" class="col-sm-4">
             @csrf
 
             @if ($errors->any())
             <div class="alert alert-warning">
-                Vous n'avez pas pu être authentifié &#9785;
+                Echec de la mise à jour &#9785;
             </div>
             @endif
 
@@ -28,9 +28,7 @@
             </div>
 
             <div class="form-group my-2 d-flex flex-column">
-                <a href="/signin/forgot" class="align-self-end link-underline link-underline-opacity-0">Mot de passe oublié ?</a>
                 <input type="password" id="password" name="password" placeholder="mot de passe" aria-describedby="password_feedback" class="py-3 form-control shadow-none @error('password') is-invalid @enderror" />
-                
                 @error('password')
                 <div id="password_feedback" class="invalid-feedback">
                     {{ $message }}
@@ -38,16 +36,20 @@
                 @enderror
             </div>
 
-            <div class="d-grid">
-                <button type="submit" class="btn btn-primary btn-lg shadow-none my-2">Se connecter</button>
+            <div class="form-group my-2">
+                <input type="password" id="password_confirmed" name="password_confirmed" placeholder="confirmer mot de passe" aria-describedby="password_confirmed_feedback" class="py-3 form-control shadow-none @error('password_confirmed') is-invalid @enderror" />
+
+                @error('password_confirmed')
+                <div id="password_confirmed_feedback" class="invalid-feedback">
+                    {{ $message }}
+                </div>
+                @enderror
             </div>
 
+            <div class="d-grid">
+                <button type="submit" class="btn btn-success btn-lg shadow-none my-2">Valider</button>
+            </div>
         </form>
-
-        <div class="col-sm-4 d-flex flex-column align-items-center">
-            <span>Vous n'avez pas encore un compte ?</span>
-            <a href="/signup" class="link-underline link-underline-opacity-0">C'est par ici pour en créer un !</a>
-        </div>
 
     </div>
 

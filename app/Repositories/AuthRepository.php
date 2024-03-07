@@ -94,7 +94,7 @@ final class AuthRepository
     /**
      * Check if user email is verified
      */
-    public function isEmailVerified(int $id): bool
+    public function isEmailVerifiedAtNull(int $id): bool
     {
         $user = DB::table("users")
             ->where("id", $id)

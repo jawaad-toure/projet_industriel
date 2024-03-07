@@ -74,6 +74,11 @@ class AuthController extends BaseController
         return view('auth/signin');
     }
 
+    public function showForgotPasswordForm()
+    {
+        return view('auth/forgot_password');
+    }
+
     /** controllers functions */
 
     /**
@@ -160,11 +165,13 @@ class AuthController extends BaseController
 
         try {
             $user = $this->authRepository->getUser($validatedData['email']);
-            $this->authRepository->doPasswordsMatch($user['password'], $validatedData['password']);                
-            if ($this->authRepository->isEmailVerified($user["id"])) {
+            $this->authRepository->doPasswordsMatch($user['password'], $validatedData['password']); 
+
+            if ($this->authRepository->isEmailVerifiedAtNull($user["id"])) {
                 $this->sendEmailValidation($request, $user["id"]);
                 return redirect()->route('signup.verify', ['userId' => $user["id"]]);
             }
+            
             $request->session()->put('user', $user);
         } catch (Exception $exception) {
             return redirect()->back()->withInput()->withErrors("Impossible de vous authentifier.");
@@ -270,7 +277,7 @@ class AuthController extends BaseController
      * 
      * @return view
      */
-    public function updatePassword(Request $request)
+    public function updatePassword(Request $request, int $userId)
     {
         $rules = [
             'password' => ['required'],
@@ -290,7 +297,7 @@ class AuthController extends BaseController
 
         $validatedData = $request->validate($rules, $messages);
 
-        $user = $this->authRepository->getUser($request->session()->get('user')['email']);
+        $user = $this->authRepository->getUser($userId);
 
         try {
             $value = $this->authRepository->hashNewPassword($user['email'], $validatedData['password'], $validatedData['new_password']);
@@ -378,5 +385,48 @@ class AuthController extends BaseController
         $request->session()->forget('user');
         $this->authRepository->deleteUser($userId);
         return redirect()->route('signin.show');
+    }
+
+    /**
+     * 
+     */
+    public function forgotPassword(Request $request)
+    {
+        $rules = [
+            'email' => ['required', 'email', 'exists:users,email'],
+            'password' => ['required', 'min:8', 'max:20', 'regex:/[a-z]/', 'regex:/[A-Z]/', 'regex:/[0-9]/', 'regex:/[@$!%*#?&]/'],
+            'password_confirmed' => ['required', 'same:password']
+        ];
+
+        $messages = [
+            'email.required' => 'Vous devez saisir un e-mail.',
+            'email.email' => 'Vous devez saisir un e-mail valide.',
+            'email.exists' => "Cet utilisateur n'existe pas.",
+            'password.required' => 'Vous devez saisir un mot de passe.',
+            'password.min' => "Votre mot de passe doit-être d'au moins 8 caractères.",
+            'password.max' => "Votre mot de passe doit-être d'au plus 20 caractères.",
+            'password.regex' => 'Votre mot de passe doit contenir au moins 1 minuscule, 1 majuscule, 1 chiffre et 1 caractère spécial.',
+            'password_confirmed.required' => 'Vous devez confirmer le mot de passe.',
+            'password_confirmed.same' => "Votre mot de passe n'est pas conforme."
+        ];
+
+        $validatedData = $request->validate($rules, $messages);
+
+        try {
+            $user = $this->authRepository->getUser($validatedData['email']);
+
+            if ($this->authRepository->isEmailVerifiedAtNull($user["id"])) {
+                $this->sendEmailValidation($request, $user["id"]);
+                return redirect()->route('signup.verify', ['userId' => $user["id"]]);
+            }
+
+            $value = $this->authRepository->hashNewPassword($user['email'], $validatedData['password'], $validatedData['password_confirmed']);
+            $this->authRepository->updateField($user['email'], 'password', $value);
+        } catch(Exception $exception) {
+            return redirect()->back()->withInput()->withErrors("Impossible de définir un nouveau mot de passe.");
+        }
+
+        return redirect()->route('signin.show');
+
     }
 }

@@ -29,6 +29,8 @@ Route::post('/signup/verify/{userId}', [AuthController::class, 'sendEmailValidat
 Route::get('/signin', [AuthController::class, 'showSigninForm'])->name('signin.show');
 Route::post('/signin', [AuthController::class, 'signin'])->name('signin.post');
 Route::get('/signin/{userId}', [AuthController::class, 'showSigninFirstTime'])->where('userId', '[0-9]+')->name('signin.firsttime.show');
+Route::get('/signin/forgot', [AuthController::class, 'showForgotPasswordForm'])->name('forgot.password.show');
+Route::post('/signin/forgot', [AuthController::class, 'forgotPassword'])->name('forgot.password.post');
 
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
