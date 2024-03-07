@@ -34,15 +34,18 @@ class AuthController extends BaseController
         return view('home');
     }
 
+
     public function showSignupForm()
     {
         return view('auth/signup');
     }
 
+
     public function showSignupVerify(int $userId)
     {
         return view('auth/signup_email_verify', ['userId' => $userId]);
     }
+
 
     public function showUserDashboard(Request $request)
     {
@@ -55,6 +58,7 @@ class AuthController extends BaseController
         return view('users/user_dashboard', ['user' => $user]);
     }
 
+
     public function showUserInformationsForm(Request $request)
     {
         if (!$request->session()->has('user')) {
@@ -64,10 +68,12 @@ class AuthController extends BaseController
         return view('users/user_infos_update');
     }
 
+
     public function showSigninForm()
     {
         return view('auth/signin');
     }
+
 
     public function showSigninFirstTime(int $userId)
     {
@@ -75,15 +81,18 @@ class AuthController extends BaseController
         return view('auth/signin');
     }
 
+
     public function showForgotPasswordForm()
     {
         return view('auth/forgot_password');
     }
 
+
     public function showEditPasswordForm(int $userId)
     {
         return view('auth/edit_password', ['userId' => $userId]);
     }
+
 
     /** controllers functions */
 
@@ -96,6 +105,7 @@ class AuthController extends BaseController
         Mail::to($email)->send(new ConfirmSignupMail($userId));
         return redirect()->back();
     }
+
 
     /**
      * Add user to DB
@@ -146,6 +156,7 @@ class AuthController extends BaseController
         return redirect()->route('signup.verify', ['userId' => $userAdded["id"]]);
     }
 
+
     /**
      * Signin user
      * 
@@ -185,6 +196,7 @@ class AuthController extends BaseController
         return redirect()->route('dashboard.show', ['userId' => $request->session()->get('user')['id']]);
     }
 
+
     /**
      * Logout user
      * 
@@ -206,7 +218,7 @@ class AuthController extends BaseController
      * 
      * @return view
      */
-    public function updateInformations(Request $request)
+    public function updateInformations(Request $request, int $userId)
     {
         $rules = [
             'firstname' => ['nullable', 'string'],
@@ -228,9 +240,10 @@ class AuthController extends BaseController
 
         $validatedData = $request->validate($rules, $messages);
 
-        $user = $this->authRepository->getUser($request->session()->get('user')['email']);
-
+        
         try {
+            $user = $this->authRepository->getUser($userId);
+
             foreach ($validatedData as $key => $value) {
                 if (isset($validatedData[$key]) && $value != $user[$key]) {
                     $this->authRepository->updateField($user['email'], $key, $value);
@@ -244,6 +257,7 @@ class AuthController extends BaseController
         return redirect()->back();
     }
 
+
     /**
      * Update user email
      * 
@@ -251,7 +265,7 @@ class AuthController extends BaseController
      * 
      * @return view
      */
-    public function updateEmail(Request $request)
+    public function updateEmail(Request $request, int $userId)
     {
         $rules = [
             'email' => ['required', 'email', 'unique:users,email']
@@ -266,7 +280,7 @@ class AuthController extends BaseController
         $validatedData = $request->validate($rules, $messages);
         
         try {
-            $user = $this->authRepository->getUser($request->session()->get('user')['email']);
+            $user = $this->authRepository->getUser($userId);
             $this->authRepository->updateField($user['email'], 'email', $validatedData['email']);
             $request->session()->put('user.email', $validatedData['email']);
         } catch (Exception $exception) {
@@ -275,6 +289,7 @@ class AuthController extends BaseController
 
         return redirect()->back();
     }
+
 
     /**
      * Update user password
@@ -302,11 +317,10 @@ class AuthController extends BaseController
         ];
 
         $validatedData = $request->validate($rules, $messages);
-
         
         try {
             $user = $this->authRepository->getUser($userId);
-            $this->authRepository->doPasswordsMatch($validatedData['password'], $validatedData['new_password']);
+            $this->authRepository->doPasswordsMatch($user['password'], $validatedData['password']);
             $newPasswordHashed = $this->authRepository->hashNewPassword($validatedData['new_password']);
             $this->authRepository->updateField($user['email'], 'password', $newPasswordHashed);
             $this->logout($request);
@@ -317,6 +331,7 @@ class AuthController extends BaseController
         return redirect()->back();
     }
 
+
     /**
      * Update user avatar
      * 
@@ -324,7 +339,7 @@ class AuthController extends BaseController
      * 
      * @return view
      */
-    public function updateAvatar(Request $request)
+    public function updateAvatar(Request $request, int $userId)
     {
         $rules = [
             'avatar' => ['required']
@@ -335,10 +350,9 @@ class AuthController extends BaseController
         ];
 
         $validatedData = $request->validate($rules, $messages);
-
-        $user = $this->authRepository->getUser($request->session()->get('user')['email']);
-
+        
         try {
+            $user = $this->authRepository->getUser($userId);
             $file = $request->file('avatar');
             $extension = $file->getClientOriginalExtension();
             $filename = time() . '.' . $extension;
@@ -360,6 +374,7 @@ class AuthController extends BaseController
         return redirect()->back();
     }
 
+
     /**
      * Delete user avatar
      * 
@@ -367,9 +382,9 @@ class AuthController extends BaseController
      * 
      * @return view
      */
-    public function deleteAvatar(Request $request)
+    public function deleteAvatar(Request $request, int $userId)
     {
-        ['email' => $userEmail, 'avatar' => $userAvatar] = $this->authRepository->getUser($request->session()->get('user')['email']);
+        ['email' => $userEmail, 'avatar' => $userAvatar] = $this->authRepository->getUser($userId);
         $this->authRepository->updateField($userEmail, 'avatar', null);
         if (strcmp($userAvatar, "uploads/avatars/default_avatar.png") != 0) {
             File::delete($userAvatar);
@@ -377,6 +392,7 @@ class AuthController extends BaseController
         $request->session()->put('user.avatar', $this->authRepository->getUser($userEmail)['avatar']);
         return redirect()->back();
     }
+
 
     /**
      * Delete User whose id have been specified from DB
@@ -393,6 +409,7 @@ class AuthController extends BaseController
         $this->authRepository->deleteUser($userId);
         return redirect()->route('signin.show');
     }
+
 
     /**
      * Send email validation to user and redirect to email validation notification page 
@@ -430,6 +447,7 @@ class AuthController extends BaseController
 
         return redirect()->back()->with('message',"Authentification réussie, verifiez votre boîte mail");
     }
+
 
     /**
      * Edit password forgot

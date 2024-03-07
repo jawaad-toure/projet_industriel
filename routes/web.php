@@ -18,10 +18,10 @@ use App\Http\Controllers\AuthController;
 //     return view('welcome');
 // });
 
-
+/** home route */
 Route::get('/', [AuthController::class, 'showHome'])->name('home.show');
 
-
+/** signup password routes */
 Route::get('/signup', [AuthController::class, 'showSignupForm'])->name('signup.show');
 Route::post('/signup', [AuthController::class, 'signup'])->name('signup.post');
 
@@ -29,14 +29,14 @@ Route::post('/signup', [AuthController::class, 'signup'])->name('signup.post');
 Route::get('/signup/verify/{userId}', [AuthController::class, 'showSignupVerify'])->where('userId', '[0-9]+')->name('verify.show');
 Route::post('/signup/verify/{userId}', [AuthController::class, 'sendEmailValidation'])->where('userId', '[0-9]+')->name('verify.post');
 
-
+/** signin routes */
 Route::get('/signin', [AuthController::class, 'showSigninForm'])->name('signin.show');
 Route::post('/signin', [AuthController::class, 'signin'])->name('signin.post');
 
 
 Route::get('/signin/{userId}', [AuthController::class, 'showSigninFirstTime'])->where('userId', '[0-9]+')->name('firstAuth.show');
 
-
+/** edit password routes */
 Route::get('/signin/forgotPassword', [AuthController::class, 'showForgotPasswordForm'])->name('forgotPassword.show');
 Route::post('/signin/forgotPassword', [AuthController::class, 'forgotPassword'])->name('forgotPassword.post');
 
@@ -44,10 +44,10 @@ Route::post('/signin/forgotPassword', [AuthController::class, 'forgotPassword'])
 Route::get('/signin/forgotPassword/{userId}', [AuthController::class, 'showEditPasswordForm'])->where('userId', '[0-9]+')->name('editPassword.show');
 Route::post('/signin/forgotPassword/{userId}', [AuthController::class, 'editPassword'])->where('userId', '[0-9]+')->name('editPassword.post');
 
-
+/** logout route */
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-
+/** user signin routes */
 Route::get('/users/{userId}/dashboard', [AuthController::class, 'showUserDashboard'])->where('userId', '[0-9]+')->name('dashboard.show');
 
 

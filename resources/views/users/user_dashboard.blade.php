@@ -123,6 +123,11 @@
                                 </div>
 
                                 <div class="modal-body">
+                                    <div>
+                                        <span class="fs-3 fw-bold text-danger">Attention !</span><br />
+                                        Vous devez vérifier votre email pour que la mise à jour soit effective.
+                                    </div>
+
                                     <div class="form-group my-2">
                                         <input type="email" name="email" placeholder="example@email.com" aria-describedby="email_feedback" class="py-3 form-control shadow-none @error('email') is-invalid @enderror" />
 
@@ -144,7 +149,7 @@
                     </div>
                 </form>
 
-                <!-- button edit password -->
+                <!-- button update password -->
                 <form method="POST" action="{{ route('password.update', ['userId' => session()->get('user')['id']]) }}" class="d-grid">
                     @csrf
                     @method('PUT')
@@ -163,10 +168,10 @@
                                 </div>
 
                                 <div class="modal-body">
-                                    <p>
-                                        <span class="fs-3 fw-bold text-success">Note !</span><br />
+                                    <div>
+                                        <span class="fs-3 fw-bold text-danger">Attention !</span><br />
                                         Vous serez déconnecté.e après modification du mot de passe.
-                                    </p>
+                                    </div>
 
                                     <div class="form-group my-2">
                                         <input type="password" name="password" placeholder="mot de passe" aria-describedby="password_feedback" class="py-3 form-control shadow-none @error('password') is-invalid @enderror" />
