@@ -6,11 +6,11 @@
     <div class="fs-1 fw-bold">Validation d'email</div>
 
     <div>
-        Votre compte a bien été créé.
+        Votre demande de création de compte a été bien prise en compte.
     </div>
 
     <div>
-        Il ne vous reste plus qu'à l'activer dans votre boîte mail pour pouvoir vous connecter.
+        Il ne vous reste plus qu'à vérifier votre email pour pouvoir vous connecter.
     </div>
 
     <div>

@@ -79,9 +79,11 @@ class AuthController extends BaseController
     /**
      * Send email validation
      */
-    public function sendEmailValidation($email, int $userId)
+    public function sendEmailValidation(Request $request, int $userId)
     {
+        $email = $this->authRepository->getUser($userId)['email'];
         Mail::to($email)->send(new ConfirmSignupMail($userId));
+        return redirect()->back();
     }
 
     /**
@@ -121,16 +123,16 @@ class AuthController extends BaseController
 
         try {
             $this->authRepository->addUser($validatedData['username'], $validatedData['email'], $validatedData['password']);
-            $userSignupId = $this->authRepository->getUser($validatedData['email'])["id"];           
-            // $this->sendEmailValidation($validatedData['email'], $this->authRepository->getUser($validatedData['email'])["id"]);
-            Mail::to($validatedData['email'])->send(new ConfirmSignupMail($userSignupId));
+            $userAdded = $this->authRepository->getUser($validatedData['email']);           
+            $this->sendEmailValidation($request, $userAdded["id"]);
+            // Mail::to($validatedData['email'])->send(new ConfirmSignupMail($userAddedId));
             DB::commit();
         } catch (Exception $exception) {
             DB::rollBack();
             return redirect()->back()->withInput()->withErrors("Impossible de créer un compte.");
         }
 
-        return redirect()->route('signup.verify', ['userId' => $userSignupId]);
+        return redirect()->route('signup.verify', ['userId' => $userAdded["id"]]);
     }
 
     /**
@@ -160,7 +162,8 @@ class AuthController extends BaseController
             $user = $this->authRepository->getUser($validatedData['email']);
             $this->authRepository->doPasswordsMatch($user['password'], $validatedData['password']);                
             if ($this->authRepository->isEmailVerified($user["id"])) {
-                return redirect()->route('signup.verify');
+                $this->sendEmailValidation($request, $user["id"]);
+                return redirect()->route('signup.verify', ['userId' => $user["id"]]);
             }
             $request->session()->put('user', $user);
         } catch (Exception $exception) {

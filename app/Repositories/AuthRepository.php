@@ -67,7 +67,10 @@ final class AuthRepository
             'phone' => $user->phone,
             'address' => $user->address,
             'password' => $user->password,
-            'avatar' => $user->avatar ?? 'uploads/avatars/default_avatar.png'
+            'avatar' => $user->avatar ?? 'uploads/avatars/default_avatar.png',
+            'email_verified_at' => $user->email_verified_at,
+            'created_at' => $user->created_at,
+            'updated_at' => $user->updated_at,
         ];
     }
 

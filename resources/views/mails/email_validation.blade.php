@@ -10,7 +10,7 @@
 <body>
     <div class="container">
         <div class="d-flex flex-column m-4 gap-3">
-            <div class="fs-3 align-self-center">
+            <div class="fs-3">
                 Bonjour !
             </div>
 
@@ -22,7 +22,7 @@
                 Veuillez cliquer sur le bouton ci-dessous pour valider votre adresse email.
             </div>
 
-            <div class="d-flex justify-content-center align-items-center">
+            <div>
                 <a href="{{ route('signin.firsttime.show', ['userId' => $emailValidationUserId]) }}" role="bouton" class="btn btn-primary">
                     Verifier email
                 </a>
