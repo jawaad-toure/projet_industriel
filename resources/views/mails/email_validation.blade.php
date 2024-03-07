@@ -23,7 +23,7 @@
             </div>
 
             <div>
-                <a href="{{ route('signin.firsttime.show', ['userId' => $emailValidationUserId]) }}" role="bouton" class="btn btn-primary">
+                <a href="{{ route('firstAuth.show', ['userId' => $emailValidationUserId]) }}" role="bouton" class="btn btn-primary">
                     Verifier email
                 </a>
             </div>

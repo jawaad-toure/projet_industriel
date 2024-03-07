@@ -20,7 +20,7 @@
 
                     <div class="d-flex justify-content-center gap-4">
                         <!-- button edit avatar -->
-                        <form method="POST" action="{{ route('user.avatar.update', ['userId' => session()->get('user')['id']]) }}" enctype="multipart/form-data" class="d-grid">
+                        <form method="POST" action="{{ route('avatar.update', ['userId' => session()->get('user')['id']]) }}" enctype="multipart/form-data" class="d-grid">
                             @csrf
                             @method('PUT')
 
@@ -60,7 +60,7 @@
                         </form>
 
                         <!-- button delete avatar -->
-                        <form method="POST" action="{{ route('user.avatar.delete', ['userId' => session()->get('user')['id']]) }}" class="d-grid">
+                        <form method="POST" action="{{ route('avatar.delete', ['userId' => session()->get('user')['id']]) }}" class="d-grid">
                             @csrf
 
                             <button type="submit" class="btn btn-danger d-flex justify-content-center align-items-center">
@@ -100,12 +100,12 @@
             </div>
 
             <div class="d-flex flex-column gap-2">
-                <a role="button" class="btn btn-secondary" href="{{ route('user.informations.show', ['userId' => session()->get('user')['id']]) }}">
+                <a role="button" class="btn btn-secondary" href="{{ route('informations.show', ['userId' => session()->get('user')['id']]) }}">
                     Modifier mes informations
                 </a>
 
                 <!-- button edit email -->
-                <form method="POST" id="updateEmailForm" action="{{ route('user.email.update', ['userId' => session()->get('user')['id']]) }}" class="d-grid">
+                <form method="POST" id="updateEmailForm" action="{{ route('email.update', ['userId' => session()->get('user')['id']]) }}" class="d-grid">
                     @csrf
                     @method('PUT')
 
@@ -145,7 +145,7 @@
                 </form>
 
                 <!-- button edit password -->
-                <form method="POST" action="{{ route('user.password.update', ['userId' => session()->get('user')['id']]) }}" class="d-grid">
+                <form method="POST" action="{{ route('password.update', ['userId' => session()->get('user')['id']]) }}" class="d-grid">
                     @csrf
                     @method('PUT')
 

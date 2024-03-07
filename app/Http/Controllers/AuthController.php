@@ -171,12 +171,12 @@ class AuthController extends BaseController
                 $this->sendEmailValidation($request, $user["id"]);
                 return redirect()->route('signup.verify', ['userId' => $user["id"]]);
             }
-            
+
             $request->session()->put('user', $user);
         } catch (Exception $exception) {
             return redirect()->back()->withInput()->withErrors("Impossible de vous authentifier.");
         }
-        return redirect()->route('user.dashboard.show', ['userId' => $request->session()->get('user')['id']]);
+        return redirect()->route('dashboard.show', ['userId' => $request->session()->get('user')['id']]);
     }
 
     /**

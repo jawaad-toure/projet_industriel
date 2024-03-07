@@ -8,7 +8,7 @@
 
         <h1 class="text-center py-4">Nouveau de mot de passe</h1>
 
-        <form method="POST" action="{{ route('forgot.password.post') }}" class="col-sm-4">
+        <form method="POST" action="{{ route('forgot.post') }}" class="col-sm-4">
             @csrf
 
             @if ($errors->any())

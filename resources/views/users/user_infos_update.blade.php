@@ -8,7 +8,7 @@
 
     <h1 class="text-center py-4">Informations personnelles</h1>
 
-    <form method="POST" action="{{ route('user.informations.update', ['userId' => session()->get('user')['id']]) }}" class="col-md-7">
+    <form method="POST" action="{{ route('informations.update', ['userId' => session()->get('user')['id']]) }}" class="col-md-7">
         @csrf
         @method('PUT')
 
@@ -123,7 +123,7 @@
         <!-- buttons update and back -->
         <div class="d-flex justify-content-center gap-2">
             <button type="submit" class="btn btn-success btn-lg shadow-none">Valider</button>
-            <a class="btn btn-secondary btn-lg" href="{{ route('user.dashboard.show', ['userId' => session()->get('user')['id']]) }}" role="button">
+            <a class="btn btn-secondary btn-lg" href="{{ route('dashboard.show', ['userId' => session()->get('user')['id']]) }}" role="button">
                 Retour
             </a>
         </div>

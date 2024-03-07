@@ -17,7 +17,7 @@
         Si vous n'avez pas reçu le mail de validation, cliquez sur le button ci-dessous pour le recevoir à nouveau.
     </div>
 
-    <form method="POST" action="{{ route('signup.verify.send', ['userId' => $userId]) }}">
+    <form method="POST" action="{{ route('verify.post', ['userId' => $userId]) }}">
         @csrf
         <button type="submit" class="btn btn-primary">
             Renvoyer le mail

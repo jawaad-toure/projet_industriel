@@ -46,7 +46,7 @@
                     </a>
 
                     <ul class="dropdown-menu dropdown-menu-end">
-                        <li><a href="{{ route('user.dashboard.show', ['userId' => session()->get('user')['id']]) }}" class="dropdown-item active-effect-dislabled">Profil</a></li>
+                        <li><a href="{{ route('dashboard.show', ['userId' => session()->get('user')['id']]) }}" class="dropdown-item active-effect-dislabled">Profil</a></li>
                         <li>
                             <hr class="dropdown-divider">
                         </li>
