@@ -38,9 +38,9 @@ class AuthController extends BaseController
         return view('auth/signup');
     }
 
-    public function showSignupVerify()
+    public function showSignupVerify(int $userId)
     {
-        return view('auth/signup_email_verify');
+        return view('auth/signup_email_verify', ['userId' => $userId]);
     }
 
     public function showUserDashboard(Request $request)
@@ -68,7 +68,21 @@ class AuthController extends BaseController
         return view('auth/signin');
     }
 
+    public function showSigninFirstTime(int $userId)
+    {
+        $this->authRepository->updateField($userId, 'email_verified_at', now());
+        return view('auth/signin');
+    }
+
     /** controllers functions */
+
+    /**
+     * Send email validation
+     */
+    public function sendEmailValidation($email, int $userId)
+    {
+        Mail::to($email)->send(new ConfirmSignupMail($userId));
+    }
 
     /**
      * Add user to DB
@@ -107,14 +121,16 @@ class AuthController extends BaseController
 
         try {
             $this->authRepository->addUser($validatedData['username'], $validatedData['email'], $validatedData['password']);
-            Mail::to($validatedData['email'])->send(new ConfirmSignupMail());
+            $userSignupId = $this->authRepository->getUser($validatedData['email'])["id"];           
+            // $this->sendEmailValidation($validatedData['email'], $this->authRepository->getUser($validatedData['email'])["id"]);
+            Mail::to($validatedData['email'])->send(new ConfirmSignupMail($userSignupId));
             DB::commit();
         } catch (Exception $exception) {
             DB::rollBack();
             return redirect()->back()->withInput()->withErrors("Impossible de créer un compte.");
         }
 
-        return redirect()->route('signup.verify');
+        return redirect()->route('signup.verify', ['userId' => $userSignupId]);
     }
 
     /**
@@ -142,10 +158,10 @@ class AuthController extends BaseController
 
         try {
             $user = $this->authRepository->getUser($validatedData['email']);
-
-            if (!$this->authRepository->doPasswordsMatch($user['password'], $validatedData['password']))
-                throw new Exception("Utilisateur inconnu");
-
+            $this->authRepository->doPasswordsMatch($user['password'], $validatedData['password']);                
+            if ($this->authRepository->isEmailVerified($user["id"])) {
+                return redirect()->route('signup.verify');
+            }
             $request->session()->put('user', $user);
         } catch (Exception $exception) {
             return redirect()->back()->withInput()->withErrors("Impossible de vous authentifier.");
@@ -232,10 +248,9 @@ class AuthController extends BaseController
         ];
 
         $validatedData = $request->validate($rules, $messages);
-
-        $user = $this->authRepository->getUser($request->session()->get('user')['email']);
-
+        
         try {
+            $user = $this->authRepository->getUser($request->session()->get('user')['email']);
             $this->authRepository->updateField($user['email'], 'email', $validatedData['email']);
             $request->session()->put('user.email', $validatedData['email']);
         } catch (Exception $exception) {

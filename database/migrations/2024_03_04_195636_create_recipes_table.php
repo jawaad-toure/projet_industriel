@@ -15,8 +15,8 @@ return new class extends Migration
             $table->bigIncrements('id');
             $table->string('recipename', 50)->unique()->notNullable();
             $table->time('time')->notNullable();
-            $table->enum('cookingtype', ['four', 'barbeue', 'poele', 'vapeur', 'sans cuisson']);
-            $table->enum('category', ['entree', 'plat', 'desset', 'boisson']);
+            $table->enum('cookingtype', ['four', 'barbecue', 'poele', 'vapeur', 'sans cuisson']);
+            $table->enum('category', ['entree', 'plat', 'dessert', 'boisson']);
             $table->enum('difficulty', ['difficile', 'facile', 'moyen']);
             $table->unsignedBigInteger('id_user');
 

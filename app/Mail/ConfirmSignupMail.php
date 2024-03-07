@@ -13,12 +13,13 @@ class ConfirmSignupMail extends Mailable
 {
     use Queueable, SerializesModels;
 
+    protected $userId;
     /**
      * Create a new message instance.
      */
-    public function __construct()
+    public function __construct($userId)
     {
-        //
+        $this->userId = $userId;
     }
 
     /**
@@ -38,7 +39,7 @@ class ConfirmSignupMail extends Mailable
     {
         return new Content(
             view: 'mails.email_validation',
-            with: ["link" => config("app.client_url")],
+            with: ["emailValidationUserId" => $this->userId],
         );
     }
 

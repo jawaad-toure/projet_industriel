@@ -23,10 +23,12 @@ Route::get('/', [AuthController::class, 'showHome'])->name('home.show');
 
 Route::get('/signup', [AuthController::class, 'showSignupForm'])->name('signup.show');
 Route::post('/signup', [AuthController::class, 'signup'])->name('signup.post');
-Route::get('/signup/verify', [AuthController::class, 'showSignupVerify'])->name('signup.verify');
+Route::get('/signup/verify/{userId}', [AuthController::class, 'showSignupVerify'])->name('signup.verify');
+Route::post('/signup/verify/{userId}', [AuthController::class, 'sendEmailValidation'])->where('userId', '[0-9]+')->name('signup.verify.send');
 
 Route::get('/signin', [AuthController::class, 'showSigninForm'])->name('signin.show');
 Route::post('/signin', [AuthController::class, 'signin'])->name('signin.post');
+Route::get('/signin/{userId}', [AuthController::class, 'showSigninFirstTime'])->where('userId', '[0-9]+')->name('signin.firsttime.show');
 
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 

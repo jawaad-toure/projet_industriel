@@ -10,7 +10,7 @@
 <body>
     <div class="container">
         <div class="d-flex flex-column m-4 gap-3">
-            <div class="fs-3">
+            <div class="fs-3 align-self-center">
                 Bonjour !
             </div>
 
@@ -23,8 +23,8 @@
             </div>
 
             <div class="d-flex justify-content-center align-items-center">
-                <a href={{$link}} role="bouton" class="btn btn-primary">
-                    Verifier l'adresse email
+                <a href="{{ route('signin.firsttime.show', ['userId' => $emailValidationUserId]) }}" role="bouton" class="btn btn-primary">
+                    Verifier email
                 </a>
             </div>
 

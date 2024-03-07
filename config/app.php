@@ -31,8 +31,6 @@ return [
 
     'env' => env('APP_ENV', 'production'),
 
-    'client_url' => env('APP_CLIENT', ''),
-
     /*
     |--------------------------------------------------------------------------
     | Application Debug Mode

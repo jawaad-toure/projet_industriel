@@ -3,13 +3,13 @@
 namespace App\Repositories;
 
 use Exception;
-// use App\Models\User;
+use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 final class AuthRepository
 {
-    
+
     /**
      * Add user to DB with his username, email and password
      * 
@@ -33,7 +33,7 @@ final class AuthRepository
         return $userId;
     }
 
-    
+
     /**
      * Get user from DB with email
      * 
@@ -41,11 +41,17 @@ final class AuthRepository
      * 
      * @return array 
      */
-    public function getUser(string $email): array
+    public function getUser(string|int $with): array
     {
-        $user = DB::table("users")
-            ->where('email', $email)
-            ->first();
+        if (is_string($with)) {
+            $user = DB::table("users")
+                ->where('email', $with)
+                ->first();
+        } else {
+            $user = DB::table("users")
+                ->where('id', $with)
+                ->first();
+        }
 
         if (!$user) {
             throw new Exception("Utilisateur inconnu");
@@ -65,7 +71,7 @@ final class AuthRepository
         ];
     }
 
-    
+
     /**
      * Check if user actual password match to password enter in input
      * 
@@ -76,10 +82,24 @@ final class AuthRepository
      */
     public function doPasswordsMatch(string $dbPassword, string $password): bool
     {
-        return Hash::check($password, $dbPassword);
+        if (!Hash::check($password, $dbPassword)) {
+            throw new Exception("Mot de passe incorrect.");
+        }
+        return true;
     }
 
-    
+    /**
+     * Check if user email is verified
+     */
+    public function isEmailVerified(int $id): bool
+    {
+        $user = DB::table("users")
+            ->where("id", $id)
+            ->first();
+        return is_null($user->email_verified_at);
+    }
+
+
     /**
      * Search user by the eamil and update the information in the field with the value
      * 
@@ -87,17 +107,20 @@ final class AuthRepository
      * @param string $field
      * @param string|null $value
      */
-    public function updateField(string $email, string $field, string|null $value)
+    public function updateField(string|int $with, string $field, string|null $value)
     {
-        DB::table("users")
-            ->where("email", $email)
-            ->update([$field => $value]);
-
-        // User::where("email", $email)
-        //     ->update([$field => $value]);
+        if (is_string($with)) {
+            DB::table("users")
+                ->where("email", $with)
+                ->update([$field => $value]);
+        } else {
+            DB::table("users")
+                ->where("id", $with)
+                ->update([$field => $value]);
+        }
     }
 
-    
+
     /**
      * Hash new password set by user
      * 
@@ -117,20 +140,16 @@ final class AuthRepository
         return Hash::make($newPassword);
     }
 
-    
+
     /**
      * Delete User whose id have been specified from DB
      * 
      * @param int $userId
      */
-    public function deleteUser(int $userId) 
+    public function deleteUser(int $userId)
     {
         DB::table("users")
             ->where("id", $userId)
             ->delete();
-
-        // User::where("id", $userId)
-        //     ->delete();
     }
-
 }
