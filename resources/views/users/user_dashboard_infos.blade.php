@@ -2,8 +2,6 @@
 
 @section('content')
 
-
-
 <div class="d-flex flex-column align-items-center mb-5">
 
     <h1 class="text-center py-4">Informations personnelles</h1>
@@ -15,6 +13,12 @@
         @if ($errors->any())
         <div class="alert alert-warning">
             Echec de la mise à jour &#9785;
+        </div>
+        @endif
+
+        @if(session('message'))
+        <div class="alert alert-success">
+            {{ session('message') }} &#128578;
         </div>
         @endif
 

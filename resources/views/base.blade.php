@@ -65,7 +65,7 @@
     </div>
 
     <!-- content -->
-    <div class="vh-100 container">
+    <div class="container vh-100">
         @yield('content')
     </div>
 

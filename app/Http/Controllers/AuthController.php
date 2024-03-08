@@ -7,7 +7,9 @@ use Illuminate\Http\Request;
 use App\Mail\EditPasswordMail;
 use App\Mail\ConfirmSignupMail;
 use Illuminate\Support\Facades\DB;
+use App\Mail\ConfirmUpdateEmailMail;
 use App\Repositories\AuthRepository;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Foundation\Bus\DispatchesJobs;
@@ -35,12 +37,6 @@ class AuthController extends BaseController
     }
 
 
-    public function showSignupForm()
-    {
-        return view('auth/signup');
-    }
-
-
     public function showSignupVerify(int $userId)
     {
         return view('auth/signup_email_verify', ['userId' => $userId]);
@@ -59,13 +55,39 @@ class AuthController extends BaseController
     }
 
 
-    public function showUserInformationsForm(Request $request)
+    public function showUserDashboardInfosForm(Request $request)
     {
         if (!$request->session()->has('user')) {
             return redirect()->route('signin.show');
         }
 
-        return view('users/user_infos_update');
+        return view('users/user_dashboard_infos');
+    }
+
+
+    public function showUserDashboardEmailForm(Request $request)
+    {
+        if (!$request->session()->has('user')) {
+            return redirect()->route('signin.show');
+        }
+
+        return view('users/user_dashboard_email');
+    }
+    
+
+    public function showUserDashboardPasswordForm(Request $request)
+    {
+        if (!$request->session()->has('user')) {
+            return redirect()->route('signin.show');
+        }
+
+        return view('users/user_dashboard_password');
+    }
+
+
+    public function showSignupForm()
+    {
+        return view('auth/signup');
     }
 
 
@@ -144,9 +166,8 @@ class AuthController extends BaseController
 
         try {
             $this->authRepository->addUser($validatedData['username'], $validatedData['email'], $validatedData['password']);
-            $userAdded = $this->authRepository->getUser($validatedData['email']);           
+            $userAdded = $this->authRepository->getUser($validatedData['email']);
             $this->sendEmailValidation($request, $userAdded["id"]);
-            // Mail::to($validatedData['email'])->send(new ConfirmSignupMail($userAddedId));
             DB::commit();
         } catch (Exception $exception) {
             DB::rollBack();
@@ -182,7 +203,7 @@ class AuthController extends BaseController
 
         try {
             $user = $this->authRepository->getUser($validatedData['email']);
-            $this->authRepository->doPasswordsMatch($user['password'], $validatedData['password']); 
+            $this->authRepository->doPasswordsMatch($user['password'], $validatedData['password']);
 
             if ($this->authRepository->isEmailVerifiedAtNull($user["id"])) {
                 $this->sendEmailValidation($request, $user["id"]);
@@ -240,7 +261,7 @@ class AuthController extends BaseController
 
         $validatedData = $request->validate($rules, $messages);
 
-        
+
         try {
             $user = $this->authRepository->getUser($userId);
 
@@ -254,7 +275,7 @@ class AuthController extends BaseController
             return redirect()->back()->withInput()->withErrors("Impossible de modifier vos informations.");
         }
 
-        return redirect()->back();
+        return redirect()->back()->with('message', "Mise à jour effectuée avec succès");
     }
 
 
@@ -278,11 +299,17 @@ class AuthController extends BaseController
         ];
 
         $validatedData = $request->validate($rules, $messages);
-        
+
         try {
             $user = $this->authRepository->getUser($userId);
-            $this->authRepository->updateField($user['email'], 'email', $validatedData['email']);
-            $request->session()->put('user.email', $validatedData['email']);
+            // $userEmailVerfiedAtOld = $user['email_verified_at'];
+            Mail::to($validatedData['email'])->send(new ConfirmUpdateEmailMail($user['id']));
+            // strcmp($userEmailVerfiedAtOld, $this->authRepository->getUser($userId)['email_verified_at']
+            // dump(Carbon::parse($userEmailVerfiedAtOld)->lessThan(now()));
+            // if (Carbon::parse($userEmailVerfiedAtOld)->lessThan(Carbon::parse($this->authRepository->getUser($userId)['email_verified_at']))) {
+            //     $this->authRepository->updateField($user['email'], 'email', $validatedData['email']);
+            //     $request->session()->put('user.email', $validatedData['email']);
+            // }
         } catch (Exception $exception) {
             return redirect()->back()->withInput()->withErrors("Impossible de modifier l'email.");
         }
@@ -290,6 +317,16 @@ class AuthController extends BaseController
         return redirect()->back();
     }
 
+
+    public function confirmNewEmailUpdate(Request $request, int $userId)
+    {
+        $user = $this->authRepository->getUser($userId);
+        $userEmailVerfiedAtOld = $user['email_verified_at'];
+        if (Carbon::parse($userEmailVerfiedAtOld)->lessThan(Carbon::parse($this->authRepository->getUser($userId)['email_verified_at']))) {
+            // $this->authRepository->updateField($user['email'], 'email', $validatedData['email']);
+            // $request->session()->put('user.email', $validatedData['email']);
+        }
+    }
 
     /**
      * Update user password
@@ -317,7 +354,7 @@ class AuthController extends BaseController
         ];
 
         $validatedData = $request->validate($rules, $messages);
-        
+
         try {
             $user = $this->authRepository->getUser($userId);
             $this->authRepository->doPasswordsMatch($user['password'], $validatedData['password']);
@@ -350,7 +387,7 @@ class AuthController extends BaseController
         ];
 
         $validatedData = $request->validate($rules, $messages);
-        
+
         try {
             $user = $this->authRepository->getUser($userId);
             $file = $request->file('avatar');
@@ -440,12 +477,11 @@ class AuthController extends BaseController
             }
 
             Mail::to($user['email'])->send(new EditPasswordMail($user['id']));
-
-        } catch(Exception $exception) {
+        } catch (Exception $exception) {
             return redirect()->back()->withInput()->withErrors("Impossible de définir un nouveau mot de passe.");
         }
 
-        return redirect()->back()->with('message',"Authentification réussie, verifiez votre boîte mail");
+        return redirect()->back()->with('message', "Authentification réussie, verifiez votre boîte mail");
     }
 
 
@@ -477,7 +513,7 @@ class AuthController extends BaseController
             $user = $this->authRepository->getUser($userId);
             $newPasswordHashed = $this->authRepository->hashNewPassword($validatedData['password']);
             $this->authRepository->updateField($user['email'], 'password', $newPasswordHashed);
-        } catch(Exception $exception) {
+        } catch (Exception $exception) {
             return redirect()->back()->withInput()->withErrors("Impossible de définir un nouveau mot de passe.");
         }
 

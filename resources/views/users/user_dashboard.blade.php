@@ -25,7 +25,7 @@
                             @method('PUT')
 
                             <button type="button" class="btn btn-secondary d-flex justify-content-center align-items-center" data-bs-toggle="modal" data-bs-target="#updateAvatarModal">
-                                <i class="bi bi-pencil-square"></i>
+                                <i class="bi bi-upload"></i>
                             </button>
 
                             <div class="modal fade" id="updateAvatarModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -100,119 +100,20 @@
             </div>
 
             <div class="d-flex flex-column gap-2">
+                <!-- button edit email -->
                 <a role="button" class="btn btn-secondary" href="{{ route('informations.show', ['userId' => session()->get('user')['id']]) }}">
                     Modifier mes informations
                 </a>
 
                 <!-- button edit email -->
-                <form method="POST" id="updateEmailForm" action="{{ route('email.update', ['userId' => session()->get('user')['id']]) }}" class="d-grid">
-                    @csrf
-                    @method('PUT')
-
-                    <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#updateEmailModal">
-                        Modifier mon email
-                    </button>
-
-                    <div class="modal fade" id="updateEmailModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-
-                        <div class="modal-dialog modal-dialog-centered">
-
-                            <div class="modal-content">
-                                <div class="modal-header border border-0">
-                                    <button type="button" class="btn-close shadow-none" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-
-                                <div class="modal-body">
-                                    <div>
-                                        <span class="fs-3 fw-bold text-danger">Attention !</span><br />
-                                        Vous devez vérifier votre email pour que la mise à jour soit effective.
-                                    </div>
-
-                                    <div class="form-group my-2">
-                                        <input type="email" name="email" placeholder="example@email.com" aria-describedby="email_feedback" class="py-3 form-control shadow-none @error('email') is-invalid @enderror" />
-
-                                        @error('email')
-                                        <div id="email_feedback" class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
-                                        @enderror
-                                    </div>
-                                </div>
-
-                                <div class="modal-footer border border-0">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                                    <button type="submit" class="btn btn-success" id="btnUpdateEmail">Valider</button>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                </form>
+                <a type="button" class="btn btn-secondary" href="{{ route('email.show', ['userId' => session()->get('user')['id']]) }}">
+                    Modifier mon email
+                </a>
 
                 <!-- button update password -->
-                <form method="POST" action="{{ route('password.update', ['userId' => session()->get('user')['id']]) }}" class="d-grid">
-                    @csrf
-                    @method('PUT')
-
-                    <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#updatePasswordModal">
-                        Modifier mon mot de passe
-                    </button>
-
-                    <div class="modal fade" id="updatePasswordModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-
-                        <div class="modal-dialog modal-dialog-centered">
-
-                            <div class="modal-content">
-                                <div class="modal-header border border-0">
-                                    <button type="button" class="btn-close shadow-none" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-
-                                <div class="modal-body">
-                                    <div>
-                                        <span class="fs-3 fw-bold text-danger">Attention !</span><br />
-                                        Vous serez déconnecté.e après modification du mot de passe.
-                                    </div>
-
-                                    <div class="form-group my-2">
-                                        <input type="password" name="password" placeholder="mot de passe" aria-describedby="password_feedback" class="py-3 form-control shadow-none @error('password') is-invalid @enderror" />
-
-                                        @error('password')
-                                        <div id="password_feedback" class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
-                                        @enderror
-                                    </div>
-
-                                    <div class="form-group my-2">
-                                        <input type="password" name="new_password" placeholder="nouveau mot de passe" aria-describedby="new_password_feedback" class="py-3 form-control shadow-none @error('new_password') is-invalid @enderror" />
-
-                                        @error('new_password')
-                                        <div id="new_password_feedback" class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
-                                        @enderror
-                                    </div>
-
-                                    <div class="form-group my-2">
-                                        <input type="password" name="new_password_confirmed" placeholder="confirmer nouveau mot de passe" aria-describedby="new_password_confirmed_feedback" class="py-3 form-control shadow-none @error('new_password_confirmed') is-invalid @enderror" />
-
-                                        @error('new_password_confirmed')
-                                        <div id="new_password_confirmed_feedback" class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
-                                        @enderror
-                                    </div>
-                                </div>
-
-                                <div class="modal-footer border border-0">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                                    <button type="submit" class="btn btn-success">Valider</button>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                </form>
+                <a type="button" class="btn btn-secondary" href="{{ route('password.show', ['userId' => session()->get('user')['id']]) }}">
+                    Modifier mon mot de passe
+                </a>
 
                 <!-- button logout -->
                 <form method="POST" action="{{ route('logout') }}" class="d-grid">

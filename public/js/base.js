@@ -1,6 +1,10 @@
-$('#btnUpdateEmail').on('click', function() {
-    $('#updateEmailModal').modal({
-        backdrop: "static ",
-        keyboard: false
-    });
+$(document).ready(function () {
+    setTimeout(function () {
+        $('.alert').fadeOut();
+    }, 5000);
 });
+
+
+
+
+
