@@ -1,10 +1,19 @@
 
-.active-effect-dislabled:active {
-    background: none;
+.active-effect-disabled:active {
+    background: none !important;
     color: inherit;
 }
 
 .hover-effect-disabled:hover {
     background: none;
-    color: red;
+}
+
+.--primary:hover, .--primary:active {
+    color: #0275d8 !important;
+}
+
+
+
+.--danger:hover, .--danger:active {
+    color: #d9534f !important;
 }

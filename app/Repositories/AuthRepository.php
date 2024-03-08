@@ -27,7 +27,8 @@ final class AuthRepository
             ->insertGetId([
                 "username" => $username,
                 "email" => $email,
-                "password" => $passwordHashed
+                "password" => $passwordHashed,
+                "created_at" => now(),
             ]);
 
         return $userId;

@@ -37,7 +37,10 @@ Route::post('/signin', [AuthController::class, 'signin'])->name('signin.post');
 
 
 Route::get('/signin/{userId}', [AuthController::class, 'showSigninFirstTime'])->where('userId', '[0-9]+')->name('firstAuth.show');
-Route::get('/signin/{userId}', [AuthController::class, 'confirmNewEmailUpdate'])->where('userId', '[0-9]+')->name('confirmEmailUpdate.show');
+
+
+Route::get('/signin/{userId}/{userNewEmail}', [AuthController::class, 'showSigninAfterNewEmailValidation'])->where('userId', '[0-9]+')->where('userNewEmail', '[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}')->name('newEmailAuth.show');
+// Route::get('/signin/{userId}/{userNewEmail}', [AuthController::class, 'showSigninAfterNewEmailValidation'])->where(['userId' => '[0-9]+', 'userNewEmail' => '[a-z]+'])->name('newEmailAuth.show');
 
 
 /** edit password routes */

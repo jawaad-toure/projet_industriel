@@ -11,15 +11,15 @@
         <form method="POST" action="{{ route('editPassword.post', ['userId' => $userId]) }}" class="col-sm-4">
             @csrf
 
-            @if ($errors->any())
+            @if(session('warning'))
             <div class="alert alert-warning">
-                Echec de la modification &#9785;
+                {{ session('warning') }} &#9785;
             </div>
             @endif
 
-            @if(session('message'))
+            @if(session('success'))
             <div class="alert alert-success">
-                {{ session('message') }} &#128578;
+                {{ session('success') }} &#128578;
             </div>
             @endif
 

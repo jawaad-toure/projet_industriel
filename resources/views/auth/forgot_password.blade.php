@@ -11,15 +11,15 @@
         <form method="POST" action="{{ route('forgotPassword.post') }}" class="col-sm-4">
             @csrf
 
-            @if ($errors->any())
+            @if(session('warning'))
             <div class="alert alert-warning">
-                Echec d'authentification &#9785;
+                {{ session('warning') }} &#9785;
             </div>
             @endif
 
-            @if(session('message'))
+            @if(session('success'))
             <div class="alert alert-success">
-                {{ session('message') }} &#128578;
+                {{ session('success') }} &#128578;
             </div>
             @endif
 

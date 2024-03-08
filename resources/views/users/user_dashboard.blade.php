@@ -73,27 +73,27 @@
 
                 <div class="d-flex flex-column">
                     <div class="my-2">
-                        <span class="fw-bold">Pseudonyme : </span>{{ session()->get('user')['username'] }}
+                        <span class="fw-bold">Pseudonyme : </span>{{ $user['username'] }}
                     </div>
 
                     <div class="my-2">
-                        <span class="fw-bold">Nom : </span>{{ session()->get('user')['firstname'] }} {{ session()->get('user')['lastname'] }}
+                        <span class="fw-bold">Nom : </span>{{ $user['firstname'] }} {{ $user['lastname'] }}
                     </div>
 
                     <div class="my-2">
-                        <span class="fw-bold">Email : </span>{{ session()->get('user')['email'] }}
+                        <span class="fw-bold">Email : </span>{{ $user['email'] }}
                     </div>
 
                     <div class="my-2">
-                        <span class="fw-bold">Date de naissance : </span>{{ session()->get('user')['birthdate'] }}
+                        <span class="fw-bold">Date de naissance : </span>{{ $user['birthdate'] }}
                     </div>
 
                     <div class="my-2">
-                        <span class="fw-bold">Adresse : </span>{{ session()->get('user')['address'] }}
+                        <span class="fw-bold">Adresse : </span>{{ $user['address'] }}
                     </div>
 
                     <div class="my-2">
-                        <span class="fw-bold">Numéro : </span>{{ session()->get('user')['phone'] }}
+                        <span class="fw-bold">Numéro : </span>{{ $user['phone'] }}
                     </div>
                 </div>
 
@@ -119,7 +119,7 @@
                 <form method="POST" action="{{ route('logout') }}" class="d-grid">
                     @csrf
 
-                    <button type="submit" class="btn btn-outline-danger hover-effect-disabled">
+                    <button type="submit" class="btn btn-outline-danger hover-effect-disabled --danger active-effect-disabled">
                         Déconnexion
                     </button>
                 </form>

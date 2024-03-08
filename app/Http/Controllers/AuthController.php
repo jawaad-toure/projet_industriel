@@ -9,7 +9,6 @@ use App\Mail\ConfirmSignupMail;
 use Illuminate\Support\Facades\DB;
 use App\Mail\ConfirmUpdateEmailMail;
 use App\Repositories\AuthRepository;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Foundation\Bus\DispatchesJobs;
@@ -43,13 +42,13 @@ class AuthController extends BaseController
     }
 
 
-    public function showUserDashboard(Request $request)
+    public function showUserDashboard(Request $request, int $userId)
     {
         if (!$request->session()->has('user')) {
             return redirect()->route('signin.show');
         }
 
-        $user = $this->authRepository->getUser($request->session()->get('user')['email']);
+        $user = $this->authRepository->getUser($userId);
 
         return view('users/user_dashboard', ['user' => $user]);
     }
@@ -85,14 +84,22 @@ class AuthController extends BaseController
     }
 
 
-    public function showSignupForm()
+    public function showSignupForm(Request $request)
     {
+        if ($request->session()->has('user')) {
+            return redirect()->route('home.show');
+        }
+        
         return view('auth/signup');
     }
 
 
-    public function showSigninForm()
+    public function showSigninForm(Request $request)
     {
+        if ($request->session()->has('user')) {
+            return redirect()->route('home.show');
+        }
+
         return view('auth/signin');
     }
 
@@ -100,7 +107,14 @@ class AuthController extends BaseController
     public function showSigninFirstTime(int $userId)
     {
         $this->authRepository->updateField($userId, 'email_verified_at', now());
-        return view('auth/signin');
+        return redirect()->route('home.show');
+    }
+
+
+    public function showSigninAfterNewEmailValidation(int $userId, string $userNewEmail)
+    {        
+        $this->authRepository->updateField($userId, 'email', $userNewEmail);
+        return redirect()->route('home.show');
     }
 
 
@@ -165,16 +179,15 @@ class AuthController extends BaseController
         DB::beginTransaction();
 
         try {
-            $this->authRepository->addUser($validatedData['username'], $validatedData['email'], $validatedData['password']);
-            $userAdded = $this->authRepository->getUser($validatedData['email']);
-            $this->sendEmailValidation($request, $userAdded["id"]);
+            $userAddedId = $this->authRepository->addUser($validatedData['username'], $validatedData['email'], $validatedData['password']);          
+            $this->sendEmailValidation($request, $userAddedId);
             DB::commit();
         } catch (Exception $exception) {
             DB::rollBack();
-            return redirect()->back()->withInput()->withErrors("Impossible de créer un compte.");
+            return redirect()->back()->withInput()->with('warning', "Impossible de créer un compte");
         }
 
-        return redirect()->route('signup.verify', ['userId' => $userAdded["id"]]);
+        return redirect()->route('verify.show', ['userId' => $userAddedId]);
     }
 
 
@@ -212,7 +225,7 @@ class AuthController extends BaseController
 
             $request->session()->put('user', $user);
         } catch (Exception $exception) {
-            return redirect()->back()->withInput()->withErrors("Impossible de vous authentifier.");
+            return redirect()->back()->withInput()->with("warning", "Impossible de vous authentifier");
         }
         return redirect()->route('dashboard.show', ['userId' => $request->session()->get('user')['id']]);
     }
@@ -272,10 +285,10 @@ class AuthController extends BaseController
                 }
             }
         } catch (Exception $exception) {
-            return redirect()->back()->withInput()->withErrors("Impossible de modifier vos informations.");
+            return redirect()->back()->withInput()->withErrors("Impossible de modifier vos informations");
         }
 
-        return redirect()->back()->with('message', "Mise à jour effectuée avec succès");
+        return redirect()->back()->with('success', "Information.s modifiée.s avec succès");
     }
 
 
@@ -301,32 +314,14 @@ class AuthController extends BaseController
         $validatedData = $request->validate($rules, $messages);
 
         try {
-            $user = $this->authRepository->getUser($userId);
-            // $userEmailVerfiedAtOld = $user['email_verified_at'];
-            Mail::to($validatedData['email'])->send(new ConfirmUpdateEmailMail($user['id']));
-            // strcmp($userEmailVerfiedAtOld, $this->authRepository->getUser($userId)['email_verified_at']
-            // dump(Carbon::parse($userEmailVerfiedAtOld)->lessThan(now()));
-            // if (Carbon::parse($userEmailVerfiedAtOld)->lessThan(Carbon::parse($this->authRepository->getUser($userId)['email_verified_at']))) {
-            //     $this->authRepository->updateField($user['email'], 'email', $validatedData['email']);
-            //     $request->session()->put('user.email', $validatedData['email']);
-            // }
+            Mail::to($validatedData['email'])->send(new ConfirmUpdateEmailMail($userId, $validatedData['email']));
         } catch (Exception $exception) {
-            return redirect()->back()->withInput()->withErrors("Impossible de modifier l'email.");
+            return redirect()->back()->withInput()->with("warning", "Impossible d'envoyer un mail d'authentification");
         }
 
-        return redirect()->back();
+        return redirect()->back()->with('success', "Mail d'authentification envoyé avec succès");
     }
 
-
-    public function confirmNewEmailUpdate(Request $request, int $userId)
-    {
-        $user = $this->authRepository->getUser($userId);
-        $userEmailVerfiedAtOld = $user['email_verified_at'];
-        if (Carbon::parse($userEmailVerfiedAtOld)->lessThan(Carbon::parse($this->authRepository->getUser($userId)['email_verified_at']))) {
-            // $this->authRepository->updateField($user['email'], 'email', $validatedData['email']);
-            // $request->session()->put('user.email', $validatedData['email']);
-        }
-    }
 
     /**
      * Update user password
@@ -362,7 +357,7 @@ class AuthController extends BaseController
             $this->authRepository->updateField($user['email'], 'password', $newPasswordHashed);
             $this->logout($request);
         } catch (Exception $exception) {
-            return redirect()->back()->withInput()->withErrors("Impossible de modifier le mot de passe.");
+            return redirect()->back()->withInput()->with("warning", "Impossible de modifier le mot de passe.");
         }
 
         return redirect()->back();
@@ -476,12 +471,12 @@ class AuthController extends BaseController
                 return redirect()->route('verify.show', ['userId' => $user["id"]]);
             }
 
-            Mail::to($user['email'])->send(new EditPasswordMail($user['id']));
+            Mail::to($validatedData['email'])->send(new EditPasswordMail($user['id']));
         } catch (Exception $exception) {
-            return redirect()->back()->withInput()->withErrors("Impossible de définir un nouveau mot de passe.");
+            return redirect()->back()->withInput()->with("warning", "Impossible de vous authentifier.");
         }
 
-        return redirect()->back()->with('message', "Authentification réussie, verifiez votre boîte mail");
+        return redirect()->back()->with('success', "Authentification réussie, verifiez votre boîte mail");
     }
 
 
@@ -514,9 +509,9 @@ class AuthController extends BaseController
             $newPasswordHashed = $this->authRepository->hashNewPassword($validatedData['password']);
             $this->authRepository->updateField($user['email'], 'password', $newPasswordHashed);
         } catch (Exception $exception) {
-            return redirect()->back()->withInput()->withErrors("Impossible de définir un nouveau mot de passe.");
+            return redirect()->back()->withInput()->with("warning", "Echec de la modification du mot de passe.");
         }
 
-        return redirect()->back()->with('message', "Mot de passe modifé avec succès");
+        return redirect()->back()->with('success', "Mot de passe modifé avec succès");
     }
 }

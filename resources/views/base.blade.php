@@ -26,10 +26,10 @@
                     </a>
 
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item c1 active-effect-dislabled" href="#">Plats</a></li>
-                        <li><a class="dropdown-item active-effect-dislabled" href="#">Entrées</a></li>
-                        <li><a class="dropdown-item active-effect-dislabled" href="#">Desserts</a></li>
-                        <li><a class="dropdown-item active-effect-dislabled" href="#">Boissons</a></li>
+                        <li><a class="dropdown-item active-effect-disabled" href="#">Plats</a></li>
+                        <li><a class="dropdown-item active-effect-disabled" href="#">Entrées</a></li>
+                        <li><a class="dropdown-item active-effect-disabled" href="#">Desserts</a></li>
+                        <li><a class="dropdown-item active-effect-disabled" href="#">Boissons</a></li>
                     </ul>
                 </div>
             </nav>
@@ -50,7 +50,7 @@
                             <form method="POST" action="{{ route('logout') }}" class="d-grid">
                                 @csrf
 
-                                <button type="submit" class="dropdown-item active-effect-dislabled text-danger">
+                                <button type="submit" class="dropdown-item active-effect-disabled text-danger">
                                     Déconnexion
                                 </button>
                             </form>
@@ -59,7 +59,7 @@
                 </div>
             </div>
             @else
-            <a href="/signin" class="btn btn-outline-primary shadow-none">Connexion</a>
+            <a href="/signin" class="btn btn-outline-primary hover-effect-disabled active-effect-disabled --primary shadow-none">Connexion</a>
             @endif
         </div>
     </div>

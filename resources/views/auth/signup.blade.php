@@ -11,14 +11,14 @@
         <form method="POST" action="{{ route('signup.post') }}" class="col-sm-4">
             @csrf
 
-            @if ($errors->any())
+            @if(session('warning'))
             <div class="alert alert-warning">
-                Votre compte n'a pas pu être créé &#9785;
+                {{ session('warning') }} &#9785;
             </div>
             @endif
 
             <div class="form-group my-2">
-                <input type="text" id="username" name="username" placeholder="pseudonyme" aria-describedby="username_feedback" class="py-3 form-control shadow-none @error('username') is-invalid @enderror" />
+                <input type="text" id="username" name="username" value="{{ old('username') }}" placeholder="pseudonyme" aria-describedby="username_feedback" class="py-3 form-control shadow-none @error('username') is-invalid @enderror" />
 
                 @error('username')
                 <div id="username_feedback" class="invalid-feedback">
@@ -28,7 +28,7 @@
             </div>
 
             <div class="form-group my-2">
-                <input type="email" id="email" name="email" placeholder="email" aria-describedby="email_feedback" class="py-3 form-control shadow-none @error('email') is-invalid @enderror" />
+                <input type="email" id="email" name="email" value="{{ old('email') }}" placeholder="email" aria-describedby="email_feedback" class="py-3 form-control shadow-none @error('email') is-invalid @enderror" />
 
                 @error('email')
                 <div id="email_feedback" class="invalid-feedback">

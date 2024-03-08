@@ -14,18 +14,20 @@ class ConfirmUpdateEmailMail extends Mailable
     use Queueable, SerializesModels;
 
     protected $userId;
+    protected $userNewEmail;
     /**
      * Create a new message instance.
      */
-    public function __construct(int $userId)
+    public function __construct(int $userId, string $userNewEmail)
     {
         $this->userId = $userId;
+        $this->userNewEmail = $userNewEmail;
     }
 
     /**
      * Get the message envelope.
      */
-public function envelope(): Envelope
+    public function envelope(): Envelope
     {
         return new Envelope(
             subject: "Validation d'adresse email",
@@ -39,7 +41,7 @@ public function envelope(): Envelope
     {
         return new Content(
             view: 'mails.update_email_validation_content',
-            with: ["emailValidationUserId" => $this->userId],
+            with: ["emailValidationUserId" => $this->userId, "emailValidationUserNewEmail" => $this->userNewEmail],
         );
     }
 
