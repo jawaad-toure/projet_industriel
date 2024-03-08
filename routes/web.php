@@ -40,7 +40,6 @@ Route::get('/signin/{userId}', [AuthController::class, 'showSigninFirstTime'])->
 
 
 Route::get('/signin/{userId}/{userNewEmail}', [AuthController::class, 'showSigninAfterNewEmailValidation'])->where('userId', '[0-9]+')->where('userNewEmail', '[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}')->name('newEmailAuth.show');
-// Route::get('/signin/{userId}/{userNewEmail}', [AuthController::class, 'showSigninAfterNewEmailValidation'])->where(['userId' => '[0-9]+', 'userNewEmail' => '[a-z]+'])->name('newEmailAuth.show');
 
 
 /** edit password routes */
