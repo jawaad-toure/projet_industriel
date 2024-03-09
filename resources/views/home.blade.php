@@ -15,7 +15,7 @@
             </div>
 
             <div class="fs-5">
-                Recettes de cuisines vous aide à partager vos recettes avec
+                The Cook Talk vous aide à partager vos pépites avec
                 des milliers de passionnés de cuisines
             </div>
 
@@ -41,9 +41,9 @@
             Trouvez une recette
         </div>
 
-        <div class="d-flex flex-column">
-            <div class="border border-1 px-2 py-1 rounded-pill">
-                <form method="" action="" class="d-flex align-items-center gap-4">
+        <div class="d-flex flex-column col-sm-4">
+            <div class="border border-primary border-1 px-2 py-1 rounded-pill">
+                <form method="" action="" class="col d-flex align-items-center justify-content-between gap-4">
                     @csrf
                     <input type="text" placeholder="Chercher une recette" class="form-control border border-0 shadow-none bg-transparent" />
 

@@ -21,7 +21,7 @@
 
             <nav class="my-2 my-md-0 mr-md-3">
                 <div class="dropdown-center">
-                    <a class="p-2 text-dark text-decoration-none dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" data-bs-offset="10,14" aria-expanded="false">
+                    <a class="p-2 text-dark text-decoration-none dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" data-bs-offset="10,15" aria-expanded="false">
                         Recettes
                     </a>
 
@@ -37,12 +37,12 @@
             @if (session()->has('user'))
             <div class="d-flex align-items-center justify-content-around">
                 <div class="dropdown">
-                    <a class="text-dark text-decoration-none dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" data-bs-offset="10,24" aria-expanded="false">
+                    <a class="text-dark text-decoration-none dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" data-bs-offset="10,25" aria-expanded="false">
                         <img src="{{ asset(session()->get('user')['avatar']) }}" width="30" height="30" class="object-fit-cover rounded-circle">
                     </a>
 
                     <ul class="dropdown-menu dropdown-menu-end">
-                        <li><a href="{{ route('dashboard.show', ['userId' => session()->get('user')['id']]) }}" class="dropdown-item active-effect-dislabled">Profil</a></li>
+                        <li><a href="{{ route('dashboard.show', ['userId' => session()->get('user')['id']]) }}" class="dropdown-item active-effect-disabled">Profil</a></li>
                         <li>
                             <hr class="dropdown-divider">
                         </li>
@@ -59,7 +59,7 @@
                 </div>
             </div>
             @else
-            <a href="/signin" class="btn btn-outline-primary hover-effect-disabled active-effect-disabled --primary shadow-none">Connexion</a>
+            <a href="/signin" class="btn btn-outline-primary hover-effect-disabled active-effect-disabled --primary shadow-none"><i class="bi bi-person-fill"></i> Connexion</a>
             @endif
         </div>
     </div>
