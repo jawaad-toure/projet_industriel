@@ -42,12 +42,12 @@
         </div>
 
         <div class="d-flex flex-column col-sm-4">
-            <div class="border border-primary border-1 px-2 py-1 rounded-pill">
+            <div class="border border-1 px-2 py-1 rounded-pill">
                 <form method="" action="" class="col d-flex align-items-center justify-content-between gap-4">
                     @csrf
-                    <input type="text" placeholder="Chercher une recette" class="form-control border border-0 shadow-none bg-transparent" />
+                    <input type="text" placeholder="Chercher une recette ..." class="form-control border border-0 shadow-none bg-transparent" />
 
-                    <button type="button" class="d-flex justify-content-center align-items-center bg-transparent btn">
+                    <button type="button" class="d-flex justify-content-center align-items-center bg-transparent btn border border-0">
                         <i class="bi bi-search"></i>
                     </button>
                 </form>
