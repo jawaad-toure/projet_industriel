@@ -10,15 +10,21 @@
         @csrf
         @method('PUT')
 
-        @if ($errors->any())
+        @if (session('warning'))
         <div class="alert alert-warning">
-            Echec de la mise à jour &#9785;
+            {{ session('warning') }} &#9785;
         </div>
         @endif
 
         @if(session('success'))
         <div class="alert alert-success">
             {{ session('success') }} &#128578;
+        </div>
+        @endif
+
+        @if(session('info'))
+        <div class="alert alert-info">
+            {{ session('info') }} &#128578;
         </div>
         @endif
 

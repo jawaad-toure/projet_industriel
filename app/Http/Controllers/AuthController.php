@@ -274,9 +274,20 @@ class AuthController extends BaseController
 
         $validatedData = $request->validate($rules, $messages);
 
+        $numberOfChanges = 0;
 
         try {
             $user = $this->authRepository->getUser($userId);
+
+            foreach ($validatedData as $key => $value) {
+                if (strcmp($user[$key], $value) != 0) {
+                    $numberOfChanges++;
+                }
+            }
+
+            if ($numberOfChanges == 0) {
+                return redirect()->back()->with('info', "Aucune modification apportée");
+            }
 
             foreach ($validatedData as $key => $value) {
                 if (isset($validatedData[$key]) && $value != $user[$key]) {
@@ -285,7 +296,7 @@ class AuthController extends BaseController
                 }
             }
         } catch (Exception $exception) {
-            return redirect()->back()->withInput()->withErrors("Impossible de modifier vos informations");
+            return redirect()->back()->withInput()->withErrors("warning", "Impossible de modifier vos informations");
         }
 
         return redirect()->back()->with('success', "Information.s modifiée.s avec succès");
