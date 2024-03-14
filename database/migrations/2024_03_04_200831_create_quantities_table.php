@@ -13,11 +13,12 @@ return new class extends Migration
     {
         Schema::create('quantites', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('unit', 5)->notNullable();
             $table->integer('quantity')->notNullable();
+            $table->unsignedBigInteger('id_unit');
             $table->unsignedBigInteger('id_ingredient');
             $table->unsignedBigInteger('id_recipe');
             
+            $table->foreign('id_unit')->references('id')->on('units');
             $table->foreign('id_ingredient')->references('id')->on('ingredients');
             $table->foreign('id_recipe')->references('id')->on('recipes');
         });
