@@ -22,11 +22,12 @@ class DatabaseSeeder extends Seeder
         // ]);
 
         for ($i = 1; $i <= 10; $i++) {
-            DB::table('users')->insert([
-                'username' => 'user'.$i,
-                'email' => 'user'.$i.'@example.com',
-                'password' => Hash::make('A1&zerty'),
-            ]);
+            DB::table('users')
+                ->insert([
+                    'username' => 'user' . $i,
+                    'email' => 'user' . $i . '@example.com',
+                    'password' => Hash::make('A1&zerty'),
+                ]);
         }
     }
 }
