@@ -16,10 +16,10 @@
         <div class="d-flex flex-column flex-md-row gap-5 mb-3">
             <div class="d-flex flex-column flex-sm-row gap-4">
                 <div class="d-flex row-gap-2 flex-column align-items-center">
-                    <img src="{{ asset($user['avatar']) }}" class="object-fit-cover img-thumbnail rounded mr-3" style="width: 200px; height: 200px" alt="avatar">
+                    <img src="{{ asset($user['avatar']) }}" class="object-fit-cover img-thumbnail rounded mr-3" width="200" height="200" alt="avatar">
 
                     <div class="d-flex justify-content-center gap-4">
-                        <!-- button edit avatar -->
+                        <!-- button upload avatar -->
                         <form method="POST" action="{{ route('avatar.update', ['userId' => session()->get('user')['id']]) }}" enctype="multipart/form-data" class="d-grid">
                             @csrf
                             @method('PUT')
@@ -28,10 +28,9 @@
                                 <i class="bi bi-upload"></i>
                             </button>
 
+                            <!-- modal -->
                             <div class="modal fade" id="updateAvatarModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-
                                 <div class="modal-dialog modal-dialog-centered">
-
                                     <div class="modal-content">
                                         <div class="modal-header border border-0">
                                             <button type="button" class="btn-close shadow-none" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -39,7 +38,7 @@
 
                                         <div class="modal-body">
                                             <div class="form-group my-2">
-                                                <input type="file" id="avatar" name="avatar" accept="image/*" aria-describedby="avatar_feedback" class="py-3 form-control shadow-none @error('avatar_feedback') is-invalid @enderror" />
+                                                <input type="file" id="avatar" name="avatar" accept="image/*" aria-describedby="avatar_feedback" class="form-control shadow-none @error('avatar_feedback') is-invalid @enderror" />
 
                                                 @error('avatar')
                                                 <div id="avatar_feedback" class="invalid-feedback">
@@ -50,11 +49,10 @@
                                         </div>
 
                                         <div class="modal-footer border border-0">
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                                            <button type="submit" class="btn btn-success">Valider</button>
+                                            <button type="button" class="fw-bold btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                                            <button type="submit" class="fw-bold btn btn-success">Valider</button>
                                         </div>
                                     </div>
-
                                 </div>
                             </div>
                         </form>
@@ -62,11 +60,11 @@
                         <!-- button delete avatar -->
                         <form method="POST" action="{{ route('avatar.delete', ['userId' => session()->get('user')['id']]) }}" class="d-grid">
                             @csrf
+                            @method('DELETE')
 
                             <button type="submit" class="btn btn-danger d-flex justify-content-center align-items-center">
                                 <i class="bi bi-trash"></i>
                             </button>
-
                         </form>
                     </div>
                 </div>
@@ -101,17 +99,17 @@
 
             <div class="d-flex flex-column gap-2">
                 <!-- button edit email -->
-                <a role="button" class="btn btn-secondary" href="{{ route('informations.show', ['userId' => session()->get('user')['id']]) }}">
+                <a role="button" class="fw-bold btn btn-secondary" href="{{ route('informations.show', ['userId' => session()->get('user')['id']]) }}">
                     Modifier mes informations
                 </a>
 
                 <!-- button edit email -->
-                <a type="button" class="btn btn-secondary" href="{{ route('email.show', ['userId' => session()->get('user')['id']]) }}">
+                <a type="button" class="fw-bold btn btn-secondary" href="{{ route('email.show', ['userId' => session()->get('user')['id']]) }}">
                     Modifier mon email
                 </a>
 
                 <!-- button update password -->
-                <a type="button" class="btn btn-secondary" href="{{ route('password.show', ['userId' => session()->get('user')['id']]) }}">
+                <a type="button" class="fw-bold btn btn-secondary" href="{{ route('password.show', ['userId' => session()->get('user')['id']]) }}">
                     Modifier mon mot de passe
                 </a>
 
@@ -119,7 +117,7 @@
                 <form method="POST" action="{{ route('logout') }}" class="d-grid">
                     @csrf
 
-                    <button type="submit" class="btn btn-outline-danger hover-effect-disabled --danger active-effect-disabled">
+                    <button type="submit" class="fw-bold btn btn-outline-danger hover-effect-disabled --danger active-effect-disabled">
                         Déconnexion
                     </button>
                 </form>
@@ -127,8 +125,9 @@
                 <!-- button delete account -->
                 <form method="POST" action="{{ route('user.delete', ['userId' => session()->get('user')['id']]) }}" class="d-grid">
                     @csrf
+                    @method('DELETE')
 
-                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteAccountModal">
+                    <button type="button" class="fw-bold btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteAccountModal">
                         Supprimer mon compte
                     </button>
 
@@ -147,8 +146,8 @@
                                 </div>
 
                                 <div class="modal-footer border border-0">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                                    <button type="submit" class="btn btn-danger">Supprimer</button>
+                                    <button type="button" class="fw-bold btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                                    <button type="submit" class="fw-bold btn btn-danger">Supprimer</button>
                                 </div>
                             </div>
 
@@ -165,35 +164,88 @@
             <div class="fw-bold fs-5 align-self-center">
                 Recettes
             </div>
-            <a class="fw-bold btn btn-outline-primary rounded-pill" href="#" role="button">Ajouter</a>
+            <a class="fw-bold btn btn-outline-primary rounded-pill" href="{{ route('createRecipeForm.show', ['userId' => session()->get('user')['id']]) }}" role="button">Ajouter</a>
         </div>
 
-        <div class="text-center">
-            Aucune recette ajoutée
+        <!-- notifications -->
+        @if (session('recipe_warning'))
+        <div class="alert alert-warning">
+            {{ session('recipe_warning') }} &#9785;
+        </div>
+        @endif
+
+        @if(session('recipe_success'))
+        <div class="alert alert-success">
+            {{ session('recipe_success') }} &#128578;
+        </div>
+        @endif
+
+        <div class="d-flex flex-column gap-2">
+            @foreach($userRecipes as $userRecipe)
+            <div class="d-flex flex-sm-row flex-column justify-content-between border rounded p-2 gap-2">
+                <div class="d-flex align-items-center gap-3">
+                    <div class="d-flex align-items-center">
+                        <a href="#" class="btn btn-sm btn-secondary border-end-0 rounded-end-0 btn-on disabled" tabindex="-1" role="button">
+                            ON
+                        </a>
+                        <a href="#" class="btn btn-sm btn-secondary border-start-0 rounded-start-0 btn-off disabled" tabindex="-1" role="button">
+                            OFF
+                        </a>
+                    </div>
+
+
+                    <div class="d-flex align-items-center fw-medium">
+                        {{ $userRecipe->recipename }}
+                    </div>
+                </div>
+
+                <div class="d-flex">
+
+
+                </div>
+
+                <div class="d-flex justify-content-center align-item-center gap-2">
+                    <a type="button" href="#" class="btn btn-secondary d-flex justify-content-center align-items-center">
+                        <i class="bi bi-eye"></i>
+                    </a>
+
+                    <a type="button" href="{{ route('updateRecipeForm.show', ['userId' => session()->get('user')['id'], 'recipeId' => $userRecipe->id]) }}" class="btn btn-success d-flex justify-content-center align-items-center">
+                        <i class="bi bi-pencil-square"></i>
+                    </a>
+
+                    <form method="POST" action="{{ route('recipe.delete', ['userId' => session()->get('user')['id'], 'recipeId' => $userRecipe->id]) }}">
+                        @csrf
+                        @method('DELETE')
+
+                        <button type="submit" class="btn btn-danger d-flex justify-content-center align-items-center">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+            @endforeach
         </div>
     </div>
 
     <!-- Favoris -->
     <div class="my-3">
-        <div class="d-flex justify-content-between border-bottom py-2 mb-3">
+        <div class="d-flex justify-content-between border-bottom py-3 mb-3">
             <div class="fw-bold fs-5 align-self-center">
                 Favoris
             </div>
-            <a class="fw-bold btn btn-outline-primary rounded-pill" href="#" role="button">Ajouter</a>
         </div>
 
         <div class="text-center">
-            Aucun favori ajouté
+            Aucun favoris
         </div>
     </div>
 
     <!-- Commentaires -->
     <div class="my-3">
-        <div class="d-flex justify-content-between border-bottom py-2 mb-3">
+        <div class="d-flex justify-content-between border-bottom py-3 mb-3">
             <div class="fw-bold fs-5 align-self-center">
                 Commentaires
             </div>
-            <a class="fw-bold btn btn-outline-primary rounded-pill" href="#" role="button">Ajouter</a>
         </div>
 
         <div class="text-center">

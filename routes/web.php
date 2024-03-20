@@ -2,6 +2,12 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\StepController;
+use App\Http\Controllers\ImageController;
+use App\Http\Controllers\RecipeController;
+use App\Http\Controllers\QuantityController;
+use App\Http\Controllers\IngredientController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -18,6 +24,7 @@ use App\Http\Controllers\AuthController;
 //     return view('welcome');
 // });
 
+/** ------------------------------------------------------------------------------------------------ */
 /** home route */
 Route::get('/', [AuthController::class, 'showHome'])
     ->name('home.show');
@@ -58,17 +65,17 @@ Route::get('/signin/{userId}/{userNewEmail}', [AuthController::class, 'showSigni
 
 /** ------------------------------------------------------------------------------------------------ */
 /** edit password routes */
-Route::get('/signin/forgotPassword', [AuthController::class, 'showForgotPasswordForm'])
+Route::get('/signin/forgot-password', [AuthController::class, 'showForgotPasswordForm'])
     ->name('forgotPassword.show');
 
-Route::post('/signin/forgotPassword', [AuthController::class, 'forgotPassword'])
+Route::post('/signin/forgot-password', [AuthController::class, 'forgotPassword'])
     ->name('forgotPassword.post');
 
-Route::get('/signin/forgotPassword/{userId}', [AuthController::class, 'showEditPasswordForm'])
+Route::get('/signin/forgot-password/{userId}', [AuthController::class, 'showEditPasswordForm'])
     ->where('userId', '[0-9]+')
     ->name('editPassword.show');
 
-Route::post('/signin/forgotPassword/{userId}', [AuthController::class, 'editPassword'])
+Route::post('/signin/forgot-password/{userId}', [AuthController::class, 'editPassword'])
     ->where('userId', '[0-9]+')
     ->name('editPassword.post');
 
@@ -96,7 +103,7 @@ Route::put('/users/{userId}/dashboard/avatar', [AuthController::class, 'updateAv
     ->where('userId', '[0-9]+')
     ->name('avatar.update');
 
-Route::post('/users/{userId}/dashboard/avatar', [AuthController::class, 'deleteAvatar'])
+Route::delete('/users/{userId}/dashboard/avatar', [AuthController::class, 'deleteAvatar'])
     ->where('userId', '[0-9]+')
     ->name('avatar.delete');
 
@@ -116,6 +123,85 @@ Route::put('/users/{userId}/dashboard/password', [AuthController::class, 'update
     ->where('userId', '[0-9]+')
     ->name('password.update');
 
-Route::post('/users/{userId}/delete', [AuthController::class, 'deleteUser'])
+Route::delete('/users/{userId}/delete', [AuthController::class, 'deleteUser'])
     ->where('userId', '[0-9]+')
     ->name('user.delete');
+
+/** ------------------------------------------------------------------------------------------------ */
+/** recipe routes */
+
+Route::get('/users/{userId}/dashboard/create-recipe', [RecipeController::class, 'showCreateRecipeForm'])
+    ->where('userId', '[0-9]+')
+    ->name('createRecipeForm.show');
+
+Route::post('/users/{userId}/dashboard/create-recipe', [RecipeController::class, 'insertRecipe'])
+    ->where('userId', '[0-9]+')
+    ->name('recipe.post');
+
+Route::get('/users/{userId}/dashboard/{recipeId}', [RecipeController::class, 'showUpdateRecipeForm'])
+    ->where('userId', '[0-9]+')
+    ->where('recipeId', '[0-9]+')
+    ->name('updateRecipeForm.show');
+
+Route::put('/users/{userId}/dashboard/{recipeId}', [RecipeController::class, 'updateRecipe'])
+    ->where('userId', '[0-9]+')
+    ->where('recipeId', '[0-9]+')
+    ->name('recipe.update');
+
+Route::delete('/users/{userId}/dashboard/{recipeId}', [RecipeController::class, 'deleteRecipe'])
+    ->where('userId', '[0-9]+')
+    ->where('recipeId', '[0-9]+')
+    ->name('recipe.delete');
+
+/** ------------------------------------------------------------------------------------------------ */
+/** quantities routes */
+Route::post('/users/{userId}/dashboard/{recipeId}/quantity', [QuantityController::class, 'insertQuantity'])
+    ->where('userId', '[0-9]+')
+    ->where('recipeId', '[0-9]+')
+    ->name('quantity.post');
+
+Route::put('/users/{userId}/dashboard/{recipeId}/quantity/{quantityId}', [QuantityController::class, 'updateQuantity'])
+    ->where('userId', '[0-9]+')
+    ->where('recipeId', '[0-9]+')
+    ->where('quantityId', '[0-9]+')
+    ->name('quantity.update');
+
+Route::delete('/users/{userId}/dashboard/{recipeId}/quantity/{quantityId}', [QuantityController::class, 'deleteQuantity'])
+    ->where('userId', '[0-9]+')
+    ->where('recipeId', '[0-9]+')
+    ->where('quantityId', '[0-9]+')
+    ->name('quantity.delete');
+
+/** ------------------------------------------------------------------------------------------------ */
+/** steps routes */
+
+Route::post('/users/{userId}/dashboard/{recipeId}/step', [StepController::class, 'insertStep'])
+    ->where('userId', '[0-9]+')
+    ->where('recipeId', '[0-9]+')
+    ->name('step.post');
+
+Route::put('/users/{userId}/dashboard/{recipeId}/step/{stepId}', [StepController::class, 'updateStep'])
+    ->where('userId', '[0-9]+')
+    ->where('recipeId', '[0-9]+')
+    ->where('stepId', '[0-9]+')
+    ->name('step.update');
+
+Route::delete('/users/{userId}/dashboard/{recipeId}/step/{stepId}', [StepController::class, 'deleteStep'])
+    ->where('userId', '[0-9]+')
+    ->where('recipeId', '[0-9]+')
+    ->where('stepId', '[0-9]+')
+    ->name('step.delete');
+
+/** ------------------------------------------------------------------------------------------------ */
+/** image routes */
+
+Route::post('/users/{userId}/dashboard/{recipeId}/image', [ImageController::class, 'insertImages'])
+    ->where('userId', '[0-9]+')
+    ->where('recipeId', '[0-9]+')
+    ->name('image.post');
+
+Route::delete('/users/{userId}/dashboard/{recipeId}/image/{imageId}', [ImageController::class, 'deleteImage'])
+    ->where('userId', '[0-9]+')
+    ->where('recipeId', '[0-9]+')
+    ->where('imageId', '[0-9]+')
+    ->name('image.delete');

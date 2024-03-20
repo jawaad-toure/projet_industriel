@@ -11,6 +11,7 @@ use App\Mail\ConfirmUpdateEmailMail;
 use App\Repositories\AuthRepository;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Mail;
+use App\Repositories\RecipeRepository;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -22,10 +23,12 @@ class AuthController extends BaseController
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
     protected $authRepository;
+    protected $recipeRepository;
 
-    public function __construct(AuthRepository $authRepository)
+    public function __construct(AuthRepository $authRepository, RecipeRepository $recipeRepository)
     {
         $this->authRepository = $authRepository;
+        $this->recipeRepository = $recipeRepository;
     }
 
     /** views preview function */
@@ -49,8 +52,9 @@ class AuthController extends BaseController
         }
 
         $user = $this->authRepository->getUser($userId);
+        $userRecipes = $this->recipeRepository->getUserRecipes($userId);
 
-        return view('users/user_dashboard', ['user' => $user]);
+        return view('users/user_dashboard', ['user' => $user, 'userRecipes' => $userRecipes]);
     }
 
 
@@ -72,7 +76,7 @@ class AuthController extends BaseController
 
         return view('users/user_dashboard_email');
     }
-    
+
 
     public function showUserDashboardPasswordForm(Request $request)
     {
@@ -89,7 +93,7 @@ class AuthController extends BaseController
         if ($request->session()->has('user')) {
             return redirect()->route('home.show');
         }
-        
+
         return view('auth/signup');
     }
 
@@ -112,7 +116,7 @@ class AuthController extends BaseController
 
 
     public function showSigninAfterNewEmailValidation(int $userId, string $userNewEmail)
-    {        
+    {
         $this->authRepository->updateField($userId, 'email', $userNewEmail);
         return redirect()->route('home.show');
     }
@@ -144,7 +148,7 @@ class AuthController extends BaseController
 
 
     /**
-     * Add user to DB
+     * Add user in DB
      * 
      * @param Request $request
      * 
@@ -179,12 +183,15 @@ class AuthController extends BaseController
         DB::beginTransaction();
 
         try {
-            $userAddedId = $this->authRepository->addUser($validatedData['username'], $validatedData['email'], $validatedData['password']);          
+            $userAddedId = $this->authRepository->addUser($validatedData['username'], $validatedData['email'], $validatedData['password']);
             $this->sendEmailValidation($request, $userAddedId);
             DB::commit();
         } catch (Exception $exception) {
             DB::rollBack();
-            return redirect()->back()->withInput()->with('warning', "Impossible de créer un compte");
+            return redirect()
+                ->back()
+                ->withInput()
+                ->with('warning', "Impossible de créer un compte");
         }
 
         return redirect()->route('verify.show', ['userId' => $userAddedId]);
@@ -227,7 +234,8 @@ class AuthController extends BaseController
         } catch (Exception $exception) {
             return redirect()->back()->withInput()->with("warning", "Impossible de vous authentifier");
         }
-        return redirect()->route('dashboard.show', ['userId' => $request->session()->get('user')['id']]);
+        return redirect()
+            ->route('dashboard.show', ['userId' => $request->session()->get('user')['id']]);
     }
 
 
@@ -296,7 +304,10 @@ class AuthController extends BaseController
                 }
             }
         } catch (Exception $exception) {
-            return redirect()->back()->withInput()->withErrors("warning", "Impossible de modifier vos informations");
+            return redirect()
+                ->back()
+                ->withInput()
+                ->withErrors("warning", "Impossible de modifier vos informations");
         }
 
         return redirect()->back()->with('success', "Information.s modifiée.s avec succès");
@@ -396,20 +407,19 @@ class AuthController extends BaseController
 
         try {
             $user = $this->authRepository->getUser($userId);
-            $file = $request->file('avatar');
-            $extension = $file->getClientOriginalExtension();
-            $filename = time() . '.' . $extension;
-            $path = 'uploads/avatars/';
-            $file->move($path, $filename);
+            $extension = $validatedData['avatar']->getClientOriginalExtension();
+            $avatarName = time() . '.' . $extension;
+            $folder = 'uploads/avatars/';
+            $validatedData['avatar']->move($folder, $avatarName);
 
             if (File::exists($user['avatar']) && strcmp($user['avatar'], "uploads/avatars/default_avatar.png") != 0) {
                 File::delete($user['avatar']);
             }
 
-            $value = $path . $filename;
+            $avatarPath = $folder . $avatarName;
 
-            $this->authRepository->updateField($user['email'], 'avatar', $value);
-            $request->session()->put('user.avatar', $value);
+            $this->authRepository->updateField($user['email'], 'avatar', $avatarPath);
+            $request->session()->put('user.avatar', $avatarPath);
         } catch (Exception $exception) {
             return redirect()->back()->withInput()->withErrors("Impossible de modifier l'avatar.");
         }
@@ -429,9 +439,11 @@ class AuthController extends BaseController
     {
         ['email' => $userEmail, 'avatar' => $userAvatar] = $this->authRepository->getUser($userId);
         $this->authRepository->updateField($userEmail, 'avatar', null);
+        
         if (strcmp($userAvatar, "uploads/avatars/default_avatar.png") != 0) {
             File::delete($userAvatar);
         }
+
         $request->session()->put('user.avatar', $this->authRepository->getUser($userEmail)['avatar']);
         return redirect()->back();
     }
@@ -448,6 +460,7 @@ class AuthController extends BaseController
         if (!$request->session()->has('user')) {
             return redirect()->route('signin.show');
         }
+        
         $request->session()->forget('user');
         $this->authRepository->deleteUser($userId);
         return redirect()->route('signin.show');

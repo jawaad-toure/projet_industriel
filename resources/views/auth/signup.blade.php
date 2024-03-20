@@ -17,7 +17,7 @@
             </div>
             @endif
 
-            <div class="form-group my-2">
+            <div class="my-2">
                 <input type="text" id="username" name="username" value="{{ old('username') }}" placeholder="pseudonyme" aria-describedby="username_feedback" class="py-3 form-control shadow-none @error('username') is-invalid @enderror" />
 
                 @error('username')
@@ -27,7 +27,7 @@
                 @enderror
             </div>
 
-            <div class="form-group my-2">
+            <div class="my-2">
                 <input type="email" id="email" name="email" value="{{ old('email') }}" placeholder="email" aria-describedby="email_feedback" class="py-3 form-control shadow-none @error('email') is-invalid @enderror" />
 
                 @error('email')
@@ -37,7 +37,7 @@
                 @enderror
             </div>
 
-            <div class="form-group my-2">
+            <div class="my-2">
                 <input type="password" id="password" name="password" placeholder="mot de passe" aria-describedby="password_feedback" class="py-3 form-control shadow-none @error('password') is-invalid @enderror" />
 
                 @error('password')
@@ -47,7 +47,7 @@
                 @enderror
             </div>
 
-            <div class="form-group my-2">
+            <div class="my-2">
                 <input type="password" id="password_confirmed" name="password_confirmed" placeholder="confirmer mot de passe" aria-describedby="password_confirmed_feedback" class="py-3 form-control shadow-none @error('password_confirmed') is-invalid @enderror" />
 
                 @error('password_confirmed')
@@ -58,7 +58,7 @@
             </div>
 
             <div class="d-grid">
-                <button type="submit" class="btn btn-primary shadow-none btn-lg btn-block my-2">Créer mon compte</button>
+                <button type="submit" class="fw-bold btn btn-primary btn-block my-2">Créer mon compte</button>
             </div>
 
         </form>

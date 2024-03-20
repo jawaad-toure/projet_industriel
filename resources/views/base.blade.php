@@ -5,10 +5,15 @@
     <title>The Cook Talk</title>
     <!-- bootstrap cdn -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    
     <!-- bootstrap icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    
     <!-- personal css (public/css/base.css) -->
     <link rel="stylesheet" href="{{ asset('css/base.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/dashboard_switch_button.css') }}">
+    
+    <!-- jquery -->
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
 
 </head>
@@ -17,7 +22,7 @@
     <!-- header -->
     <div class="container sticky-top bg-white border-bottom p-3 px-md-4 mb-3">
         <div class="d-flex align-items-center justify-content-between">
-            <a href="/" class="fs-5 fw-bold my-0 link-dark link-underline link-underline-opacity-0">The Cook Talk</a>
+            <a href="/" class="fs-5 fw-bold my-0 link-dark link-underline link-underline-opacity-0">TheCookTalk</a>
 
             <nav class="my-2 my-md-0 mr-md-3">
                 <div class="dropdown-center">
@@ -65,19 +70,23 @@
     </div>
 
     <!-- content -->
-    <div class="container vh-100">
+    <div class="container">
         @yield('content')
     </div>
 
     <!-- footer -->
     <div class="container d-flex justify-content-center align-items-center border-top bg-white mt-3 py-4">
-        <a href="#" class="fs-5 fw-bold my-0 link-dark link-underline link-underline-opacity-0">© 2024 The Cook Talk</a>
+        <a href="#" class="fs-5 fw-bold my-0 link-dark link-underline link-underline-opacity-0">© 2024 TheCookTalk</a>
     </div>
 
     <!-- bootstrap javascript -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    
     <!-- personal js (public/css/base.css) -->
     <script src="{{ asset('js/base.js') }}"></script>
+
+    <!-- js for recipe form -->
+    <script src="{{ asset('js/recipe_form.js') }}"></script>
 </body>
 
 </html>

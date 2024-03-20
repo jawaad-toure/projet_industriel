@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('quantites', function (Blueprint $table) {
+        Schema::create('quantities', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('quantity')->notNullable();
+            $table->decimal('quantity')->notNullable();
             $table->unsignedBigInteger('id_unit');
             $table->unsignedBigInteger('id_ingredient');
             $table->unsignedBigInteger('id_recipe');
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('quantites');
+        Schema::dropIfExists('quantities');
     }
 };

@@ -32,7 +32,7 @@
         <div class="row row-cols-md-2 gx-2 mb-3">
 
             <!-- firstname -->
-            <div class="form-group my-2">
+            <div class="my-2">
                 <label for="firstname" class="form-label fw-bold">
                     Prénom
                 </label>
@@ -47,7 +47,7 @@
             </div>
 
             <!-- lastname -->
-            <div class="form-group my-2">
+            <div class="my-2">
                 <label for="lastname" class="form-label fw-bold">
                     Nom
                 </label>
@@ -66,7 +66,7 @@
         <div class="row row-cols-md-2 gx-2 mb-3">
 
             <!-- birthdate -->
-            <div class="form-group my-2">
+            <div class="my-2">
                 <label for="birthdate" class="form-label fw-bold">
                     Date de naissance
                 </label>
@@ -81,7 +81,7 @@
             </div>
 
             <!-- username -->
-            <div class="form-group my-2">
+            <div class="my-2">
                 <label for="username" class="form-label fw-bold">
                     Pseudonyme
                 </label>
@@ -132,10 +132,13 @@
 
         <!-- buttons update and back -->
         <div class="d-flex justify-content-center gap-2">
-            <button type="submit" class="btn btn-success btn-lg shadow-none">Valider</button>
-            <a class="btn btn-secondary btn-lg" href="{{ route('dashboard.show', ['userId' => session()->get('user')['id']]) }}" role="button">
+            <a class="fw-bold btn btn-secondary" href="{{ route('dashboard.show', ['userId' => session()->get('user')['id']]) }}" role="button">
                 Retour
             </a>
+            
+            <button type="submit" class="fw-bold btn btn-success">
+                Valider
+            </button>
         </div>
 
     </form>

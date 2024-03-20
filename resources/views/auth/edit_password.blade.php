@@ -44,7 +44,7 @@
             </div>
 
             <div class="d-grid">
-                <button type="submit" class="btn btn-success btn-lg shadow-none my-2">Valider</button>
+                <button type="submit" class="fw-bold btn btn-success my-2">Valider</button>
             </div>
         </form>
 

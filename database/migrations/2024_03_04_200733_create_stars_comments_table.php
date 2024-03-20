@@ -15,9 +15,9 @@ return new class extends Migration
             $table->bigIncrements('id');
             $table->text('comment')->nullable();
             $table->enum('stars', [1, 2, 3, 4, 5])->notNullable();
-            
             $table->unsignedBigInteger('id_recipe');
             $table->unsignedBigInteger('id_user');
+
             $table->foreign('id_recipe')->references('id')->on('recipes');
             $table->foreign('id_user')->references('id')->on('users');
            

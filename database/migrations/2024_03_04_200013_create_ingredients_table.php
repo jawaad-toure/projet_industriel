@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('ingredients', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('ingredientname', 50)->notNullable();
-            $table->Integer('calorie')->notNullable();
+            $table->string('ingredientname', 255)->notNullable();
+            $table->decimal('calorie')->unsigned();
         });
     }
 

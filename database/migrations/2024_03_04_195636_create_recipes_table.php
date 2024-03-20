@@ -13,11 +13,12 @@ return new class extends Migration
     {
         Schema::create('recipes', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('recipename', 50)->unique()->notNullable();
+            $table->string('recipename', 255)->unique()->notNullable();
             $table->time('time')->notNullable();
-            $table->enum('cookingtype', ['four', 'barbecue', 'poele', 'vapeur', 'sans cuisson']);
-            $table->enum('category', ['entree', 'plat', 'dessert', 'boisson']);
-            $table->enum('difficulty', ['difficile', 'facile', 'moyen']);
+            $table->enum('cookingtype', ['Four', 'Barbecue', 'Poele', 'Vapeur', 'Sans cuisson']);
+            $table->enum('category', ['Entrée', 'Plat', 'Dessert', 'Boisson']);
+            $table->enum('difficulty', ['Difficile', 'Facile', 'Moyen']);
+            $table->enum('visibility', ['Private', 'Public']);
             $table->unsignedBigInteger('id_user');
 
             $table->foreign('id_user')->references('id')->on('users');

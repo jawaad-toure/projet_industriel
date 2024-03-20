@@ -19,7 +19,7 @@
 
     <form method="POST" action="{{ route('verify.post', ['userId' => $userId]) }}">
         @csrf
-        <button type="submit" class="btn btn-primary">
+        <button type="submit" class="fw-bold btn btn-primary">
             Renvoyer le mail
         </button>
     </form>

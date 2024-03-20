@@ -34,7 +34,7 @@
             </div>
 
             <div class="d-grid">
-                <button type="submit" class="btn btn-success btn-lg shadow-none my-2">Envoyer</button>
+                <button type="submit" class="fw-bold btn btn-success my-2">Envoyer</button>
             </div>
         </form>
 

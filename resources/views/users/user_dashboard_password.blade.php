@@ -56,8 +56,8 @@
             </div>
 
             <div class="d-flex justify-content-center gap-2">
-                <button type="submit" class="btn btn-success btn-lg shadow-none">Valider</button>
-                <a class="btn btn-secondary btn-lg" href="{{ route('dashboard.show', ['userId' => session()->get('user')['id']]) }}" role="button">
+                <button type="submit" class="fw-bold btn btn-success">Valider</button>
+                <a class="fw-bold btn btn-secondary" href="{{ route('dashboard.show', ['userId' => session()->get('user')['id']]) }}" role="button">
                     Retour
                 </a>
             </div>

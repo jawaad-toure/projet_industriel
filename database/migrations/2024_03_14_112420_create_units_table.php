@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('units', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('unit')->notNullable();
+            $table->string('unitname', 255)->notNullable();
         });
     }
 
