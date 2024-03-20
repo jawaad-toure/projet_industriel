@@ -181,6 +181,7 @@ class RecipeController extends Controller
             }
 
             DB::commit();
+
         } catch (Exception $exception) {
             DB::rollBack();
             return redirect()->back()->withInput()->with('recipe_warning', "Impossible de modifier la recette");
@@ -189,6 +190,43 @@ class RecipeController extends Controller
         return redirect()->back()->with('recipe_success', "Recette modifiée avec succès");
     }
 
+
+    /**
+     * 
+     */
+    public function recipeSetOnPublic(Request $request, int $userId, int $recipeId)
+    {
+        DB::beginTransaction();
+        try {
+            $this->recipeRepository->updateField($recipeId, 'visibility', true);
+            DB::commit();
+
+        } catch (Exception $exception) {
+            DB::rollBack();
+            return redirect()->back()->withInput()->with('recipe_warning', "Impossible de rendre public la recette");
+        }
+
+        return redirect()->back()->with('recipe_success', "Votre recette est publique");
+    }
+
+
+    /**
+     * 
+     */
+    public function recipeSetOnPrivate(Request $request, int $userId, int $recipeId)
+    {
+        DB::beginTransaction();
+        try {
+            $this->recipeRepository->updateField($recipeId, 'visibility', false);
+            DB::commit();
+
+        } catch (Exception $exception) {
+            DB::rollBack();
+            return redirect()->back()->withInput()->with('recipe_warning', "Impossible de rendre public la recette");
+        }
+
+        return redirect()->back()->with('recipe_success', "Votre récette est privée");
+    }
 
 
     /**

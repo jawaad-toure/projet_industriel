@@ -26,6 +26,11 @@ final class ImageRepository
             ->get();
     }
 
+    public function isRecipeImagesMoreThanZero(int $recipeId)
+    {
+        return $this->getRecipeImages($recipeId)->count() > 0;
+    }
+
     public function deleteImage(int $imageId)
     {
         Image::where('id', $imageId)

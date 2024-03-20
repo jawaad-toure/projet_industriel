@@ -14,7 +14,8 @@ class RecipeData
                 "cookingtype" => "Four", 
                 "category" => "Entrée", 
                 "difficulty" => "Difficile",
-                "visibility" => "Private",
+                "visibility" => false,
+                "completed" => false,
                 "id_user" => 1,
             ],
             [
@@ -23,7 +24,8 @@ class RecipeData
                 "cookingtype" => "Poele", 
                 "category" => "Boisson",
                 "difficulty" => "Facile",
-                "visibility" => "Private",
+                "visibility" => false,
+                "completed" => false,
                 "id_user" => 1,
             ],
             [
@@ -32,7 +34,8 @@ class RecipeData
                 "cookingtype" => "Vapeur", 
                 "category" => "Plat",
                 "difficulty" => "Moyen",
-                "visibility" => "Private",
+                "visibility" => false,
+                "completed" => false,
                 "id_user" => 1,
             ],
             [
@@ -41,7 +44,8 @@ class RecipeData
                 "cookingtype" => "Barbecue", 
                 "category" => "Dessert",
                 "difficulty" => "Difficile",
-                "visibility" => "Private",
+                "visibility" => false,
+                "completed" => false,
                 "id_user" => 1,
             ],
             [
@@ -50,7 +54,8 @@ class RecipeData
                 "cookingtype" => "Four", 
                 "category" => "Boisson",
                 "difficulty" => "Facile",
-                "visibility" => "Private",
+                "visibility" => false,
+                "completed" => false,
                 "id_user" => 1,
             ],
             [
@@ -59,7 +64,8 @@ class RecipeData
                 "cookingtype" => "Sans cuisson", 
                 "category" => "Plat",
                 "difficulty" => "Moyen",
-                "visibility" => "Private",
+                "visibility" => false,
+                "completed" => false,
                 "id_user" => 1,
             ],
             [
@@ -68,7 +74,8 @@ class RecipeData
                 "cookingtype" => "Vapeur", 
                 "category" => "Entrée",
                 "difficulty" => "Difficile",
-                "visibility" => "Private",
+                "visibility" => false,
+                "completed" => false,
                 "id_user" => 1,
             ],
             [
@@ -77,7 +84,8 @@ class RecipeData
                 "cookingtype" => "Poele", 
                 "category" => "Dessert",
                 "difficulty" => "Facile",
-                "visibility" => "Private",
+                "visibility" => false,
+                "completed" => false,
                 "id_user" => 1,
             ],
             [
@@ -86,7 +94,8 @@ class RecipeData
                 "cookingtype" => "Four", 
                 "category" => "Plat",
                 "difficulty" => "Moyen",
-                "visibility" => "Private",
+                "visibility" => false,
+                "completed" => false,
                 "id_user" => 1,
             ],
             [
@@ -95,7 +104,8 @@ class RecipeData
                 "cookingtype" => "Sans cuisson", 
                 "category" => "Entrée",
                 "difficulty" => "Difficile",
-                "visibility" => "Private",
+                "visibility" => false,
+                "completed" => false,
                 "id_user" => 1,
             ],
         ];

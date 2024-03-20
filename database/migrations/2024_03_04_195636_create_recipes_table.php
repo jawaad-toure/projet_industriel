@@ -18,7 +18,8 @@ return new class extends Migration
             $table->enum('cookingtype', ['Four', 'Barbecue', 'Poele', 'Vapeur', 'Sans cuisson']);
             $table->enum('category', ['Entrée', 'Plat', 'Dessert', 'Boisson']);
             $table->enum('difficulty', ['Difficile', 'Facile', 'Moyen']);
-            $table->enum('visibility', ['Private', 'Public']);
+            $table->boolean('visibility');
+            $table->boolean('completed');
             $table->unsignedBigInteger('id_user');
 
             $table->foreign('id_user')->references('id')->on('users');

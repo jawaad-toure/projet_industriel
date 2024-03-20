@@ -5,8 +5,11 @@ namespace App\Http\Controllers;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use App\Repositories\ImageRepository;
+use App\Repositories\StepRepository;
 use Illuminate\Support\Facades\File;
+use App\Repositories\ImageRepository;
+use App\Repositories\RecipeRepository;
+use App\Repositories\QuantityRepository;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
@@ -16,10 +19,16 @@ class ImageController extends Controller
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
     protected $imageRepository;
+    protected $recipeRepository;
+    protected $quantityRepository;
+    protected $stepRepository;
 
-    public function __construct(ImageRepository $imageRepository)
+    public function __construct(ImageRepository $imageRepository, RecipeRepository $recipeRepository, QuantityRepository $quantityRepository, StepRepository $stepRepository)
     {
         $this->imageRepository = $imageRepository;
+        $this->recipeRepository = $recipeRepository;
+        $this->quantityRepository = $quantityRepository;
+        $this->stepRepository = $stepRepository;
     }
 
     /** controllers functions */
@@ -54,7 +63,11 @@ class ImageController extends Controller
                     $image->move($folder, $imageName);
                     $this->imageRepository->addImage($imagePath, $recipeId);
                 }
-            }
+            }       
+
+            if ($this->quantityRepository->isRecipeQuantitiesMoreThanZero($recipeId) && $this->stepRepository->isRecipeStepsMoreThanZero($recipeId))
+                $this->recipeRepository->updateField($recipeId, 'completed', true);
+
         } catch (Exception $exception) {
             return redirect()->back()->withInput()->with("image_warning", "Impossible d'ajouter une image");
         }
@@ -75,7 +88,14 @@ class ImageController extends Controller
             if (File::exists(public_path($imagePath))) {
                 File::delete(public_path($imagePath));
             }
+
+            if (!$this->imageRepository->isRecipeImagesMoreThanZero($recipeId)) {
+                $this->recipeRepository->updateField($recipeId, 'visibility', false);
+                $this->recipeRepository->updateField($recipeId, 'completed', false);
+            }
+            
         } catch (Exception $exception) {
+            
             return redirect()->back()->withInput()->with("image_warning", "Impossible de supprimer l'image");
         }
 

@@ -14,7 +14,8 @@ final class RecipeRepository
             "cookingtype" => $cookingtype,
             "category" => $category,
             "difficulty" => $difficulty,
-            "visibility" => "Private",
+            "visibility" => false,
+            "completed" => false,
             "id_user" => $userId,
         ]);
     }
@@ -39,16 +40,10 @@ final class RecipeRepository
             ->get();
     }
 
-    public function updateField(int $recipeId, string $field, string $value)
+    public function updateField(int $recipeId, string $field, string|int|bool $value)
     {
         Recipe::where('id', $recipeId)
             ->update([$field => $value]);
-    }
-
-    public function updateVisibility(int $recipeId, string $visibility)
-    {
-        Recipe::where('id', $recipeId)
-            ->update(['visibility' => $visibility]);
     }
 
     public function deleteRecipe(int $recipeId)

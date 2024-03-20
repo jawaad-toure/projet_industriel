@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use Exception;
 use Illuminate\Http\Request;
+use App\Repositories\StepRepository;
 use App\Repositories\UnitRepository;
+use App\Repositories\ImageRepository;
+use App\Repositories\RecipeRepository;
 use App\Repositories\QuantityRepository;
 use App\Repositories\IngredientRepository;
 use Illuminate\Foundation\Bus\DispatchesJobs;
@@ -18,13 +21,18 @@ class QuantityController extends Controller
     protected $quantityRepository;
     protected $ingredientRepository;
     protected $unitRepository;
-    
+    protected $imageRepository;
+    protected $recipeRepository;
+    protected $stepRepository;
 
-    public function __construct(QuantityRepository $quantityRepository, IngredientRepository $ingredientRepository, UnitRepository $unitRepository)
+    public function __construct(QuantityRepository $quantityRepository, IngredientRepository $ingredientRepository, UnitRepository $unitRepository, ImageRepository $imageRepository, RecipeRepository $recipeRepository, StepRepository $stepRepository)
     {
         $this->quantityRepository = $quantityRepository;
         $this->ingredientRepository = $ingredientRepository;
         $this->unitRepository = $unitRepository;
+        $this->imageRepository = $imageRepository;
+        $this->recipeRepository = $recipeRepository;
+        $this->stepRepository = $stepRepository;
     }
 
     /** controllers functions */
@@ -59,10 +67,15 @@ class QuantityController extends Controller
             $unitId = $this->unitRepository->getUnitId($validatedData['unitname']);
             $ingredientId = $this->ingredientRepository->getIngredientId($validatedData['ingredientname']);
 
-            $this->quantityRepository->addQuantity($validatedData['quantity'], $unitId, $ingredientId, $recipeId);
+            $this->quantityRepository->addQuantity($validatedData['quantity'], $unitId, $ingredientId, $recipeId);       
+
+            if ($this->imageRepository->isRecipeImagesMoreThanZero($recipeId) && $this->stepRepository->isRecipeStepsMoreThanZero($recipeId))
+                $this->recipeRepository->updateField($recipeId, 'completed', true);
+
         } catch (Exception $exception) {
             return redirect()->back()->withInput()->with('quantity_warning', "Impossible d'ajouter l'ingrédient");
         }
+
 
         return redirect()->back()->with('quantity_success', "Ingrdient ajouté avec succès");
     }
@@ -119,7 +132,13 @@ class QuantityController extends Controller
     public function deleteQuantity(Request $request, int $userId, int $recipeId, int $quantityId)
     {
         try {
-           $this->quantityRepository->deleteQuantity($quantityId, $recipeId); 
+           $this->quantityRepository->deleteQuantity($quantityId, $recipeId);
+
+            if (!$this->quantityRepository->isRecipeQuantitiesMoreThanZero($recipeId)) {
+                $this->recipeRepository->updateField($recipeId, 'completed', false);
+                $this->recipeRepository->updateField($recipeId, 'visibility', false);
+            }
+
         } catch (Exception $exception) {
             return redirect()->back()->withInput()->with("quantity_warning", "Impossible de supprimer l'ingrédient");
         }

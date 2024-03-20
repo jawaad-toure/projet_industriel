@@ -185,12 +185,23 @@
             <div class="d-flex flex-sm-row flex-column justify-content-between border rounded p-2 gap-2">
                 <div class="d-flex align-items-center gap-3">
                     <div class="d-flex align-items-center">
-                        <a href="#" class="btn btn-sm btn-secondary border-end-0 rounded-end-0 btn-on disabled" tabindex="-1" role="button">
-                            ON
-                        </a>
-                        <a href="#" class="btn btn-sm btn-secondary border-start-0 rounded-start-0 btn-off disabled" tabindex="-1" role="button">
-                            OFF
-                        </a>
+                        <form method="POST" action="{{ route('recipeSetOnPublic.update', ['userId' => session()->get('user')['id'], 'recipeId' => $userRecipe->id]) }}">
+                            @csrf
+                            @method('PUT')
+
+                            <button type="submit" class="btn btn-sm btn-secondary border-end-0 rounded-end-0 btn-on @if ($userRecipe->visibility === 1) is-public @endif" @if ($userRecipe->completed === 0) disabled @endif>
+                                ON
+                            </button>
+                        </form>
+
+                        <form method="POST" action="{{ route('recipeSetOnPrivate.update', ['userId' => session()->get('user')['id'], 'recipeId' => $userRecipe->id]) }}">
+                            @csrf
+                            @method('PUT')
+
+                            <button type="submit" class="btn btn-sm btn-secondary border-start-0 rounded-start-0 btn-off @if ($userRecipe->visibility === 0) is-private @endif" @if ($userRecipe->completed === 0) disabled @endif>
+                                OFF
+                            </button>
+                        </form>
                     </div>
 
 

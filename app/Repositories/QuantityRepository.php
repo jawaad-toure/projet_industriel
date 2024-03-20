@@ -62,6 +62,11 @@ final class QuantityRepository
                 'ingredients.ingredientname as ingredientname',
                 'units.unitname as unitname',
             ]);
+    }  
+
+    public function isRecipeQuantitiesMoreThanZero(int $recipeId)
+    {
+        return Quantity::where('id_recipe', $recipeId)->get()->count() > 0;
     }
 
     public function deleteQuantity(int $quantityId, int $recipeId)

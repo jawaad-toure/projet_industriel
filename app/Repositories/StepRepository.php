@@ -20,6 +20,11 @@ final class StepRepository
             ->get();
     }
 
+    public function isRecipeStepsMoreThanZero(int $recipeId)
+    {
+        return $this->getRecipeSteps($recipeId)->count() > 0;
+    }
+
     public function getRecipeStep(int $stepId, int $recipeId)
     {
         return Step::where('id', $stepId)

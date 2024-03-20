@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Repositories\ImageRepository;
+use App\Repositories\QuantityRepository;
+use App\Repositories\RecipeRepository;
 use Exception;
 use Illuminate\Http\Request;
 use App\Repositories\StepRepository;
@@ -14,10 +17,16 @@ class StepController extends Controller
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
     
     protected $stepRepository;
+    protected $quantityRepository;
+    protected $imageRepository;
+    protected $recipeRepository;
 
-    public function __construct(StepRepository $stepRepository)
+    public function __construct(StepRepository $stepRepository, RecipeRepository $recipeRepository, ImageRepository $imageRepository, QuantityRepository $quantityRepository)
     {
         $this->stepRepository = $stepRepository;
+        $this->imageRepository = $imageRepository;
+        $this->quantityRepository = $quantityRepository;
+        $this->recipeRepository = $recipeRepository;
     }
 
     /** views preview function */
@@ -40,6 +49,9 @@ class StepController extends Controller
         try {
             
             $this->stepRepository->addStep($validatedData['description_to_add'], $recipeId);
+
+            if ($this->imageRepository->isRecipeImagesMoreThanZero($recipeId) && $this->quantityRepository->isRecipeQuantitiesMoreThanZero($recipeId))
+                $this->recipeRepository->updateField($recipeId, 'completed', true);
 
         } catch (Exception $exception) {
             return redirect()->back()->withInput()->with("step_warning", "Impossible d'ajouter une étape");
@@ -85,6 +97,12 @@ class StepController extends Controller
     {
         try {
             $this->stepRepository->deleteStep($stepId, $recipeId);
+
+            if (!$this->stepRepository->isRecipeStepsMoreThanZero($recipeId)) {
+                $this->recipeRepository->updateField($recipeId, 'visibility', false);
+                $this->recipeRepository->updateField($recipeId, 'completed', false);
+            }
+            
         } catch (Exception $exception) {
             return redirect()->back()->withInput()->with("step_warning", "Impossible de supprimer l'étape");
         }

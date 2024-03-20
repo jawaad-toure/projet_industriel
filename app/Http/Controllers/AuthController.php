@@ -54,7 +54,10 @@ class AuthController extends BaseController
         $user = $this->authRepository->getUser($userId);
         $userRecipes = $this->recipeRepository->getUserRecipes($userId);
 
-        return view('users/user_dashboard', ['user' => $user, 'userRecipes' => $userRecipes]);
+        return view('users/user_dashboard', [
+            'user' => $user, 
+            'userRecipes' => $userRecipes
+        ]);
     }
 
 

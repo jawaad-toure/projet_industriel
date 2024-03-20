@@ -148,6 +148,16 @@ Route::put('/users/{userId}/dashboard/{recipeId}', [RecipeController::class, 'up
     ->where('recipeId', '[0-9]+')
     ->name('recipe.update');
 
+Route::put('/users/{userId}/dashboard/{recipeId}/public', [RecipeController::class, 'recipeSetOnPublic'])
+    ->where('userId', '[0-9]+')
+    ->where('recipeId', '[0-9]+')
+    ->name('recipeSetOnPublic.update');
+
+Route::put('/users/{userId}/dashboard/{recipeId}/private', [RecipeController::class, 'recipeSetOnPrivate'])
+    ->where('userId', '[0-9]+')
+    ->where('recipeId', '[0-9]+')
+    ->name('recipeSetOnPrivate.update');
+
 Route::delete('/users/{userId}/dashboard/{recipeId}', [RecipeController::class, 'deleteRecipe'])
     ->where('userId', '[0-9]+')
     ->where('recipeId', '[0-9]+')
