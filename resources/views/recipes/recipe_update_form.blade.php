@@ -72,7 +72,7 @@
                 <!-- difficulty -->
                 <div class="">
                     <select name="difficulty" aria-describedby="difficulty_feedback" class="form-select form-control shadow-none @error('difficulty') is-invalid @enderror" @if(session('recipe_submitted')) disabled @endif>
-                        <option value="">Sélectionnez un niveau</option>
+                        <option value="">Sélectionnez la difficulté</option>
                         <option value="Facile" @if ( $recipe->difficulty === 'Facile' ) selected @endif>Facile</option>
                         <option value="Moyen" @if ( $recipe->difficulty === 'Moyen' ) selected @endif>Moyen</option>
                         <option value="Difficile" @if ( $recipe->difficulty ==='Difficile' ) selected @endif>Difficile</option>
@@ -287,9 +287,7 @@
                     @enderror
 
                     <!-- textarea -->
-                    <textarea type="text" name="description_to_add" placeholder="Entrez une description" aria-describedby="description_to_add_feedback" class="my-2 form-control shadow-none @error('description_to_add') is-invalid @enderror">
-                    {{ old('description') }}
-                    </textarea>
+                    <textarea type="text" name="description_to_add" placeholder="Entrez une description" aria-describedby="description_to_add_feedback" class="my-2 form-control shadow-none @error('description_to_add') is-invalid @enderror">{{ old('description') }}</textarea>
 
                     @error('description_to_add')
                     <div id="description_to_add_feedback" class="invalid-feedback">
@@ -310,9 +308,7 @@
                         @csrf
                         @method('PUT')
 
-                        <textarea type="text" name="description_to_update" cols="110" aria-describedby="description_to_update_feedback" class="text-start form-control shadow-none">
-                        {{ $recipeStep->description }}
-                        </textarea>
+                        <textarea type="text" name="description_to_update" cols="110" aria-describedby="description_to_update_feedback" class="text-start form-control shadow-none">{{ $recipeStep->description }}</textarea>
 
                         <button type="submit" class="btn btn-primary d-flex justify-content-center align-items-center">
                             <i class="bi bi-floppy-fill"></i>

@@ -52,7 +52,7 @@
                 <!-- difficulty -->
                 <div class="my-2">
                     <select name="difficulty" aria-describedby="difficulty_feedback" class="form-select py-3 form-control shadow-none @error('difficulty') is-invalid @enderror">
-                        <option value="">Sélectionnez un niveau</option>
+                        <option value="">Sélectionnez la difficulté</option>
                         <option value="Facile" @if ( old('difficulty')=='Facile' ) selected @endif>Facile</option>
                         <option value="Moyen" @if ( old('difficulty')=='Moyen' ) selected @endif>Moyen</option>
                         <option value="Difficile" @if ( old('difficulty')=='Difficile' ) selected @endif>Difficile</option>
