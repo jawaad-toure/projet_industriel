@@ -60,6 +60,7 @@ final class QuantityRepository
                 'quantities.id as id',
                 'quantities.quantity as quantity',
                 'ingredients.ingredientname as ingredientname',
+                'ingredients.calorie as calorie',
                 'units.unitname as unitname',
             ]);
     }  

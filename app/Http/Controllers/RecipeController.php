@@ -58,6 +58,25 @@ class RecipeController extends Controller
     /**
      * 
      */
+    public function showRecipe(Request $request, int $recipeId)
+    {
+        $recipe = $this->recipeRepository->getRecipe($recipeId);
+        $recipeSteps = $this->stepRepository->getRecipeSteps($recipeId);
+        $recipeImages = $this->imageRepository->getRecipeImages($recipeId);
+        $recipeQuantities = $this->quantityRepository->getRecipeQuantities($recipeId);
+
+        return view('recipes/recipe', [
+            'recipe' => $recipe, 
+            'recipeSteps' => $recipeSteps,
+            'recipeImages' => $recipeImages,
+            'recipeQuantities' => $recipeQuantities,
+        ]);
+    }
+
+
+    /**
+     * 
+     */
     public function showUpdateRecipeForm(Request $request, int $userId, int $recipeId)
     {
         if (!$request->session()->has('user')) {

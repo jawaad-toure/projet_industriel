@@ -130,6 +130,10 @@ Route::delete('/users/{userId}/delete', [AuthController::class, 'deleteUser'])
 /** ------------------------------------------------------------------------------------------------ */
 /** recipe routes */
 
+Route::get('/recipes/{recipeId}', [RecipeController::class, 'showRecipe'])
+    ->where('recipeId', '[0-9]+')
+    ->name('recipe.show');
+
 Route::get('/users/{userId}/dashboard/create-recipe', [RecipeController::class, 'showCreateRecipeForm'])
     ->where('userId', '[0-9]+')
     ->name('createRecipeForm.show');

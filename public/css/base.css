@@ -2,6 +2,7 @@
 .active-effect-disabled:active {
     background: none !important;
     color: inherit;
+    border: none;
 }
 
 .hover-effect-disabled:hover {
