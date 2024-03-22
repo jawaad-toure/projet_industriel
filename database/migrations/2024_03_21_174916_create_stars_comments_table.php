@@ -11,20 +11,27 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('favorites', function (Blueprint $table) {
+        Schema::create('stars_comments', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->enum('stars', [1, 2, 3, 4, 5])->notNullable();
+            $table->text('comment')->nullable();
+            
             $table->unsignedBigInteger('id_recipe');
             $table->unsignedBigInteger('id_user');
-            
+
             $table->foreign('id_recipe')->references('id')->on('recipes');
             $table->foreign('id_user')->references('id')->on('users');
+           
+           
         });
     }
+
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('favorites');
+        Schema::dropIfExists('stars_comments');
     }
 };
+

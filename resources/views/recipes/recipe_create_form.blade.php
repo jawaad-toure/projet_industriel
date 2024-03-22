@@ -2,9 +2,13 @@
 
 @section('content')
 
-<div class="d-flex flex-column align-items-center mb-5">
+<div class="d-flex flex-column gap-4 align-items-center mb-5">
 
-    <h1 class="text-center py-4">Création d'une recette</h1>
+    <h1 class="text-center">Création d'une recette</h1>
+
+    <span class="text-center align-self-center col-7">
+        &#9888; Dans les 2 derniers champs dites si c'est une recette pour N Personne.s ou pour une Boisson de N Litre.s
+    </span>
 
     <!-- recipe form -->
     <form method="POST" action="{{ route('recipe.post', ['userId' => session()->get('user')['id']]) }}" class="col-md-7">
@@ -92,6 +96,23 @@
                         {{ $message }}
                     </div>
                     @enderror
+                </div>
+
+                <!-- for -->
+                <div class="my-2">
+                    <input type="number" name="for" value="{{ old('for') }}" placeholder="10" aria-describedby="for_feedback" class="col form-control py-3 shadow-none @error('for') is-invalid @enderror">
+                </div>
+
+                <!-- recipe unitname -->
+                <div class="my-2">
+                    <input list="units" name="id_unit" value="{{ old('id_unit') }}" placeholder="Saisissez une unité" aria-describedby="id_unit_feedback" class="col form-control py-3 shadow-none @error('id_unit') is-invalid @enderror">
+                    <datalist id="units">
+                        @foreach($units as $unit)
+                        <option>
+                            {{ $unit->unitname }}
+                        </option>
+                        @endforeach
+                    </datalist>
                 </div>
             </div>
 

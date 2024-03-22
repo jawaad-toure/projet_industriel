@@ -20,8 +20,12 @@ return new class extends Migration
             $table->enum('difficulty', ['Difficile', 'Facile', 'Moyen']);
             $table->boolean('visibility');
             $table->boolean('completed');
+            $table->integer('for')->notNullable();
+
+            $table->unsignedBigInteger('id_unit');
             $table->unsignedBigInteger('id_user');
 
+            $table->foreign('id_unit')->references('id')->on('units');
             $table->foreign('id_user')->references('id')->on('users');
         });
     }
@@ -34,3 +38,4 @@ return new class extends Migration
         Schema::dropIfExists('recipes');
     }
 };
+

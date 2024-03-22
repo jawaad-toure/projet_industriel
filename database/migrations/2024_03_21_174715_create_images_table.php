@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('images', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('image')->notNullable();
+            
             $table->unsignedBigInteger('id_recipe');
 
             $table->foreign('id_recipe')->references('id')->on('recipes');
@@ -28,3 +29,4 @@ return new class extends Migration
         Schema::dropIfExists('images');
     }
 };
+

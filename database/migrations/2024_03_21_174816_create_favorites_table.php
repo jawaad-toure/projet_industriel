@@ -11,24 +11,22 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('quantities', function (Blueprint $table) {
+        Schema::create('favorites', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->decimal('quantity')->notNullable();
-            $table->unsignedBigInteger('id_unit');
-            $table->unsignedBigInteger('id_ingredient');
-            $table->unsignedBigInteger('id_recipe');
             
-            $table->foreign('id_unit')->references('id')->on('units');
-            $table->foreign('id_ingredient')->references('id')->on('ingredients');
+            $table->unsignedBigInteger('id_recipe');
+            $table->unsignedBigInteger('id_user');
+            
             $table->foreign('id_recipe')->references('id')->on('recipes');
+            $table->foreign('id_user')->references('id')->on('users');
         });
     }
-
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('quantities');
+        Schema::dropIfExists('favorites');
     }
 };
+

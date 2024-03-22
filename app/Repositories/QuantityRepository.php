@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 
 final class QuantityRepository
 {
-    public function addQuantity(string $quantity, string $id_unit, string $id_ingredient, string $id_recipe)
+    public function addQuantity(int $quantity, string $id_unit, string $id_ingredient, string $id_recipe)
     {
         Quantity::create([
             'quantity' => $quantity,

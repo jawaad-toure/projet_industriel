@@ -2,7 +2,7 @@
 
 @section('content')
 
-<div class="d-flex flex-column align-items-center mb-5">
+<div class="d-flex flex-column gap-4 align-items-center mb-5">
 
     <h1 class="text-center py-4">Mise à jour de la recette</h1>
 
@@ -18,6 +18,10 @@
                     Recette
                 </div>
             </div>
+
+            <span class="text-center align-self-center mb-3">
+                &#9888; Dans les 2 derniers champs dites si c'est une recette pour N Personne.s ou pour une Boisson de N Litre.s
+            </span>
 
             <!-- notifications -->
             @if (session('recipe_warning'))
@@ -112,6 +116,23 @@
                         {{ $message }}
                     </div>
                     @enderror
+                </div>
+
+                <!-- for -->
+                <div class="my-2">
+                    <input type="number" name="for" value="{{ $recipe->for }}" placeholder="10" aria-describedby="for_feedback" class="col form-control shadow-none @error('for') is-invalid @enderror">
+                </div>
+
+                <!-- recipe unitname -->
+                <div class="my-2">
+                    <input list="units" name="id_unit" value="{{ $recipeUnitname }}" placeholder="Saisissez une unité" aria-describedby="id_unit_feedback" class="col form-control shadow-none @error('id_unit') is-invalid @enderror">
+                    <datalist id="units">
+                        @foreach($units as $unit)
+                        <option>
+                            {{ $unit->unitname }}
+                        </option>
+                        @endforeach
+                    </datalist>
                 </div>
             </div>
 

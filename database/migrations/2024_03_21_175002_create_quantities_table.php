@@ -11,21 +11,26 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('steps', function (Blueprint $table) {
+        Schema::create('quantities', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->text('description');
+            $table->decimal('quantity')->notNullable();
+            
+            $table->unsignedBigInteger('id_unit');
+            $table->unsignedBigInteger('id_ingredient');
             $table->unsignedBigInteger('id_recipe');
             
+            $table->foreign('id_unit')->references('id')->on('units');
+            $table->foreign('id_ingredient')->references('id')->on('ingredients');
             $table->foreign('id_recipe')->references('id')->on('recipes');
         });
     }
-
 
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('steps');
+        Schema::dropIfExists('quantities');
     }
 };
+

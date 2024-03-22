@@ -224,7 +224,7 @@
                         @method('DELETE')
 
                         <button type="submit" class="btn btn-danger d-flex justify-content-center align-items-center">
-                            <i class="bi bi-trash"></i>
+                            <i class="bi bi-trash-fill"></i>
                         </button>
                     </form>
                 </div>

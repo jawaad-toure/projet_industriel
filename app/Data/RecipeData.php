@@ -16,6 +16,8 @@ class RecipeData
                 "difficulty" => "Difficile",
                 "visibility" => false,
                 "completed" => false,
+                "for" => 1,
+                "id_unit" => 5,
                 "id_user" => 1,
             ],
             [
@@ -26,6 +28,8 @@ class RecipeData
                 "difficulty" => "Facile",
                 "visibility" => false,
                 "completed" => false,
+                "for" => 2,
+                "id_unit" => 5,
                 "id_user" => 1,
             ],
             [
@@ -36,6 +40,8 @@ class RecipeData
                 "difficulty" => "Moyen",
                 "visibility" => false,
                 "completed" => false,
+                "for" => 3,
+                "id_unit" => 5,
                 "id_user" => 1,
             ],
             [
@@ -46,6 +52,8 @@ class RecipeData
                 "difficulty" => "Difficile",
                 "visibility" => false,
                 "completed" => false,
+                "for" => 4,
+                "id_unit" => 5,
                 "id_user" => 1,
             ],
             [
@@ -56,6 +64,8 @@ class RecipeData
                 "difficulty" => "Facile",
                 "visibility" => false,
                 "completed" => false,
+                "for" => 5,
+                "id_unit" => 5,
                 "id_user" => 1,
             ],
             [
@@ -66,6 +76,8 @@ class RecipeData
                 "difficulty" => "Moyen",
                 "visibility" => false,
                 "completed" => false,
+                "for" => 6,
+                "id_unit" => 5,
                 "id_user" => 1,
             ],
             [
@@ -76,6 +88,8 @@ class RecipeData
                 "difficulty" => "Difficile",
                 "visibility" => false,
                 "completed" => false,
+                "for" => 7,
+                "id_unit" => 5,
                 "id_user" => 1,
             ],
             [
@@ -86,6 +100,8 @@ class RecipeData
                 "difficulty" => "Facile",
                 "visibility" => false,
                 "completed" => false,
+                "for" => 8,
+                "id_unit" => 5,
                 "id_user" => 1,
             ],
             [
@@ -96,6 +112,8 @@ class RecipeData
                 "difficulty" => "Moyen",
                 "visibility" => false,
                 "completed" => false,
+                "for" => 9,
+                "id_unit" => 5,
                 "id_user" => 1,
             ],
             [
@@ -106,6 +124,8 @@ class RecipeData
                 "difficulty" => "Difficile",
                 "visibility" => false,
                 "completed" => false,
+                "for" => 10,
+                "id_unit" => 5,
                 "id_user" => 1,
             ],
         ];

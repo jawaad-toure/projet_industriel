@@ -66,7 +66,7 @@ class RecipeController extends Controller
         $recipeQuantities = $this->quantityRepository->getRecipeQuantities($recipeId);
 
         return view('recipes/recipe', [
-            'recipe' => $recipe, 
+            'recipe' => $recipe,
             'recipeSteps' => $recipeSteps,
             'recipeImages' => $recipeImages,
             'recipeQuantities' => $recipeQuantities,
@@ -86,6 +86,7 @@ class RecipeController extends Controller
         $ingredients = $this->ingredientRepository->getIngredients();
         $units = $this->unitRepository->getUnits();
         $recipe = $this->recipeRepository->getRecipe($recipeId);
+        $recipeUnitname = $this->unitRepository->getUnit($recipe->id_unit)->unitname;
         $recipeImages = $this->imageRepository->getRecipeImages($recipeId);
         $recipeSteps = $this->stepRepository->getRecipeSteps($recipeId);
         $recipeQuantities = $this->quantityRepository->getRecipeQuantities($recipeId);
@@ -95,6 +96,7 @@ class RecipeController extends Controller
             'units' => $units,
             'userId' => $userId,
             'recipe' => $recipe,
+            'recipeUnitname' => $recipeUnitname,
             'recipeImages' => $recipeImages,
             'recipeSteps' => $recipeSteps,
             'recipeQuantities' => $recipeQuantities,
@@ -115,30 +117,38 @@ class RecipeController extends Controller
             'cookingtype' => 'required|in:Four,Barbecue,Poele,Vapeur,Sans cuisson',
             'category' => 'required|in:Entrée,Plat,Dessert,Boisson',
             'difficulty' => 'required|in:Difficile,Facile,Moyen',
+            'for' => 'required',
+            'id_unit' => 'required|regex:/^\p{L}+$/u',
         ];
 
         $messages = [
             'recipename.required' => 'Le nom de la recette est requis.',
             'recipename.unique' => 'Le nom de la recette existe déjà.',
+            'time.required' => 'Le temps de cuisson est requis.',
             'cookingtype.required' => 'Le type de cuisson de la recette est requis.',
             'category.required' => 'Le type de plat de la recette est requis.',
             'difficulty.required' => 'Le niveau de difficulté de la recette est requis.',
-            'time.required' => 'Le temps de cuisson est requis.',
+            'for.required' => 'Vous devez renseigner ce champ.',
+            'id_unit.required' => "Vous devez renseigner une unité",
+            'id_unit.regex' => "Vous devez saisir une unité valide",
         ];
 
         $validatedData = $request->validate($rules, $messages);
         $validatedData["id_user"] = $userId;
 
-
         DB::beginTransaction();
 
         try {
+            $unitId = $this->unitRepository->getUnitId($validatedData["id_unit"]);
+
             $this->recipeRepository->addRecipe(
                 $validatedData['recipename'],
                 $validatedData['time'],
                 $validatedData['cookingtype'],
                 $validatedData['category'],
                 $validatedData['difficulty'],
+                $validatedData['for'],
+                $unitId,
                 $validatedData['id_user'],
             );
 
@@ -148,8 +158,7 @@ class RecipeController extends Controller
             return redirect()->back()->withInput()->with('warning', "Impossible de créer la recette");
         }
 
-        return redirect()
-            ->route('dashboard.show', ['userId' => $userId]);
+        return redirect()->route('dashboard.show', ['userId' => $userId]);
     }
 
     /**
@@ -164,14 +173,19 @@ class RecipeController extends Controller
             'cookingtype' => 'required|in:Four,Barbecue,Poele,Vapeur,Sans cuisson',
             'category' => 'required|in:Entrée,Plat,Dessert,Boisson',
             'difficulty' => 'required|in:Difficile,Facile,Moyen',
+            'for' => 'required',
+            'id_unit' => 'required|regex:/^\p{L}+$/u',
         ];
 
         $messages = [
             'recipename.required' => 'Le nom de la recette est requis.',
+            'time.required' => 'Le temps de cuisson est requis.',
             'cookingtype.required' => 'Le type de cuisson de la recette est requis.',
             'category.required' => 'Le type de plat de la recette est requis.',
             'difficulty.required' => 'Le niveau de difficulté de la recette est requis.',
-            'time.required' => 'Le temps de cuisson est requis.',
+            'for.required' => 'Vous devez renseigner ce champ.',
+            'id_unit.required' => "Vous devez renseigner une unité",
+            'id_unit.regex' => "Vous devez saisir une unité valide",
         ];
 
         $validatedData = $request->validate($rules, $messages);
@@ -182,6 +196,10 @@ class RecipeController extends Controller
 
         try {
             $recipeToUpdate = $this->recipeRepository->getRecipe($recipeId)->toArray();
+
+            $unitId = $this->unitRepository->getUnitId($validatedData['id_unit']);
+
+            $validatedData['id_unit'] = $unitId;
 
             foreach ($validatedData as $key => $value) {
                 if (strcmp($recipeToUpdate[$key], $value) != 0) {
@@ -200,7 +218,6 @@ class RecipeController extends Controller
             }
 
             DB::commit();
-
         } catch (Exception $exception) {
             DB::rollBack();
             return redirect()->back()->withInput()->with('recipe_warning', "Impossible de modifier la recette");
@@ -219,7 +236,6 @@ class RecipeController extends Controller
         try {
             $this->recipeRepository->updateField($recipeId, 'visibility', true);
             DB::commit();
-
         } catch (Exception $exception) {
             DB::rollBack();
             return redirect()->back()->withInput()->with('recipe_warning', "Impossible de rendre public la recette");
@@ -238,7 +254,6 @@ class RecipeController extends Controller
         try {
             $this->recipeRepository->updateField($recipeId, 'visibility', false);
             DB::commit();
-
         } catch (Exception $exception) {
             DB::rollBack();
             return redirect()->back()->withInput()->with('recipe_warning', "Impossible de rendre public la recette");

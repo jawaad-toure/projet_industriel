@@ -18,6 +18,9 @@ class Recipe extends Model
         'difficulty',
         'visibility',
         'completed',
+        'completed',
+        'for',
+        'id_unit',
         'id_user',
     ];
 

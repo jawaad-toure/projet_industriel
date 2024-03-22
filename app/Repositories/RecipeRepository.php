@@ -6,7 +6,7 @@ use App\Models\Recipe;
 
 final class RecipeRepository
 {
-    public function addRecipe(string $recipename, string $time, string $cookingtype, string $category, string $difficulty, int $userId)
+    public function addRecipe(string $recipename, string $time, string $cookingtype, string $category, string $difficulty, int $for, int $unitId, int $userId)
     {
         Recipe::create([
             "recipename" => $recipename,
@@ -16,6 +16,8 @@ final class RecipeRepository
             "difficulty" => $difficulty,
             "visibility" => false,
             "completed" => false,
+            "for" => $for,
+            "id_unit" => $unitId,
             "id_user" => $userId,
         ]);
     }

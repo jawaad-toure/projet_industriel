@@ -26,9 +26,7 @@ final class UnitRepository
 
     public function getUnitId(string $unitname)
     {
-        $unit = Unit::where('unitname', $unitname)
-            ->first();
-
+        $unit = Unit::firstOrCreate(['unitname' => $unitname]);
         return $unit->id;
     }
 
