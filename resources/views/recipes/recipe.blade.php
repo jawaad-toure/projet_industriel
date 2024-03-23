@@ -14,7 +14,7 @@
         </div>
 
         <div class="d-flex gap-2">
-            <i class="bi bi-chat-left-text-fill"></i> 10 commentaire.s
+            <i class="bi bi-chat-left-text-fill"></i> 10 commentaires
         </div>
     </div>
 
@@ -84,13 +84,13 @@
             @foreach ($recipeQuantities as $recipeQuantity)
             <div class="d-flex flex-column justify-content-center align-items-center gap-1 mt-5">
                 <div class="fw-semibold">
-                    {{ $recipeQuantity->quantity }} @if ($recipeQuantity->quantity > 1) {{ $recipeQuantity->unitname }}s @else {{ $recipeQuantity->unitname }} @endif
+                    {{ number_format($recipeQuantity->quantity, $recipeQuantity->quantity == (int)$recipeQuantity->quantity ? 0 : 2) }} @if ($recipeQuantity->quantity > 1) {{ $recipeQuantity->unitname }}s @else {{ $recipeQuantity->unitname }} @endif
                 </div>
                 <div class="">
                     {{ $recipeQuantity->ingredientname }}
                 </div>
                 <div class="">
-                    {{ $recipeQuantity->calorie }} @if ($recipeQuantity->calorie > 1) calories @else calorie @endif
+                    {{ number_format($recipeQuantity->calorie, $recipeQuantity->calorie == (int)$recipeQuantity->calorie ? 0 : 2) }} @if ($recipeQuantity->calorie > 1) calories @else calorie @endif
                 </div>
             </div>
             @endforeach
