@@ -58,7 +58,7 @@ class RecipeController extends Controller
     /**
      * 
      */
-    public function showRecipe(Request $request, int $recipeId)
+    public function showRecipe(int $recipeId)
     {
         $recipe = $this->recipeRepository->getRecipe($recipeId);
         $recipeForUnitname = $this->unitRepository->getUnit($recipe->id_unit)->unitname;

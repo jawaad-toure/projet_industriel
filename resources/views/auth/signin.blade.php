@@ -39,7 +39,7 @@
             </div>
 
             <div class="d-grid">
-                <button type="submit" class="fw-bold btn btn-primary shadow-none my-2">Se connecter</button>
+                <button type="submit" class="fw-bold btn btn-primary shadow-none py-3 my-2">Se connecter</button>
             </div>
 
         </form>

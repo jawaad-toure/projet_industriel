@@ -58,7 +58,7 @@
             </div>
 
             <div class="d-grid">
-                <button type="submit" class="fw-bold btn btn-primary btn-block my-2">Créer mon compte</button>
+                <button type="submit" class="fw-bold btn btn-primary btn-block py-3 my-2">Créer mon compte</button>
             </div>
 
         </form>

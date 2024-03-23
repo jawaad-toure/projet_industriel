@@ -17,3 +17,15 @@
     color: #d9534f !important;
 }
 
+.star {
+    cursor: pointer;
+}
+
+#rating a {
+    text-decoration: none;
+    color: inherit;
+}
+
+#rating a:hover {
+    color: inherit;
+}

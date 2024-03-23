@@ -6,7 +6,7 @@
 
     <div class="d-flex flex-column align-items-center mb-5">
 
-        <h1 class="text-center py-4">Mot de passe</h1>
+        <h1 class="fw-bold text-center py-4">Mot de passe</h1>
 
         <form method="POST" action="{{ route('password.update', ['userId' => session()->get('user')['id']]) }}" class="col-sm-4">
             @csrf

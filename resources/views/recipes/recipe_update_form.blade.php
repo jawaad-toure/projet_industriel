@@ -4,7 +4,7 @@
 
 <div class="d-flex flex-column gap-4 align-items-center mb-5">
 
-    <h1 class="text-center py-4">Mise à jour de la recette</h1>
+    <h1 class="fw-bold text-center py-4">Mise à jour de la recette</h1>
 
     <!-- recipe form -->
     <form method="POST" action="{{ route('recipe.update', ['userId' => $userId, 'recipeId' => $recipe->id]) }}" class="container col-md-7">
@@ -405,6 +405,10 @@
             </div>
         </div>
     </div>
+
+    <a class="fw-bold btn btn-secondary" href="{{ url()->previous() }}" role="button">
+        Retour
+    </a>
 </div>
 
 @endsection

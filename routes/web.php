@@ -7,6 +7,7 @@ use App\Http\Controllers\ImageController;
 use App\Http\Controllers\RecipeController;
 use App\Http\Controllers\QuantityController;
 use App\Http\Controllers\IngredientController;
+use App\Http\Controllers\StarCommentController;
 
 
 /*
@@ -219,3 +220,12 @@ Route::delete('/dashboard/{userId}/update-recipe/{recipeId}/image/{imageId}', [I
     ->where('recipeId', '[0-9]+')
     ->where('imageId', '[0-9]+')
     ->name('image.delete');
+
+/** ------------------------------------------------------------------------------------------------ */
+/** image routes */
+
+Route::get('/recipes/{recipeId}/rate', [StarCommentController::class, 'showStarCommentForm'])
+    ->where('recipeId', '[0-9]+')
+    ->name('starCommentForm.show');
+
+

@@ -109,5 +109,43 @@
         </div>
     </div>
 
+    <div class="row gy-3 mb-5">
+        <h3 class="text-center fw-bold">Votre avis nous intéresse</h3>
+
+        <div class="d-flex justify-content-center align-items-center gap-3" id="rating">
+            <a href="{{ route('starCommentForm.show', ['recipeId' => $recipe->id]) }}">
+                <span class="star fs-1" data-rating="1">&#9733;</span>
+            </a>
+
+            <a href="{{ route('starCommentForm.show', ['recipeId' => $recipe->id]) }}">
+                <span class="star fs-1" data-rating="2">&#9733;</span>
+            </a>
+
+            <a href="{{ route('starCommentForm.show', ['recipeId' => $recipe->id]) }}">
+                <span class="star fs-1" data-rating="3">&#9733;</span>
+            </a>
+
+            <a href="{{ route('starCommentForm.show', ['recipeId' => $recipe->id]) }}">
+                <span class="star fs-1" data-rating="4">&#9733;</span>
+            </a>
+
+            <a href="{{ route('starCommentForm.show', ['recipeId' => $recipe->id]) }}">
+                <span class="star fs-1" data-rating="5">&#9733;</span>
+            </a>
+        </div>
+    </div>
+
+    <div class="row gy-3 mb-5">
+        <h3 class="text-center fw-bold">Commentaires</h3>
+
+        <div class="row gy-3">
+            @foreach ($recipeSteps as $recipeStep)
+            <div class="text-start">
+                {{ $recipeStep->description }}
+            </div>
+            @endforeach
+        </div>
+    </div>
+
 </div>
 @endsection

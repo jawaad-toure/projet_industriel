@@ -4,7 +4,7 @@
 
 <div class="d-flex flex-column gap-4 align-items-center mb-5">
 
-    <h1 class="text-center">Création d'une recette</h1>
+    <h1 class="fw-bold text-center py-4">Création d'une recette</h1>
 
     <span class="text-center align-self-center col-7">
         &#9888; Dans les 2 derniers champs dites si c'est une recette pour N Personne.s ou pour une Boisson de N Litre.s
@@ -116,8 +116,8 @@
                 </div>
             </div>
 
-            <div class="d-flex justify-content-center gap-2">
-                <a class="fw-bold btn btn-secondary" href="{{ route('dashboard.show', ['userId' => session()->get('user')['id']]) }}" role="button">
+            <div class="d-flex justify-content-center align-items-center gap-2">
+                <a class="fw-bold btn btn-secondary" href="{{ url()->previous() }}" role="button">
                     Retour
                 </a>
 
