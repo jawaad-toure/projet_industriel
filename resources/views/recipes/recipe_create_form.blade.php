@@ -117,7 +117,7 @@
             </div>
 
             <div class="d-flex justify-content-center align-items-center gap-2">
-                <a class="fw-bold btn btn-secondary" href="{{ url()->previous() }}" role="button">
+                <a class="fw-bold btn btn-secondary" href="{{ route('dashboard.show', ['userId' => session()->get('user')['id']]) }}" role="button">
                     Retour
                 </a>
 
