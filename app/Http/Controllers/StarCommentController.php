@@ -25,8 +25,19 @@ class StarCommentController extends Controller
     /**
      * 
      */
-    public function showStarCommentForm()
+    public function showStarCommentForm(int $recipeId)
     {
-        return view('stars_comments/star_comment_form');
+        return view('stars_comments/star_comment_form', ['recipeId' => $recipeId]);
+    }
+
+
+    /** controllers functions */
+
+    /**
+     * 
+     */
+    public function insertStarComment(Request $request, int $recipeId)
+    {
+        dump('Il faut maintenant ajouter la logique');
     }
 }

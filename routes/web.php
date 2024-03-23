@@ -222,10 +222,14 @@ Route::delete('/dashboard/{userId}/update-recipe/{recipeId}/image/{imageId}', [I
     ->name('image.delete');
 
 /** ------------------------------------------------------------------------------------------------ */
-/** image routes */
+/** stars and comment routes */
 
 Route::get('/recipes/{recipeId}/rate', [StarCommentController::class, 'showStarCommentForm'])
     ->where('recipeId', '[0-9]+')
     ->name('starCommentForm.show');
+
+Route::post('/recipes/{recipeId}/rate', [StarCommentController::class, 'insertStarComment'])
+    ->where('recipeId', '[0-9]+')
+    ->name('starComment.post');
 
 

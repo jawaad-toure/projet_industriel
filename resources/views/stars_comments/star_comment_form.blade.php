@@ -7,7 +7,7 @@
     <h1 class="text-center fw-bold">Laissez un avis</h1>
 
     <!-- recipe form -->
-    <form method="POST" action="{{ route('recipe.post', ['userId' => session()->get('user')['id']]) }}" class="col-md-7">
+    <form method="POST" action="{{ route('starComment.post', ['recipeId' => $recipeId]) }}" class="col-md-7">
         @csrf
 
         <div class="mb-5 d-flex flex-column gap-3">
@@ -60,7 +60,7 @@
 
             <!-- comment -->
             <div class="">
-                <textarea type="text" name="comment" placeholder="Laissez une description" aria-describedby="comment_feedback" class="my-2 form-control shadow-none @error('comment') is-invalid @enderror">{{ old('description') }}</textarea>
+                <textarea type="text" name="comment" placeholder="Laissez un commentaire" aria-describedby="comment_feedback" class="my-2 form-control shadow-none @error('comment') is-invalid @enderror">{{ old('description') }}</textarea>
 
                 @error('comment')
                 <div id="description_to_add_feedback" class="invalid-feedback">
