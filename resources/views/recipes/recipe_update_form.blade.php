@@ -11,7 +11,7 @@
         @csrf
         @method('PUT')
 
-        <div class="mb-5 d-flex flex-column">
+        <div class="d-flex flex-column">
             <!-- header -->
             <div class="d-flex justify-content-between py-3 border-bottom mb-3">
                 <div class="fw-bold fs-6 align-self-center">
@@ -36,7 +36,7 @@
             </div>
             @endif
 
-            @if(session('info'))
+            @if(session('recipe_info'))
             <div class="alert alert-info">
                 {{ session('recipe_info') }} &#128578;
             </div>

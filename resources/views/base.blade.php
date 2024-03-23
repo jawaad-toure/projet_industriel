@@ -20,8 +20,6 @@
     <!-- google icons -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 
-    <!-- themeselection -->
-    <link rel="stylesheet" href="assets/vendor/libs/rateyo/rateyo.css" />
 </head>
 
 <body>
@@ -94,8 +92,6 @@
     <!-- js for recipe form -->
     <script src="{{ asset('js/recipe_form.js') }}"></script>
 
-    <!-- themeselection -->
-    <script src="assets/vendor/libs/rateyo/rateyo.js"></script>
 </body>
 
 </html>

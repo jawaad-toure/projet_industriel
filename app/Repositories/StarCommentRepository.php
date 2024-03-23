@@ -7,7 +7,7 @@ use App\Models\StarComment;
 final class StarCommentRepository
 {
     
-    public function addStarComment(string $stars, string $comment, int $id_recipe, int $id_user)
+    public function addStarComment(int $stars, string|null $comment, int $id_recipe, int $id_user)
     {
         StarComment::create([
             'stars' => $stars,

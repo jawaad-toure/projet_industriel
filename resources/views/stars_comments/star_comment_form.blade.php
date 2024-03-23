@@ -12,9 +12,21 @@
 
         <div class="mb-5 d-flex flex-column gap-3">
 
-            @if (session('warning'))
+            @if (session('star_comment_warning'))
             <div class="alert alert-warning">
-                {{ session('warning') }} &#9785;
+                {{ session('star_comment_warning') }} &#9785;
+            </div>
+            @endif
+
+            @if(session('star_comment_success'))
+            <div class="alert alert-success">
+                {{ session('star_comment_success') }} &#128578;
+            </div>
+            @endif
+
+            @if(session('star_comment_info'))
+            <div class="alert alert-info">
+                {{ session('star_comment_info') }} &#128578;
             </div>
             @endif
 
@@ -63,7 +75,7 @@
                 <textarea type="text" name="comment" placeholder="Laissez un commentaire" aria-describedby="comment_feedback" class="my-2 form-control shadow-none @error('comment') is-invalid @enderror">{{ old('description') }}</textarea>
 
                 @error('comment')
-                <div id="description_to_add_feedback" class="invalid-feedback">
+                <div id="comment_feedback" class="invalid-feedback">
                     {{ $message }}
                 </div>
                 @enderror
