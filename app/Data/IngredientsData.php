@@ -2,7 +2,7 @@
 
 namespace App\Data;
 
-class IngredientData
+class IngredientsData
 {
     public function ingredients()
     {
@@ -406,6 +406,42 @@ class IngredientData
             [
                 "ingredientname" => "Mâche",
                 "calorie" => 16.80,
+            ],
+            [
+                "ingredientname" => "Oeuf bouilli",
+                "calorie" => 155,
+            ],
+            [
+                "ingredientname" => "Oeuf frais",
+                "calorie" => 145,
+            ],
+            [
+                "ingredientname" => "Fromage râpé",
+                "calorie" => 114,
+            ],
+            [
+                "ingredientname" => "Levure",
+                "calorie" => 105,
+            ],
+            [
+                "ingredientname" => "Fromage de chèvre",
+                "calorie" => 500,
+            ],
+            [
+                "ingredientname" => "Pesto",
+                "calorie" => 517,
+            ],
+            [
+                "ingredientname" => "Farine de blé",
+                "calorie" => 364,
+            ],
+            [
+                "ingredientname" => "Pancetta",
+                "calorie" => 342,
+            ],
+            [
+                "ingredientname" => "Beurre",
+                "calorie" => 717,
             ],
         ];
     }

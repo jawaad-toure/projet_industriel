@@ -52,6 +52,11 @@ class ImageController extends Controller
         $validatedData = $request->validate($rules, $messages);
 
         try {
+
+
+            if (!$request->hasFile('images'))
+                return redirect()->back()->withInput()->with("image_info", "Vous n'avez ajouter aucune image");
+
             foreach ($validatedData['images'] as $image) {
                 $extension = $image->getClientOriginalExtension();
                 $hash = hash_file('sha256', $image);

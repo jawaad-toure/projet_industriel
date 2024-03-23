@@ -87,39 +87,39 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 /** ------------------------------------------------------------------------------------------------ */
 /** user signin routes */
-Route::get('/users/{userId}/dashboard', [AuthController::class, 'showUserDashboard'])
+Route::get('/dashboard/{userId}', [AuthController::class, 'showUserDashboard'])
     ->where('userId', '[0-9]+')
     ->name('dashboard.show');
 
-Route::get('/users/{userId}/dashboard/informations', [AuthController::class, 'showUserDashboardInfosForm'])
+Route::get('/dashboard/{userId}/informations', [AuthController::class, 'showUserDashboardInfosForm'])
     ->where('userId', '[0-9]+')
     ->name('informations.show');
 
-Route::put('/users/{userId}/dashboard/informations', [AuthController::class, 'updateInformations'])
+Route::put('/dashboard/{userId}/informations', [AuthController::class, 'updateInformations'])
     ->where('userId', '[0-9]+')
     ->name('informations.update');
 
-Route::put('/users/{userId}/dashboard/avatar', [AuthController::class, 'updateAvatar'])
+Route::put('/dashboard/{userId}/avatar', [AuthController::class, 'updateAvatar'])
     ->where('userId', '[0-9]+')
     ->name('avatar.update');
 
-Route::delete('/users/{userId}/dashboard/avatar', [AuthController::class, 'deleteAvatar'])
+Route::delete('/dashboard/{userId}/avatar', [AuthController::class, 'deleteAvatar'])
     ->where('userId', '[0-9]+')
     ->name('avatar.delete');
 
-Route::get('/users/{userId}/dashboard/email', [AuthController::class, 'showUserDashboardEmailForm'])
+Route::get('/dashboard/{userId}/email', [AuthController::class, 'showUserDashboardEmailForm'])
     ->where('userId', '[0-9]+')
     ->name('email.show');
 
-Route::put('/users/{userId}/dashboard/email', [AuthController::class, 'updateEmail'])
+Route::put('/dashboard/{userId}/email', [AuthController::class, 'updateEmail'])
     ->where('userId', '[0-9]+')
     ->name('email.update');
 
-Route::get('/users/{userId}/dashboard/password', [AuthController::class, 'showUserDashboardPasswordForm'])
+Route::get('}/dashboard/{userId/password', [AuthController::class, 'showUserDashboardPasswordForm'])
     ->where('userId', '[0-9]+')
     ->name('password.show');
 
-Route::put('/users/{userId}/dashboard/password', [AuthController::class, 'updatePassword'])
+Route::put('/dashboard/{userId}/password', [AuthController::class, 'updatePassword'])
     ->where('userId', '[0-9]+')
     ->name('password.update');
 
@@ -134,53 +134,53 @@ Route::get('/recipes/{recipeId}', [RecipeController::class, 'showRecipe'])
     ->where('recipeId', '[0-9]+')
     ->name('recipe.show');
 
-Route::get('/users/{userId}/dashboard/create-recipe', [RecipeController::class, 'showCreateRecipeForm'])
+Route::get('/dashboard/{userId}/create-recipe', [RecipeController::class, 'showCreateRecipeForm'])
     ->where('userId', '[0-9]+')
     ->name('createRecipeForm.show');
 
-Route::post('/users/{userId}/dashboard/create-recipe', [RecipeController::class, 'insertRecipe'])
+Route::post('/dashboard/{userId}/create-recipe', [RecipeController::class, 'insertRecipe'])
     ->where('userId', '[0-9]+')
     ->name('recipe.post');
 
-Route::get('/users/{userId}/dashboard/{recipeId}', [RecipeController::class, 'showUpdateRecipeForm'])
+Route::get('/dashboard/{userId}/update-recipe/{recipeId}', [RecipeController::class, 'showUpdateRecipeForm'])
     ->where('userId', '[0-9]+')
     ->where('recipeId', '[0-9]+')
     ->name('updateRecipeForm.show');
 
-Route::put('/users/{userId}/dashboard/{recipeId}', [RecipeController::class, 'updateRecipe'])
+Route::put('/dashboard/{userId}/update-recipe/{recipeId}', [RecipeController::class, 'updateRecipe'])
     ->where('userId', '[0-9]+')
     ->where('recipeId', '[0-9]+')
     ->name('recipe.update');
 
-Route::put('/users/{userId}/dashboard/{recipeId}/public', [RecipeController::class, 'recipeSetOnPublic'])
+Route::put('/dashboard/{userId}/{recipeId}/public', [RecipeController::class, 'recipeSetOnPublic'])
     ->where('userId', '[0-9]+')
     ->where('recipeId', '[0-9]+')
     ->name('recipeSetOnPublic.update');
 
-Route::put('/users/{userId}/dashboard/{recipeId}/private', [RecipeController::class, 'recipeSetOnPrivate'])
+Route::put('/dashboard/{userId}/{recipeId}/private', [RecipeController::class, 'recipeSetOnPrivate'])
     ->where('userId', '[0-9]+')
     ->where('recipeId', '[0-9]+')
     ->name('recipeSetOnPrivate.update');
 
-Route::delete('/users/{userId}/dashboard/{recipeId}', [RecipeController::class, 'deleteRecipe'])
+Route::delete('/dashboard/{userId}/{recipeId}', [RecipeController::class, 'deleteRecipe'])
     ->where('userId', '[0-9]+')
     ->where('recipeId', '[0-9]+')
     ->name('recipe.delete');
 
 /** ------------------------------------------------------------------------------------------------ */
 /** quantities routes */
-Route::post('/users/{userId}/dashboard/{recipeId}/quantity', [QuantityController::class, 'insertQuantity'])
+Route::post('/dashboard/{userId}/update-recipe/{recipeId}/quantity', [QuantityController::class, 'insertQuantity'])
     ->where('userId', '[0-9]+')
     ->where('recipeId', '[0-9]+')
     ->name('quantity.post');
 
-Route::put('/users/{userId}/dashboard/{recipeId}/quantity/{quantityId}', [QuantityController::class, 'updateQuantity'])
+Route::put('/dashboard/{userId}/update-recipe/{recipeId}/quantity/{quantityId}', [QuantityController::class, 'updateQuantity'])
     ->where('userId', '[0-9]+')
     ->where('recipeId', '[0-9]+')
     ->where('quantityId', '[0-9]+')
     ->name('quantity.update');
 
-Route::delete('/users/{userId}/dashboard/{recipeId}/quantity/{quantityId}', [QuantityController::class, 'deleteQuantity'])
+Route::delete('/dashboard/{userId}/update-recipe/{recipeId}/quantity/{quantityId}', [QuantityController::class, 'deleteQuantity'])
     ->where('userId', '[0-9]+')
     ->where('recipeId', '[0-9]+')
     ->where('quantityId', '[0-9]+')
@@ -189,18 +189,18 @@ Route::delete('/users/{userId}/dashboard/{recipeId}/quantity/{quantityId}', [Qua
 /** ------------------------------------------------------------------------------------------------ */
 /** steps routes */
 
-Route::post('/users/{userId}/dashboard/{recipeId}/step', [StepController::class, 'insertStep'])
+Route::post('/dashboard/{userId}/update-recipe/{recipeId}/step', [StepController::class, 'insertStep'])
     ->where('userId', '[0-9]+')
     ->where('recipeId', '[0-9]+')
     ->name('step.post');
 
-Route::put('/users/{userId}/dashboard/{recipeId}/step/{stepId}', [StepController::class, 'updateStep'])
+Route::put('/dashboard/{userId}/update-recipe/{recipeId}/step/{stepId}', [StepController::class, 'updateStep'])
     ->where('userId', '[0-9]+')
     ->where('recipeId', '[0-9]+')
     ->where('stepId', '[0-9]+')
     ->name('step.update');
 
-Route::delete('/users/{userId}/dashboard/{recipeId}/step/{stepId}', [StepController::class, 'deleteStep'])
+Route::delete('/dashboard/{userId}/update-recipe/{recipeId}/step/{stepId}', [StepController::class, 'deleteStep'])
     ->where('userId', '[0-9]+')
     ->where('recipeId', '[0-9]+')
     ->where('stepId', '[0-9]+')
@@ -209,12 +209,12 @@ Route::delete('/users/{userId}/dashboard/{recipeId}/step/{stepId}', [StepControl
 /** ------------------------------------------------------------------------------------------------ */
 /** image routes */
 
-Route::post('/users/{userId}/dashboard/{recipeId}/image', [ImageController::class, 'insertImages'])
+Route::post('/dashboard/{userId}/update-recipe/{recipeId}/image', [ImageController::class, 'insertImages'])
     ->where('userId', '[0-9]+')
     ->where('recipeId', '[0-9]+')
     ->name('image.post');
 
-Route::delete('/users/{userId}/dashboard/{recipeId}/image/{imageId}', [ImageController::class, 'deleteImage'])
+Route::delete('/dashboard/{userId}/update-recipe/{recipeId}/image/{imageId}', [ImageController::class, 'deleteImage'])
     ->where('userId', '[0-9]+')
     ->where('recipeId', '[0-9]+')
     ->where('imageId', '[0-9]+')

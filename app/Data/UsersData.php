@@ -4,7 +4,7 @@ namespace App\Data;
 
 use Illuminate\Support\Facades\Hash;
 
-class UserData
+class UsersData
 {
     public function users()
     {

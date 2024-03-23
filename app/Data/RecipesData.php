@@ -2,21 +2,21 @@
 
 namespace App\Data;
 
-class RecipeData
+class RecipesData
 {
 
     public function recipes()
     {
         return [
             [
-                "recipename" => "Recipe 1", 
-                "time" => "00:30", 
+                "recipename" => "Cake salé chèvre pesto", 
+                "time" => "01:05", 
                 "cookingtype" => "Four", 
                 "category" => "Entrée", 
-                "difficulty" => "Difficile",
+                "difficulty" => "Facile",
                 "visibility" => false,
                 "completed" => false,
-                "for" => 1,
+                "for" => 12,
                 "id_unit" => 5,
                 "id_user" => 1,
             ],

@@ -59,10 +59,10 @@ class QuantityController extends Controller
 
         try {
             if (!$this->ingredientRepository->doesIngredientExist($validatedData['ingredientname']))
-                $this->ingredientRepository->addIngredient(ucfirst($validatedData['ingredientname']));
+                $this->ingredientRepository->addIngredient($validatedData['ingredientname']);
 
             if (!$this->unitRepository->doesUnitExist($validatedData['unitname']))
-                $this->unitRepository->addUnit(ucfirst($validatedData['unitname']));
+                $this->unitRepository->addUnit($validatedData['unitname']);
 
             $unitId = $this->unitRepository->getUnitId($validatedData['unitname']);
             $ingredientId = $this->ingredientRepository->getIngredientId($validatedData['ingredientname']);

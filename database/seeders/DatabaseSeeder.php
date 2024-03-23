@@ -3,10 +3,14 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use App\Data\UnitData;
-use App\Data\UserData;
-use App\Data\RecipeData;
-use App\Data\IngredientData;
+
+use App\Data\StepsData;
+use App\Data\UnitsData;
+use App\Data\UsersData;
+use App\Data\ImagesData;
+use App\Data\RecipesData;
+use App\Data\QuantitiesData;
+use App\Data\IngredientsData;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -27,7 +31,7 @@ class DatabaseSeeder extends Seeder
 
         /** add ingredients to DB */
 
-        $ingredientsData = new IngredientData();
+        $ingredientsData = new IngredientsData();
         $ingredients = $ingredientsData->ingredients();
 
         foreach ($ingredients as $ingredient) {
@@ -37,7 +41,7 @@ class DatabaseSeeder extends Seeder
 
         /** add users to DB */
 
-        $usersData = new UserData();
+        $usersData = new UsersData();
         $users = $usersData->users();
 
         foreach ($users as $user) {
@@ -47,7 +51,7 @@ class DatabaseSeeder extends Seeder
 
         /** add units to DB */
 
-        $unitsData = new UnitData();
+        $unitsData = new UnitsData();
         $units = $unitsData->units();
 
         foreach ($units as $unit) {
@@ -57,12 +61,45 @@ class DatabaseSeeder extends Seeder
 
         /** add recipes to DB */
 
-        $recipesData = new RecipeData();
+        $recipesData = new RecipesData();
         $recipes = $recipesData->recipes();
 
         foreach ($recipes as $recipe) {
             DB::table('recipes')
                 ->insert($recipe);
+        }
+        
+        
+        /** add images to DB */
+
+        $imagesData = new ImagesData();
+        $images = $imagesData->images();
+
+        foreach ($images as $image) {
+            DB::table('images')
+                ->insert($image);
+        }
+        
+        
+        /** add steps to DB */
+
+        $stepsData = new StepsData();
+        $descriptions = $stepsData->descriptions();
+
+        foreach ($descriptions as $description) {
+            DB::table('steps')
+                ->insert($description);
+        }
+        
+        
+        /** add quantities to DB */
+
+        $quantitiesData = new QuantitiesData();
+        $quantities = $quantitiesData->quantities();
+
+        foreach ($quantities as $quantitie) {
+            DB::table('quantities')
+                ->insert($quantitie);
         }
 
     }

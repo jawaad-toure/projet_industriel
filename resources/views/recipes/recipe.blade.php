@@ -1,10 +1,10 @@
 @extends('base')
 
 @section('content')
-<div class="row gy-3 mb-5">
+<div class="row gy-4 mb-5">
     <h1 class="text-center fw-bold my-5">{{ $recipe->recipename }}</h1>
 
-    <div class="d-flex justify-content-between mb-3">
+    <div class="d-flex justify-content-between mb-3 px-md-5">
         <div>
             <i class="bi bi-star"></i>
             <i class="bi bi-star"></i>
@@ -19,7 +19,7 @@
     </div>
 
 
-    <div class="row gy-4">
+    <div class="row gy-3 mb-5">
         <div id="carouselExampleIndicators" class="carousel slide">
             <div class="carousel-inner">
                 @foreach ($recipeImages as $key => $recipeImage)
@@ -50,7 +50,7 @@
             <div class="d-flex gap-2">
                 <form method="POST" action="">
                     @csrf
-                    
+
                     <button type="button" class="btn d-flex justify-content-center align-items-center border border-0">
                         <i class="bi bi-heart"></i>
                     </button>
@@ -67,37 +67,47 @@
         </div>
     </div>
 
-    <div class="row gy-5">
+    <div class="row gy-3 mb-5">
         <h3 class="text-center fw-bold">Ingrédients</h3>
 
         <div class="d-flex justify-content-center align-items-center gap-3">
             <button type="button" class="btn d-flex justify-content-center align-items-center border border-0">
                 <i class="bi bi-dash-square-fill"></i>
             </button>
-            pour 1 personne
+            {{ $recipe->for }} @if ($recipe->for > 1) {{ $recipeForUnitname }}s @else {{ $recipeForUnitname }} @endif
             <button type="button" class="btn d-flex justify-content-center align-items-center border border-0">
                 <i class="bi bi-plus-square-fill"></i>
             </button>
         </div>
 
-        <div class="d-flex justify-content-center align-items-center gap-5">
+        <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 gx-3 gy-3">
             @foreach ($recipeQuantities as $recipeQuantity)
-            <div class="d-flex flex-column gap-2 border-3 border-start border-info px-3">
-                <div class="text-start fw-semibold">
-                    {{ $recipeQuantity->quantity }} {{ lcfirst($recipeQuantity->unitname) }}.s
+            <div class="d-flex flex-column justify-content-center align-items-center gap-1 mt-5">
+                <div class="fw-semibold">
+                    {{ $recipeQuantity->quantity }} @if ($recipeQuantity->quantity > 1) {{ $recipeQuantity->unitname }}s @else {{ $recipeQuantity->unitname }} @endif
                 </div>
-                <div class="text-start">
+                <div class="">
                     {{ $recipeQuantity->ingredientname }}
                 </div>
-                <div class="text-start">
-                    ({{ $recipeQuantity->calorie }} calorie.s)
+                <div class="">
+                    {{ $recipeQuantity->calorie }} @if ($recipeQuantity->calorie > 1) calories @else calorie @endif
                 </div>
             </div>
             @endforeach
         </div>
     </div>
 
+    <div class="row gy-3 mb-5">
+        <h3 class="text-center fw-bold">Préparation</h3>
 
+        <div class="row gy-3">
+            @foreach ($recipeSteps as $recipeStep)
+            <div class="text-start">
+                {{ $recipeStep->description }}
+            </div>
+            @endforeach
+        </div>
+    </div>
 
 </div>
 @endsection

@@ -61,12 +61,14 @@ class RecipeController extends Controller
     public function showRecipe(Request $request, int $recipeId)
     {
         $recipe = $this->recipeRepository->getRecipe($recipeId);
+        $recipeForUnitname = $this->unitRepository->getUnit($recipe->id_unit)->unitname;
         $recipeSteps = $this->stepRepository->getRecipeSteps($recipeId);
         $recipeImages = $this->imageRepository->getRecipeImages($recipeId);
         $recipeQuantities = $this->quantityRepository->getRecipeQuantities($recipeId);
 
         return view('recipes/recipe', [
             'recipe' => $recipe,
+            'recipeForUnitname' => $recipeForUnitname,
             'recipeSteps' => $recipeSteps,
             'recipeImages' => $recipeImages,
             'recipeQuantities' => $recipeQuantities,
