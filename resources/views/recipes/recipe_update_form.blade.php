@@ -406,7 +406,7 @@
         </div>
     </div>
 
-    <a class="fw-bold btn btn-secondary" href="{{ url()->previous() }}" role="button">
+    <a class="fw-bold btn btn-secondary" href="{{ route('dashboard.show', ['userId' => session()->get('user')['id']]) }}" role="button">
         Retour
     </a>
 </div>
