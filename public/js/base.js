@@ -21,13 +21,7 @@ $(document).ready(function () {
         $('.star-bottom').css('color', '');
     });
 
-    // for stars at the top of recipe page
-
-
-    // for stars at the top of recipe page
-    
-
-
+    // for stars at the top and in comments section of recipe page
     $('.star-comment').each(function() {
         if ($(this).hasClass('good')) {
             var rating = parseInt($(this).attr('data-rating'));
