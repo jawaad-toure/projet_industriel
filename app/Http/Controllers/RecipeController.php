@@ -12,6 +12,7 @@ use App\Repositories\ImageRepository;
 use App\Repositories\RecipeRepository;
 use App\Repositories\QuantityRepository;
 use App\Repositories\IngredientRepository;
+use App\Repositories\StarCommentRepository;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
@@ -26,8 +27,9 @@ class RecipeController extends Controller
     protected $imageRepository;
     protected $unitRepository;
     protected $quantityRepository;
+    protected $starcommentRepository;
 
-    public function __construct(RecipeRepository $recipeRepository, IngredientRepository $ingredientRepository, StepRepository $stepRepository, ImageRepository $imageRepository, UnitRepository $unitRepository, QuantityRepository $quantityRepository)
+    public function __construct(RecipeRepository $recipeRepository, IngredientRepository $ingredientRepository, StepRepository $stepRepository, ImageRepository $imageRepository, UnitRepository $unitRepository, QuantityRepository $quantityRepository, StarCommentRepository $starcommentRepository)
     {
         $this->recipeRepository = $recipeRepository;
         $this->ingredientRepository = $ingredientRepository;
@@ -35,6 +37,7 @@ class RecipeController extends Controller
         $this->imageRepository = $imageRepository;
         $this->unitRepository = $unitRepository;
         $this->quantityRepository = $quantityRepository;
+        $this->starcommentRepository = $starcommentRepository;
     }
 
     /** views preview function */
@@ -65,6 +68,11 @@ class RecipeController extends Controller
         $recipeSteps = $this->stepRepository->getRecipeSteps($recipeId);
         $recipeImages = $this->imageRepository->getRecipeImages($recipeId);
         $recipeQuantities = $this->quantityRepository->getRecipeQuantities($recipeId);
+        $recipeStarscomments = $this->starcommentRepository->getStarsComments($recipeId);
+        $recipeCommentsCount = $this->starcommentRepository->getCommentsCount($recipeId);
+        $recipeAverageStars = $this->starcommentRepository->getAverageStars($recipeId);
+
+        // dump($recipeStarscomments->avatar);
 
         return view('recipes/recipe', [
             'recipe' => $recipe,
@@ -72,6 +80,9 @@ class RecipeController extends Controller
             'recipeSteps' => $recipeSteps,
             'recipeImages' => $recipeImages,
             'recipeQuantities' => $recipeQuantities,
+            'recipeStarscomments' => $recipeStarscomments,
+            'recipeCommentsCount' => $recipeCommentsCount,
+            'recipeAverageStars' => $recipeAverageStars,
         ]);
     }
 

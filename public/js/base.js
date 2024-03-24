@@ -13,11 +13,28 @@ $(document).ready(function () {
         $(".btn-on").addClass("btn-secondary").removeClass("btn-success");
     });
 
-    $('.star').hover(function(){
-        var rating = $(this).data('rating');
-        $('.star:lt(' + rating + ')').css('color', 'yellow');
+    // for stars at the bottom of recipe page
+    $('.star-bottom').hover(function(){
+        var rating_bottom = $(this).data('rating');
+        $('.star-bottom:lt(' + rating_bottom + ')').css('color', 'yellow');
     }, function(){
-        $('.star').css('color', '');
+        $('.star-bottom').css('color', '');
+    });
+
+    // for stars at the top of recipe page
+
+
+    // for stars at the top of recipe page
+    
+
+
+    $('.star-comment').each(function() {
+        if ($(this).hasClass('good')) {
+            var rating = parseInt($(this).attr('data-rating'));
+            for (var i = 1; i <= rating; i++) {
+                $(this).parent().find('[data-rating="' + i + '"]').css('color', 'yellow');
+            }
+        }
     });
     
 });

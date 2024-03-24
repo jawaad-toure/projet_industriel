@@ -29,8 +29,12 @@ class StarCommentController extends Controller
     /**
      * 
      */
-    public function showStarCommentForm(int $recipeId)
+    public function showStarCommentForm(Request $request, int $recipeId)
     {
+        if (!$request->session()->has('user')) {
+            return redirect()->route('signin.show');
+        }
+
         return view('stars_comments/star_comment_form', ['recipeId' => $recipeId]);
     }
 

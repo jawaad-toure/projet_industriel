@@ -83,7 +83,7 @@
             </div>
 
             <div class="d-flex justify-content-center alig-items-center gap-2">
-                <a class="fw-bold btn btn-secondary" href="{{ url()->previous() }}" role="button">
+                <a class="fw-bold btn btn-secondary" href="{{ route('recipe.show', ['recipeId' => $recipeId]) }}" role="button">
                     Retour
                 </a>
 

@@ -17,15 +17,17 @@
     color: #d9534f !important;
 }
 
-.star {
+/* css for stars at the top of recipe page */
+
+.star-bottom {
     cursor: pointer;
 }
 
-#rating a {
+#rating-bottom a {
     text-decoration: none;
     color: inherit;
 }
 
-#rating a:hover {
+#rating-bottom a:hover {
     color: inherit;
 }
