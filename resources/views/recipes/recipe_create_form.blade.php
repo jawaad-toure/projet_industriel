@@ -100,7 +100,7 @@
 
                 <!-- for -->
                 <div class="my-2">
-                    <input type="number" name="for" value="{{ old('for') }}" placeholder="10" aria-describedby="for_feedback" class="col form-control py-3 shadow-none @error('for') is-invalid @enderror">
+                    <input type="number" min="0" name="for" value="{{ old('for') }}" placeholder="10" aria-describedby="for_feedback" class="col form-control py-3 shadow-none @error('for') is-invalid @enderror">
                 </div>
 
                 <!-- recipe unitname -->

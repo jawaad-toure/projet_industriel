@@ -58,9 +58,6 @@ class StarCommentController extends Controller
 
         $validatedData = $request->validate($rules, $messages);
 
-        // dump($validatedData);
-
-
         try {
             $userId = $this->recipeRepository->getRecipe($recipeId)->id_user;
 
@@ -70,8 +67,8 @@ class StarCommentController extends Controller
             $this->starCommentRepository->addStarComment(
                 intval($validatedData['rating']),
                 $validatedData['comment'],
-                $userId,
                 $recipeId,
+                $userId,
             );
 
         } catch (Exception $e) {

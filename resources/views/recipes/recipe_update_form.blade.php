@@ -120,7 +120,7 @@
 
                 <!-- for -->
                 <div class="my-2">
-                    <input type="number" name="for" value="{{ $recipe->for }}" placeholder="10" aria-describedby="for_feedback" class="col form-control shadow-none @error('for') is-invalid @enderror">
+                    <input type="number" min="0" name="for" value="{{ $recipe->for }}" placeholder="10" aria-describedby="for_feedback" class="col form-control shadow-none @error('for') is-invalid @enderror">
                 </div>
 
                 <!-- recipe unitname -->
@@ -190,7 +190,7 @@
                         </div>
 
                         <div class="d-flex flex-column">
-                            <input type="number" step="any" name="quantity" value="{{ old('quantity') }}" placeholder="100.00" aria-describedby="quantity_feedback" class="col form-control shadow-none @error('quantity') is-invalid @enderror">
+                            <input type="number" min="0" step="any" name="quantity" value="{{ old('quantity') }}" placeholder="100.00" aria-describedby="quantity_feedback" class="col form-control shadow-none @error('quantity') is-invalid @enderror">
                         </div>
 
                         <div class="d-flex flex-column">

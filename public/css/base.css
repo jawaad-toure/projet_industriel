@@ -31,3 +31,7 @@
 #rating-bottom a:hover {
     color: inherit;
 }
+
+.stroke-black {
+    -webkit-text-stroke: 2px black;
+}

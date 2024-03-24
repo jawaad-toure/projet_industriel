@@ -211,7 +211,7 @@
                 </div>
 
                 <div class="d-flex justify-content-center align-item-center gap-2">
-                    <a type="button" href="{{ route('recipe.show', ['recipeId' => $userRecipe->id]) }}" class="btn btn-secondary d-flex justify-content-center align-items-center">
+                    <a type="button" href="{{ route('recipe.show', ['recipeId' => $userRecipe->id]) }}" class="btn btn-secondary d-flex justify-content-center align-items-center @if ($userRecipe->completed === 0) disabled @endif">
                         <i class="bi bi-eye"></i>
                     </a>
 

@@ -72,7 +72,7 @@
 
             <!-- comment -->
             <div class="">
-                <textarea type="text" name="comment" placeholder="Laissez un commentaire" aria-describedby="comment_feedback" class="my-2 form-control shadow-none @error('comment') is-invalid @enderror">{{ old('description') }}</textarea>
+                <textarea type="text" name="comment" placeholder="Laissez un commentaire" aria-describedby="comment_feedback" class="my-2 form-control shadow-none @error('comment') is-invalid @enderror"></textarea>
 
                 @error('comment')
                 <div id="comment_feedback" class="invalid-feedback">

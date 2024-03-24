@@ -6,7 +6,7 @@
 
     <div class="d-flex justify-content-between mb-3 px-md-5">
         <div class="d-flex justify-content-center align-items-center gap-2">
-            <div class="d-flex justify-content-center align-items-center gap-1" id="rating-top">
+            <div class="d-flex justify-content-center align-items-center gap-1 pb-1" id="rating-top">
                 <span class="star-comment fs-4 {{ $recipeAverageStars >= '1' ? 'good' : '' }}" data-rating="1">&#9733;</span>
                 <span class="star-comment fs-4 {{ $recipeAverageStars >= '2' ? 'good' : '' }}" data-rating="2">&#9733;</span>
                 <span class="star-comment fs-4 {{ $recipeAverageStars >= '3' ? 'good' : '' }}" data-rating="3">&#9733;</span>
@@ -14,12 +14,12 @@
                 <span class="star-comment fs-4 {{ $recipeAverageStars >= '5' ? 'good' : '' }}" data-rating="5">&#9733;</span>
             </div>
 
-            <div class="d-flex justify-content-center align-items-center pt-1">
+            <div class="d-flex justify-content-center align-items-center">
                 {{ number_format($recipeAverageStars, 1) }}/5
             </div>
         </div>
 
-        <div class="d-flex gap-2">
+        <div class="d-flex justify-content-center align-items-center gap-2">
             <i class="bi bi-chat-left-text-fill"></i> @if ($recipeCommentsCount < 2) {{ $recipeCommentsCount }} commentaire @else {{ $recipeCommentsCount }} commentaires @endif </div>
         </div>
 

@@ -64,6 +64,11 @@ class RecipeController extends Controller
     public function showRecipe(int $recipeId)
     {
         $recipe = $this->recipeRepository->getRecipe($recipeId);
+        
+        if ($recipe->completed === 0) {
+
+        }
+
         $recipeForUnitname = $this->unitRepository->getUnit($recipe->id_unit)->unitname;
         $recipeSteps = $this->stepRepository->getRecipeSteps($recipeId);
         $recipeImages = $this->imageRepository->getRecipeImages($recipeId);
@@ -71,8 +76,6 @@ class RecipeController extends Controller
         $recipeStarscomments = $this->starcommentRepository->getStarsComments($recipeId);
         $recipeCommentsCount = $this->starcommentRepository->getCommentsCount($recipeId);
         $recipeAverageStars = $this->starcommentRepository->getAverageStars($recipeId);
-
-        // dump($recipeStarscomments->avatar);
 
         return view('recipes/recipe', [
             'recipe' => $recipe,
