@@ -12,6 +12,7 @@ use App\Repositories\AuthRepository;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Mail;
 use App\Repositories\RecipeRepository;
+use App\Repositories\StarCommentRepository;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -24,11 +25,13 @@ class AuthController extends BaseController
 
     protected $authRepository;
     protected $recipeRepository;
+    protected $starcommentRepository;
 
-    public function __construct(AuthRepository $authRepository, RecipeRepository $recipeRepository)
+    public function __construct(AuthRepository $authRepository, RecipeRepository $recipeRepository, StarCommentRepository $starcommentRepository)
     {
         $this->authRepository = $authRepository;
         $this->recipeRepository = $recipeRepository;
+        $this->starcommentRepository = $starcommentRepository;
     }
 
     /** views preview function */
@@ -53,10 +56,13 @@ class AuthController extends BaseController
 
         $user = $this->authRepository->getUser($userId);
         $userRecipes = $this->recipeRepository->getUserRecipes($userId);
+        $userRecipesCommented = $this->starcommentRepository->getUserRecipesCommented($userId);
+        // dump($userRecipes);
 
         return view('users/user_dashboard', [
             'user' => $user, 
-            'userRecipes' => $userRecipes
+            'userRecipes' => $userRecipes,
+            'userRecipesCommented' => $userRecipesCommented,
         ]);
     }
 

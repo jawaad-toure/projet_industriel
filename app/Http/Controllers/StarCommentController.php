@@ -59,11 +59,16 @@ class StarCommentController extends Controller
         $validatedData = $request->validate($rules, $messages);
 
         try {
-            $userId = $this->recipeRepository->getRecipe($recipeId)->id_user;
-
-            if (!isset($validatedData['rating']) || $validatedData['rating'] == 0)
+            if (!isset($validatedData['rating']) || $validatedData['rating'] == 0) {
                 return redirect()->back()->withInput()->with("star_comment_info", "Vous devez sélectionner une note");
+            }
 
+            if ($this->starCommentRepository->hasUserAlreadyRatedThisRecipe($recipeId, $request->session()->get('user')['id'])) {
+                return redirect()->back()->withInput()->with("star_comment_info", "Vous avez déjà évalué cette recette");
+            }
+                
+            $userId = $this->recipeRepository->getRecipe($recipeId)->id_user;
+                
             $this->starCommentRepository->addStarComment(
                 intval($validatedData['rating']),
                 $validatedData['comment'],
@@ -76,5 +81,20 @@ class StarCommentController extends Controller
         }
 
         return redirect()->back()->with('star_comment_success', "Votre évaluation a été bien prise en compte");
+    }
+
+
+    /**
+     * 
+     */
+    public function deleteStarComment(int $userId, int $starCommentId)
+    {  
+        try {
+            $this->starCommentRepository->deleteStarComment($starCommentId);
+        } catch (Exception $e) {
+            return redirect()->back()->withInput()->with("star_comment_warning", "Echec de la suppression de votre commentaire");
+        }
+
+        return redirect()->back()->with('star_comment_success', "Votre commentare a été bien supprimé");
     }
 }

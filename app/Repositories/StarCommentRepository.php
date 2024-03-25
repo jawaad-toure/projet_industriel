@@ -18,10 +18,10 @@ final class StarCommentRepository
     }
 
 
-    public function getStarsComments(int $id_recipe)
+    public function getStarsComments(int $recipeId)
     {
         return StarComment::join('users', 'stars_comments.id_user', '=', 'users.id')
-            ->where('id_recipe', $id_recipe)
+            ->where('id_recipe', $recipeId)
             ->get([
                 'stars_comments.stars as stars',
                 'stars_comments.comment as comment',
@@ -31,13 +31,24 @@ final class StarCommentRepository
     }
 
 
-    public function getAverageStars(int $id_recipe)
+    public function getAverageStars(int $recipeId)
     {
-        return StarComment::where('id_recipe', $id_recipe)
+        return StarComment::where('id_recipe', $recipeId)
             ->whereNotNull('stars')
             ->avg('stars');
     }
 
+
+    public function getUserRecipesCommented(int $userId)
+    {
+        return StarComment::join('recipes', 'stars_comments.id_recipe', '=','recipes.id')
+            ->where('stars_comments.id_user', $userId)
+            ->whereNotNull('comment')
+            ->get([
+               'recipes.recipename as recipename',
+               'stars_comments.id as id',
+            ]);
+    }
 
 
     public function getStarComment(int $starCommentId)
@@ -47,21 +58,36 @@ final class StarCommentRepository
     }
 
 
-    public function getCommentsCount(int $id_recipe)
+    public function getCommentsCount(int $recipeId)
     {
-        return StarComment::where('id_recipe', $id_recipe)
+        return StarComment::where('id_recipe', $recipeId)
             ->whereNotNull('comment')
             ->count();
     }
 
 
-    public function getStarCommentId(string $comment, int $id_user)
+    public function getStarCommentId(string $comment, int $userId)
     {
         $starComment = StarComment::firstOrCreate([
             'comment' => $comment,
-            'id_user' => $id_user,
+            'id_user' => $userId,
         ]);
 
         return $starComment->id;
+    }
+
+
+    public function hasUserAlreadyRatedThisRecipe(int $recipeId, int $userId)
+    {
+        return StarComment::where('id_recipe', $recipeId)
+            ->where('id_user', $userId)
+            ->exists();
+    }
+
+
+    public function deleteStarComment(int $starCommentId)
+    {
+        StarComment::where('id', $starCommentId)
+            ->delete();
     }
 }

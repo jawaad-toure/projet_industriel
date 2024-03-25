@@ -163,7 +163,7 @@ Route::put('/dashboard/{userId}/{recipeId}/private', [RecipeController::class, '
     ->where('recipeId', '[0-9]+')
     ->name('recipeSetOnPrivate.update');
 
-Route::delete('/dashboard/{userId}/{recipeId}', [RecipeController::class, 'deleteRecipe'])
+Route::delete('/dashboard/{userId}/{recipeId}/delete-recipe', [RecipeController::class, 'deleteRecipe'])
     ->where('userId', '[0-9]+')
     ->where('recipeId', '[0-9]+')
     ->name('recipe.delete');
@@ -231,5 +231,10 @@ Route::get('/recipes/{recipeId}/rate', [StarCommentController::class, 'showStarC
 Route::post('/recipes/{recipeId}/rate', [StarCommentController::class, 'insertStarComment'])
     ->where('recipeId', '[0-9]+')
     ->name('starComment.post');
+
+Route::delete('/dashboard/{userId}/{starCommentId}/delete-comment', [StarCommentController::class, 'deleteStarComment'])
+    ->where('userId', '[0-9]+')
+    ->where('starCommentId', '[0-9]+')
+    ->name('starComment.delete');
 
 
