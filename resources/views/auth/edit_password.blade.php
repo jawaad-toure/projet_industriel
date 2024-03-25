@@ -6,7 +6,7 @@
 
     <div class="d-flex flex-column align-items-center">
 
-        <h1 class="text-center py-4">Nouveau de mot de passe</h1>
+        <h1 class="fw-bold text-center py-4">Nouveau de mot de passe</h1>
 
         <form method="POST" action="{{ route('editPassword.post', ['userId' => $userId]) }}" class="col-sm-4">
             @csrf
@@ -44,7 +44,7 @@
             </div>
 
             <div class="d-grid">
-                <button type="submit" class="fw-bold btn btn-success my-2">Valider</button>
+                <button type="submit" class="fw-bold btn btn-success my-2 py-3">Valider</button>
             </div>
         </form>
 

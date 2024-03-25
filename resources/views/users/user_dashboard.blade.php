@@ -160,7 +160,7 @@
 
     <!-- Recettes -->
     <div class="my-3">
-        <div class="d-flex justify-content-between border-bottom py-2 mb-3">
+        <div class="d-flex justify-content-between border-bottom py-3 mb-3">
             <div class="fw-bold fs-5 align-self-center">
                 Recettes
             </div>

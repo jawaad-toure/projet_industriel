@@ -6,7 +6,7 @@
 
     <div class="d-flex flex-column align-items-center">
 
-        <h1 class="text-center py-4">Authentification</h1>
+        <h1 class="fw-bold text-center py-4">Authentification</h1>
 
         <form method="POST" action="{{ route('forgotPassword.post') }}" class="col-sm-4">
             @csrf
@@ -34,7 +34,7 @@
             </div>
 
             <div class="d-grid">
-                <button type="submit" class="fw-bold btn btn-success my-2">Envoyer</button>
+                <button type="submit" class="fw-bold btn btn-success my-2 py-3">Envoyer</button>
             </div>
         </form>
 
