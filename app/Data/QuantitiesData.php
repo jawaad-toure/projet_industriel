@@ -7,6 +7,7 @@ class QuantitiesData
     public function quantities()
     {
         return [
+            // ingredients quantities for recipe 1
             [
                 "quantity" => 1,
                 "id_unit" => 6,
@@ -60,6 +61,74 @@ class QuantitiesData
                 "id_unit" => 10,
                 "id_ingredient" => 108,
                 "id_recipe" => 1,
+            ],
+
+            // ingredients quantities for recipe 10
+            [
+                "quantity" => 1,
+                "id_unit" => 4,
+                "id_ingredient" => 110,
+                "id_recipe" => 10,
+            ],
+            [
+                "quantity" => 3,
+                "id_unit" => 4,
+                "id_ingredient" => 5,
+                "id_recipe" => 10,
+            ],
+            [
+                "quantity" => 7,
+                "id_unit" => 4,
+                "id_ingredient" => 5,
+                "id_recipe" => 10,
+            ],
+            [
+                "quantity" => 1,
+                "id_unit" => 3,
+                "id_ingredient" => 111,
+                "id_recipe" => 10,
+            ],
+            [
+                "quantity" => 200,
+                "id_unit" => 1,
+                "id_ingredient" => 112,
+                "id_recipe" => 10,
+            ],
+            [
+                "quantity" => 50,
+                "id_unit" => 1,
+                "id_ingredient" => 79,
+                "id_recipe" => 10,
+            ],
+            [
+                "quantity" => 50,
+                "id_unit" => 1,
+                "id_ingredient" => 64,
+                "id_recipe" => 10,
+            ],
+            [
+                "quantity" => 50,
+                "id_unit" => 1,
+                "id_ingredient" => 113,
+                "id_recipe" => 10,
+            ],
+            [
+                "quantity" => 50,
+                "id_unit" => 1,
+                "id_ingredient" => 58,
+                "id_recipe" => 10,
+            ],
+            [
+                "quantity" => 50,
+                "id_unit" => 1,
+                "id_ingredient" => 114,
+                "id_recipe" => 10,
+            ],
+            [
+                "quantity" => 50,
+                "id_unit" => 1,
+                "id_ingredient" => 58,
+                "id_recipe" => 10,
             ],
         ];
     }
