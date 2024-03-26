@@ -71,12 +71,6 @@ class QuantitiesData
                 "id_recipe" => 10,
             ],
             [
-                "quantity" => 3,
-                "id_unit" => 4,
-                "id_ingredient" => 5,
-                "id_recipe" => 10,
-            ],
-            [
                 "quantity" => 7,
                 "id_unit" => 4,
                 "id_ingredient" => 5,

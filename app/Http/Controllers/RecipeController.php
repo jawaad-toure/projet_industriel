@@ -10,6 +10,7 @@ use App\Repositories\StepRepository;
 use App\Repositories\UnitRepository;
 use App\Repositories\ImageRepository;
 use App\Repositories\RecipeRepository;
+use App\Repositories\FavoriteRepository;
 use App\Repositories\QuantityRepository;
 use App\Repositories\IngredientRepository;
 use App\Repositories\StarCommentRepository;
@@ -28,9 +29,18 @@ class RecipeController extends Controller
     protected $unitRepository;
     protected $quantityRepository;
     protected $starcommentRepository;
+    protected $favoriteRepository;
 
-    public function __construct(RecipeRepository $recipeRepository, IngredientRepository $ingredientRepository, StepRepository $stepRepository, ImageRepository $imageRepository, UnitRepository $unitRepository, QuantityRepository $quantityRepository, StarCommentRepository $starcommentRepository)
-    {
+    public function __construct(
+        RecipeRepository $recipeRepository,
+        IngredientRepository $ingredientRepository,
+        StepRepository $stepRepository,
+        ImageRepository $imageRepository,
+        UnitRepository $unitRepository,
+        QuantityRepository $quantityRepository,
+        StarCommentRepository $starcommentRepository,
+        FavoriteRepository $favoriteRepository,
+    ) {
         $this->recipeRepository = $recipeRepository;
         $this->ingredientRepository = $ingredientRepository;
         $this->stepRepository = $stepRepository;
@@ -38,6 +48,7 @@ class RecipeController extends Controller
         $this->unitRepository = $unitRepository;
         $this->quantityRepository = $quantityRepository;
         $this->starcommentRepository = $starcommentRepository;
+        $this->favoriteRepository = $favoriteRepository;
     }
 
     /** views preview function */
@@ -61,13 +72,11 @@ class RecipeController extends Controller
     /**
      * 
      */
-    public function showRecipe(int $recipeId)
+    public function showRecipe(Request $request, int $recipeId)
     {
         $recipe = $this->recipeRepository->getRecipe($recipeId);
-        
-        if ($recipe->completed === 0) {
 
-        }
+        $isRecipeInFavorites = $this->favoriteRepository->isRecipeInFavorites($request->session()->get('user')['id'], $recipeId);
 
         $recipeForUnitname = $this->unitRepository->getUnit($recipe->id_unit)->unitname;
         $recipeSteps = $this->stepRepository->getRecipeSteps($recipeId);
@@ -86,6 +95,7 @@ class RecipeController extends Controller
             'recipeStarscomments' => $recipeStarscomments,
             'recipeCommentsCount' => $recipeCommentsCount,
             'recipeAverageStars' => $recipeAverageStars,
+            'isRecipeInFavorites' => $isRecipeInFavorites,
         ]);
     }
 

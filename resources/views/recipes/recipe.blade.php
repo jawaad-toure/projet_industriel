@@ -1,35 +1,36 @@
 @extends('base')
 
 @section('content')
-<div class="row gy-4 mb-5">
-    <h1 class="text-center fw-bold my-5">{{ $recipe->recipename }}</h1>
+<div class="row gy-1 mb-5">
+    <h1 class="text-center fw-bold mt-5">{{ $recipe->recipename }}</h1>
 
-    <div class="d-flex justify-content-between mb-3 px-md-5">
-        <div class="d-flex justify-content-center align-items-center gap-2">
-            <div class="d-flex justify-content-center align-items-center gap-1 pb-1" id="rating-top">
-                <span class="star-comment fs-4 {{ $recipeAverageStars >= '1' ? 'good' : '' }}" data-rating="1">&#9733;</span>
-                <span class="star-comment fs-4 {{ $recipeAverageStars >= '2' ? 'good' : '' }}" data-rating="2">&#9733;</span>
-                <span class="star-comment fs-4 {{ $recipeAverageStars >= '3' ? 'good' : '' }}" data-rating="3">&#9733;</span>
-                <span class="star-comment fs-4 {{ $recipeAverageStars >= '4' ? 'good' : '' }}" data-rating="4">&#9733;</span>
-                <span class="star-comment fs-4 {{ $recipeAverageStars >= '5' ? 'good' : '' }}" data-rating="5">&#9733;</span>
+    <div class="d-flex flex-column gap-2 mb-3 px-md-4">
+        <div class="d-flex justify-content-between align-items-center">
+            <div class="d-flex justify-content-center align-items-center gap-2">
+                <div class="d-flex justify-content-center align-items-center gap-1 pb-1" id="rating-top">
+                    <span class="star-comment fs-4 {{ $recipeAverageStars >= '1' ? 'good' : '' }}" data-rating="1">&#9733;</span>
+                    <span class="star-comment fs-4 {{ $recipeAverageStars >= '2' ? 'good' : '' }}" data-rating="2">&#9733;</span>
+                    <span class="star-comment fs-4 {{ $recipeAverageStars >= '3' ? 'good' : '' }}" data-rating="3">&#9733;</span>
+                    <span class="star-comment fs-4 {{ $recipeAverageStars >= '4' ? 'good' : '' }}" data-rating="4">&#9733;</span>
+                    <span class="star-comment fs-4 {{ $recipeAverageStars >= '5' ? 'good' : '' }}" data-rating="5">&#9733;</span>
+                </div>
+
+                <div class="d-flex justify-content-center align-items-center">
+                    {{ number_format($recipeAverageStars, 1) }}/5
+                </div>
             </div>
 
-            <div class="d-flex justify-content-center align-items-center">
-                {{ number_format($recipeAverageStars, 1) }}/5
+            <div class="d-flex justify-content-center align-items-center gap-2">
+                <i class="bi bi-chat-left-text-fill"></i> @if ($recipeCommentsCount < 2) {{ $recipeCommentsCount }} commentaire @else {{ $recipeCommentsCount }} commentaires @endif </div>
             </div>
         </div>
 
-        <div class="d-flex justify-content-center align-items-center gap-2">
-            <i class="bi bi-chat-left-text-fill"></i> @if ($recipeCommentsCount < 2) {{ $recipeCommentsCount }} commentaire @else {{ $recipeCommentsCount }} commentaires @endif </div>
-        </div>
-
-
-        <div class="row gy-3 mb-5">
+        <div class="d-flex flex-column gap-3">
             <div id="carouselExampleIndicators" class="carousel slide">
-                <div class="carousel-inner">
+                <div class="carousel-inner border rounded">
                     @foreach ($recipeImages as $key => $recipeImage)
                     <div class="carousel-item @if ($key === 0) active @endif">
-                        <img src="{{ asset($recipeImage->image) }}" class="d-block w-100 object-fit-contain" height="500" alt="Image de recette de cuisine">
+                        <img src="{{ asset($recipeImage->image) }}" class="d-block w-100 object-fit-cover" height="700" alt="Image de recette de cuisine">
                     </div>
                     @endforeach
                 </div>
@@ -53,11 +54,11 @@
                     </span></i>{{ $recipe->category }}
                 </div>
                 <div class="d-flex gap-2">
-                    <form method="POST" action="">
+                    <form id="favoriteForm" method="POST" action="{{ route( 'favorite.post', ['recipeId' => $recipe->id] ) }}">
                         @csrf
 
-                        <button type="button" class="btn d-flex justify-content-center align-items-center border border-0">
-                            <i class="bi bi-heart"></i>
+                        <button id="heartButton" type="submit" class="btn d-flex justify-content-center align-items-center border border-0">
+                            <i class="@if ($isRecipeInFavorites) bi bi-heart-fill @else bi bi-heart @endif"></i>
                         </button>
                     </form>
                 </div>
@@ -76,11 +77,11 @@
             <h3 class="text-center fw-bold">Ingrédients</h3>
 
             <div class="d-flex justify-content-center align-items-center gap-3">
-                <button type="button" class="btn d-flex justify-content-center align-items-center border border-0">
+                <button type="button" class="btn d-flex justify-content-center align-items-center border border-0" onclick="decrement()">
                     <i class="bi bi-dash-square-fill"></i>
                 </button>
-                {{ $recipe->for }} @if ($recipe->for > 1) {{ $recipeForUnitname }}s @else {{ $recipeForUnitname }} @endif
-                <button type="button" class="btn d-flex justify-content-center align-items-center border border-0">
+                <span id="recipeFor" data-initial="{{ $recipe->for }}">{{ $recipe->for }}</span> @if ($recipe->for > 1) {{ $recipeForUnitname }}s @else {{ $recipeForUnitname }} @endif
+                <button type="button" class="btn d-flex justify-content-center align-items-center border border-0" onclick="increment()">
                     <i class="bi bi-plus-square-fill"></i>
                 </button>
             </div>
@@ -88,14 +89,14 @@
             <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 gx-3 gy-3">
                 @foreach ($recipeQuantities as $recipeQuantity)
                 <div class="d-flex flex-column justify-content-center align-items-center gap-1 mt-5">
-                    <div class="fw-semibold">
-                        {{ number_format($recipeQuantity->quantity, $recipeQuantity->quantity == (int)$recipeQuantity->quantity ? 0 : 2) }} @if ($recipeQuantity->quantity > 1) {{ $recipeQuantity->unitname }}s @else {{ $recipeQuantity->unitname }} @endif
+                    <div class="fw-semibold ingredient-quantity" data-initial="{{ $recipeQuantity->quantity }}" data-unit="{{ $recipeQuantity->unitname }}">
+                        {{ number_format($recipeQuantity->quantity * $recipe->for, $recipeQuantity->quantity == (int)$recipeQuantity->quantity ? 0 : 2) }} <!-- @if ($recipeQuantity->quantity > 1) {{ $recipeQuantity->unitname }}s @else {{ $recipeQuantity->unitname }} @endif -->
                     </div>
                     <div class="">
                         {{ $recipeQuantity->ingredientname }}
                     </div>
                     <div class="">
-                        {{ number_format($recipeQuantity->calorie, $recipeQuantity->calorie == (int)$recipeQuantity->calorie ? 0 : 2) }} @if ($recipeQuantity->calorie > 1) calories @else calorie @endif
+                        {{ number_format($recipeQuantity->calorie * $recipe->for, $recipeQuantity->calorie == (int)$recipeQuantity->calorie ? 0 : 2) }} @if ($recipeQuantity->calorie > 1) calories @else calorie @endif
                     </div>
                 </div>
                 @endforeach
@@ -105,7 +106,7 @@
         <div class="row gy-3 mb-5">
             <h3 class="text-center fw-bold">Préparation</h3>
 
-            <div class="row gy-3">
+            <div class="row gy-3 gx-5">
                 @foreach ($recipeSteps as $recipeStep)
                 <div class="text-start">
                     {{ $recipeStep->description }}
@@ -114,7 +115,7 @@
             </div>
         </div>
 
-        <div class="row gy-3 mb-5">
+        <div class="row gy-3 mb-5 gx-5">
             <h3 class="text-center fw-bold">Votre avis nous intéresse</h3>
 
             <div class="d-flex justify-content-center align-items-center gap-3" id="rating-bottom">
@@ -140,7 +141,7 @@
             </div>
         </div>
 
-        <div class="row gy-3 mb-5">
+        <div class="row gy-3 mb-5 gx-5">
             <h3 class="text-center fw-bold">Commentaires</h3>
 
             <div class="row gy-3">

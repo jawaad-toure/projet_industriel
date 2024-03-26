@@ -92,6 +92,12 @@
     <!-- js for recipe form -->
     <script src="{{ asset('js/recipe_form.js') }}"></script>
 
+    <!-- js for favorite -->
+    <script src="{{ asset('js/update_quantities.js') }}"></script>
+
+    <!-- js for favorite -->
+    <script src="{{ asset('js/prevent_page_reload.js') }}"></script>
+
 </body>
 
 </html>

@@ -40,26 +40,5 @@ class IngredientController extends Controller
 
     /** controllers functions */
 
-    public function insertIngredients(Request $request, int $userId)
-    {
-        $rules = [
-            'ingredientname' => ['required'],
-            'quantity' => ['required'],
-            'unitname' => ['required'],
-        ];
-
-        $messages = [
-            'ingredientname.*.required' => 'Vous devez ajouter un ingrédient',
-            'quantity.*.required' => 'Vous devez ajouter une quantité',
-            'unitname.*.required' => 'Vous devez ajouter une unité',
-        ];
-
-        $validatedData = $request->validate($rules, $messages);
-
-        // dump($validatedData);
-
-        return redirect()->back()->withInput()->with('ingredient_success', "Ingrédient.s ajouté.s avec succès");
-
-    }
     
 }

@@ -12,6 +12,7 @@ use App\Repositories\AuthRepository;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Mail;
 use App\Repositories\RecipeRepository;
+use App\Repositories\FavoriteRepository;
 use App\Repositories\StarCommentRepository;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
@@ -26,12 +27,18 @@ class AuthController extends BaseController
     protected $authRepository;
     protected $recipeRepository;
     protected $starcommentRepository;
+    protected $favoriteRepository;
 
-    public function __construct(AuthRepository $authRepository, RecipeRepository $recipeRepository, StarCommentRepository $starcommentRepository)
-    {
+    public function __construct(
+        AuthRepository $authRepository,
+        RecipeRepository $recipeRepository,
+        StarCommentRepository $starcommentRepository,
+        FavoriteRepository $favoriteRepository
+    ) {
         $this->authRepository = $authRepository;
         $this->recipeRepository = $recipeRepository;
         $this->starcommentRepository = $starcommentRepository;
+        $this->favoriteRepository=$favoriteRepository;
     }
 
     /** views preview function */
@@ -57,12 +64,14 @@ class AuthController extends BaseController
         $user = $this->authRepository->getUser($userId);
         $userRecipes = $this->recipeRepository->getUserRecipes($userId);
         $userRecipesCommented = $this->starcommentRepository->getUserRecipesCommented($userId);
+        $userFavoriteRecipes = $this->favoriteRepository->getUserFavoriteRecipes($userId);
         // dump($userRecipes);
 
         return view('users/user_dashboard', [
-            'user' => $user, 
+            'user' => $user,
             'userRecipes' => $userRecipes,
             'userRecipesCommented' => $userRecipesCommented,
+            'userFavoriteRecipes' => $userFavoriteRecipes,
         ]);
     }
 
@@ -448,7 +457,7 @@ class AuthController extends BaseController
     {
         ['email' => $userEmail, 'avatar' => $userAvatar] = $this->authRepository->getUser($userId);
         $this->authRepository->updateField($userEmail, 'avatar', null);
-        
+
         if (strcmp($userAvatar, "uploads/avatars/default_avatar.png") != 0) {
             File::delete($userAvatar);
         }
@@ -469,7 +478,7 @@ class AuthController extends BaseController
         if (!$request->session()->has('user')) {
             return redirect()->route('signin.show');
         }
-        
+
         $request->session()->forget('user');
         $this->authRepository->deleteUser($userId);
         return redirect()->route('signin.show');

@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\StepController;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\RecipeController;
+use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\QuantityController;
 use App\Http\Controllers\IngredientController;
 use App\Http\Controllers\StarCommentController;
@@ -237,4 +238,12 @@ Route::delete('/dashboard/{userId}/{starCommentId}/delete-comment', [StarComment
     ->where('starCommentId', '[0-9]+')
     ->name('starComment.delete');
 
+/** ------------------------------------------------------------------------------------------------ */
+/** stars and comment routes */
 
+Route::post('/recipes/{recipeId}/add-to-favorites', [FavoriteController::class, 'addFavorite'])->name('favorite.post');
+
+Route::delete('/dashboard/{userId}/{favoriteId}/delete-from-favorite', [FavoriteController::class, 'deleteFavorite'])
+    ->where('userId', '[0-9]+')
+    ->where('favoriteId', '[0-9]+')
+    ->name('favorite.delete');

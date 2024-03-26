@@ -186,7 +186,7 @@
             <div class="d-flex flex-sm-row flex-column justify-content-between border rounded p-2 gap-2">
                 <div class="d-flex align-items-center gap-3">
                     <div class="d-flex align-items-center">
-                        <form method="POST" action="{{ route('recipeSetOnPublic.update', ['userId' => session()->get('user')['id'], 'recipeId' => $userRecipe->id]) }}">
+                        <form id="visibilityOnForm" method="POST" action="{{ route('recipeSetOnPublic.update', ['userId' => session()->get('user')['id'], 'recipeId' => $userRecipe->id]) }}">
                             @csrf
                             @method('PUT')
 
@@ -195,7 +195,7 @@
                             </button>
                         </form>
 
-                        <form method="POST" action="{{ route('recipeSetOnPrivate.update', ['userId' => session()->get('user')['id'], 'recipeId' => $userRecipe->id]) }}">
+                        <form id="visibilityOffForm" method="POST" action="{{ route('recipeSetOnPrivate.update', ['userId' => session()->get('user')['id'], 'recipeId' => $userRecipe->id]) }}">
                             @csrf
                             @method('PUT')
 
@@ -248,9 +248,49 @@
             </div>
         </div>
 
+        <!-- notifications -->
+        @if (session('favorite_warning'))
+        <div class="alert alert-warning">
+            {{ session('favorite_warning') }} &#9785;
+        </div>
+        @endif
+
+        @if (session('favorite_success'))
+        <div class="alert alert-success">
+            {{ session('favorite_success') }} &#128578;
+        </div>
+        @endif
+
+        @if (count($userFavoriteRecipes) != 0)
+        <div class="d-flex flex-column gap-2">
+            @foreach ($userFavoriteRecipes as $favoriteRecipe)
+            <div class="d-flex flex-sm-row flex-column justify-content-between border rounded p-2 gap-2">
+                <div class="d-flex align-items-center fw-medium">
+                    {{ $favoriteRecipe->recipename }}
+                </div>
+
+                <div class="d-flex justify-content-center align-item-center gap-2">
+                    <a type="button" href="{{ route('recipe.show', ['recipeId' => $favoriteRecipe->id_recipe]) }}" class="btn btn-secondary d-flex justify-content-center align-items-center @if ($userRecipe->completed === 0) disabled @endif">
+                        <i class="bi bi-eye"></i>
+                    </a>
+
+                    <form method="POST" action="{{ route('favorite.delete', ['userId' => session()->get('user')['id'], 'favoriteId' => $favoriteRecipe->id]) }}">
+                        @csrf
+                        @method('DELETE')
+
+                        <button type="submit" class="btn btn-danger d-flex justify-content-center align-items-center">
+                            <i class="bi bi-trash-fill"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+            @endforeach
+        </div>
+        @else
         <div class="text-center">
             Aucune recette ajoutée en favoris
         </div>
+        @endif
     </div>
 
     <!-- Commentaires -->

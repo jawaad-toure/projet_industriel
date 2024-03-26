@@ -7,7 +7,7 @@
     <h1 class="text-center fw-bold">Laissez un avis</h1>
 
     <!-- recipe form -->
-    <form method="POST" action="{{ route('starComment.post', ['recipeId' => $recipeId]) }}" class="col-md-7">
+    <form id="starCommentForm" method="POST" action="{{ route('starComment.post', ['recipeId' => $recipeId]) }}" class="col-md-7">
         @csrf
 
         <div class="mb-5 d-flex flex-column gap-3">
