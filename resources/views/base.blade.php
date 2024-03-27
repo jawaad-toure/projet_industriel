@@ -5,16 +5,16 @@
     <title>The Cook Talk</title>
     <!-- bootstrap cdn -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    
+
     <!-- bootstrap icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    
+
     <!-- personal css (public/css/base.css) -->
     <link rel="stylesheet" href="{{ asset('css/base.css') }}">
     <link rel="stylesheet" href="{{ asset('css/dashboard_switch_button.css') }}">
     <link rel="stylesheet" href="{{ asset('css/rating_stars.css') }}">
     <link rel="stylesheet" href="{{ asset('css/home.css') }}">
-    
+
     <!-- jquery -->
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
 
@@ -29,19 +29,26 @@
         <div class="d-flex align-items-center justify-content-between">
             <a href="/" class="fs-5 fw-bold my-0 link-dark link-underline link-underline-opacity-0">TheCookTalk</a>
 
-            <nav class="my-2 my-md-0 mr-md-3">
-                <div class="dropdown-center">
-                    <a class="p-2 text-dark text-decoration-none dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" data-bs-offset="10,15" aria-expanded="false">
-                        Recettes
-                    </a>
+            <nav class="d-flex align-items-center justify-content-center gap-5 my-2 my-md-0 mr-md-3">
+                <a class="p-2 fw-semibold text-dark text-decoration-none" href="{{ route('recipes.show') }}">
+                    Recettes
+                </a>
 
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item active-effect-disabled" href="#">Plats</a></li>
-                        <li><a class="dropdown-item active-effect-disabled" href="#">Entrées</a></li>
-                        <li><a class="dropdown-item active-effect-disabled" href="#">Desserts</a></li>
-                        <li><a class="dropdown-item active-effect-disabled" href="#">Boissons</a></li>
-                    </ul>
-                </div>
+                <a class="p-2 fw-semibold text-dark text-decoration-none" href="#">
+                    Plats
+                </a>
+
+                <a class="p-2 fw-semibold text-dark text-decoration-none" href="#">
+                    Entrées
+                </a>
+
+                <a class="p-2 fw-semibold text-dark text-decoration-none" href="#">
+                    Desserts
+                </a>
+
+                <a class="p-2 fw-semibold text-dark text-decoration-none" href="#">
+                    Boissons
+                </a>
             </nav>
 
             @if (session()->has('user'))
@@ -86,7 +93,7 @@
 
     <!-- bootstrap javascript -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    
+
     <!-- personal js (public/css/base.css) -->
     <script src="{{ asset('js/base.js') }}"></script>
 

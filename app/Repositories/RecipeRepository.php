@@ -111,4 +111,17 @@ final class RecipeRepository
                 'images.image as image',
             ]);
     }
+
+    
+
+    public function getRecipes() 
+    { 
+        return Recipe::where('visibility', true)->get(); 
+    }
+
+    
+    public function getAllRecipesWithRating()
+    {
+        return Recipe::with('ratings')->get();
+    }
 }

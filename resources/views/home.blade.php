@@ -61,10 +61,10 @@
     <div class="container mt-12 mb-5">
         <div class="d-flex justify-content-between align-items-center">
                 <div class="fs-2 fw-bold">
-                    Nos recettes
+                    Recettes du monde
                 </div>
 
-                <a href="" class="text-decoration-none d-flex gap-3 align-items-center">Voir plus <i class="bi bi-arrow-right"></i></a>
+                <a href="{{ route('recipes.show') }}" class="fs-5 fw-semibold text-decoration-none d-flex gap-3 align-items-center">Voir plus &#128073;</a>
         </div>
 
         <div class="row row-cols-1 row-cols-md-4 g-4 mt-4">

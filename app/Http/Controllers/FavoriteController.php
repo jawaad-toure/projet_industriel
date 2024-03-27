@@ -18,6 +18,9 @@ class FavoriteController extends Controller
 
     public function addFavorite(Request $request, int $recipeId)
     {
+        if (!$request->session()->has('user')) {
+            return redirect()->route('signin.show');
+        }
 
         try {
             $userId = $request->session()->get('user')['id'];
@@ -27,7 +30,6 @@ class FavoriteController extends Controller
             if (!$isFavorite) {
                 return redirect()->back();
             }
-
         } catch (Exception $exception) {
             return redirect()->back()->with('error', "Une erreur s'est produite lors de l'ajout du favori");
         }
@@ -36,7 +38,7 @@ class FavoriteController extends Controller
     }
 
     public function deleteFavorite(int $userId, int $favoriteId)
-    {  
+    {
         try {
             $this->favoriteRepository->deleteFavorite($favoriteId);
         } catch (Exception $e) {

@@ -207,33 +207,406 @@ class ImagesData
                 "image" => "uploads/recipes/ratatouille_provencale5.jpeg",
                 "id_recipe" => 16,
             ],
-            
+
             // images for recipe 17
             [
                 "image" => "uploads/recipes/crevettes_sautees1.jpeg",
                 "id_recipe" => 17,
             ],
-
             [
                 "image" => "uploads/recipes/crevettes_sautees2.jpeg",
                 "id_recipe" => 17,
             ],
-
             [
                 "image" => "uploads/recipes/crevettes_sautees3.jpeg",
                 "id_recipe" => 17,
             ],
-
             [
                 "image" => "uploads/recipes/crevettes_sautees4.jpeg",
                 "id_recipe" => 17,
             ],
-
             [
                 "image" => "uploads/recipes/crevettes_sautees5.jpeg",
                 "id_recipe" => 17,
             ],
+
+            // images for recipe 18
+            [
+                "image" => "uploads/recipes/th (1).jpg",
+                "id_recipe" => 18,
+            ],
+            [
+                "image" => "uploads/recipes/th (2).jpg",
+                "id_recipe" => 18,
+            ],
+            [
+                "image" => "uploads/recipes/th (3).jpg",
+                "id_recipe" => 18,
+            ],
+            [
+                "image" => "uploads/recipes/th (0).jpg",
+                "id_recipe" => 18,
+            ],
+
+            // images for recipe 19
+            // images for Tajine d'agneau aux pruneaux et aux amandes
+            [
+                "image" => "uploads/recipes/th (4).jpg",
+                "id_recipe" => 19,
+            ],
+            [
+                "image" => "uploads/recipes/th (5).jpg",
+                "id_recipe" => 19,
+            ],
+            [
+                "image" => "uploads/recipes/th (6).jpg",
+                "id_recipe" => 19,
+            ],
+            [
+                "image" => "uploads/recipes/th (7).jpg", 
+                "id_recipe" => 19,
+            ],
+            [
+                "image" => "uploads/recipes/th (8).jpg", 
+                "id_recipe" => 19,
+            ],
+
+            // images for recipe 20
+            // images for Mhalbi
+            [
+                "image" => "uploads/recipes/th (9).jpg", 
+                "id_recipe" => 20
+            ],
+            [
+                "image" => "uploads/recipes/th (10).jpg", 
+                "id_recipe" => 20
+            ],
+            [
+                "image" => "uploads/recipes/th (11).jpg", 
+                "id_recipe" => 20
+            ],
+            [
+                "image" => "uploads/recipes/th (12).jpg", 
+                "id_recipe" => 20
+            ],
+            [
+                "image" => "uploads/recipes/th (13).jpg", 
+                "id_recipe" => 20
+            ],
+
+            // images for recipe 21
+            // images for Chorba frik
+            [
+                "image" => "uploads/recipes/th (14).jpg", 
+                "id_recipe" => 21
+            ],
+            [
+                "image" => "uploads/recipes/th (15).jpg", 
+                "id_recipe" => 21
+            ],
+            [
+                "image" => "uploads/recipes/th (16).jpg", 
+                "id_recipe" => 21
+            ],
+            [
+                "image" => "uploads/recipes/th (17).jpg", 
+                "id_recipe" => 21
+            ],
+            [
+                "image" => "uploads/recipes/th (18).jpg", 
+                "id_recipe" => 21
+            ],
+     
+            // images for recipe 22
+            // images for Couscous aux sept légumes
+            [
+                "image" => "uploads/recipes/th (19).jpg", 
+                "id_recipe" => 22
+            ],
+            [
+                "image" => "uploads/recipes/th (20).jpg", 
+                "id_recipe" => 22
+            ],
+            [
+                "image" => "uploads/recipes/th (21).jpg", 
+                "id_recipe" => 22
+            ],
+            [
+                "image" => "uploads/recipes/th (22).jpg", 
+                "id_recipe" => 22
+            ],
+            [
+                "image" => "uploads/recipes/th (23).jpg", 
+                "id_recipe" => 22
+            ],
+
+            // images for recipe 23
+            // images for Thé à la menthe marocain
+            [
+                "image" => "uploads/recipes/th (24).jpg", 
+                "id_recipe" => 23
+            ],
+            [
+                "image" => "uploads/recipes/th (25).jpg", 
+                "id_recipe" => 23
+            ],
+            [
+                "image" => "uploads/recipes/th (26).jpg", 
+                "id_recipe" => 23
+            ],
+            [
+                "image" => "uploads/recipes/th (27).jpg", 
+                "id_recipe" => 23
+            ],
+            [
+                "image" => "uploads/recipes/th (28).jpg", 
+                "id_recipe" => 23
+            ],
+
+            // images for recipe 24
+            // images for Basboussa (gâteau de semoule)
+            [
+                "image" => "uploads/recipes/th (29).jpg", 
+                "id_recipe" => 24
+            ],
+            [
+                "image" => "uploads/recipes/th (30).jpg", 
+                "id_recipe" => 24
+            ],
+            [
+                "image" => "uploads/recipes/th (31).jpg", 
+                "id_recipe" => 24
+            ],
+            [
+                "image" => "uploads/recipes/th (32).jpg", 
+                "id_recipe" => 24
+            ],
+
+            // images for recipe 25
+            // images for Jus d'orange à la fleur d'oranger
+            [
+                "image" => "uploads/recipes/th (33).jpg", 
+                "id_recipe" => 25
+            ],
+            [
+                "image" => "uploads/recipes/th (34).jpg", 
+                "id_recipe" => 25
+            ],
+            [
+                "image" => "uploads/recipes/th (35).jpg", 
+                "id_recipe" => 25
+            ],
+            [
+                "image" => "uploads/recipes/th (36).jpg", 
+                "id_recipe" => 25
+            ],
+
+            // images for recipe 26
+            // images for Briks à la viande hachée
+            [
+                "image" => "uploads/recipes/th (37).jpg", 
+                "id_recipe" => 26
+            ],
+            [
+                "image" => "uploads/recipes/th (38).jpg", 
+                "id_recipe" => 26
+            ],
+            [
+                "image" => "uploads/recipes/th (39).jpg", 
+                "id_recipe" => 26
+            ],
+            [
+                "image" => "uploads/recipes/th (40).jpg", 
+                "id_recipe" => 26
+            ],
+
+            // images for recipe 27
+            // images for Couscous royal
+            [
+                "image" => "uploads/recipes/th (41).jpg", 
+                "id_recipe" => 27
+            ],
+            [
+                "image" => "uploads/recipes/th (42).jpg", 
+                "id_recipe" => 27
+            ],
+            [
+                "image" => "uploads/recipes/th (43).jpg", 
+                "id_recipe" => 27
+            ],
+            [
+                "image" => "uploads/recipes/th (44).jpg", 
+                "id_recipe" => 27
+            ],
+
+            // images for recipe 28
+            // images for Tajine de poulet aux olives
+            [
+                "image" => "uploads/recipes/th (45).jpg", 
+                "id_recipe" => 28
+            ],
+            [
+                "image" => "uploads/recipes/th (46).jpg", 
+                "id_recipe" => 28
+            ],
+            [
+                "image" => "uploads/recipes/th (47).jpg", 
+                "id_recipe" => 28
+            ],
+            [
+                "image" => "uploads/recipes/th (48).jpg", 
+                "id_recipe" => 28
+            ],
+
+            // images for recipe 29
+            [
+                "image" => "uploads/recipes/riz_au_poisson_1.jpg",
+                "id_recipe" => 29,
+            ],
+            [
+                "image" => "uploads/recipes/riz_au_poisson_2.jpg",
+                "id_recipe" => 29,
+            ],
+            [
+                "image" => "uploads/recipes/riz_au_poisson_3.jpg",
+                "id_recipe" => 29,
+            ],
+            [
+                "image" => "uploads/recipes/riz_au_poisson_4.jpg",
+                "id_recipe" => 29,
+            ],
+            
+            // images for recipe 30
+            [
+                "image" => "uploads/recipes/burritos_1.jpg",
+                "id_recipe" => 30,
+            ],
+            [
+                "image" => "uploads/recipes/burritos_2.jpg",
+                "id_recipe" => 30,
+            ],
+            [
+                "image" => "uploads/recipes/burritos_3.jpg",
+                "id_recipe" => 30,
+            ],
+            [
+                "image" => "uploads/recipes/burritos_4.jpg",
+                "id_recipe" => 30,
+            ],
+            [
+                "image" => "uploads/recipes/burritos_5.jpg",
+                "id_recipe" => 30,
+            ],
+
+            // images for recipe 31
+            [
+                "image" => "uploads/recipes/omelette_1.jpeg",
+                "id_recipe" => 31,
+            ],
+            [
+                "image" => "uploads/recipes/omelette_2.jpg",
+                "id_recipe" => 31,
+            ],
+            [
+                "image" => "uploads/recipes//omelette_3.jpg",
+                "id_recipe" => 31,
+            ],
+            [
+                "image" => "uploads/recipes/omelette_4.jpg",
+                "id_recipe" => 31,
+            ],
+            [
+                "image" => "uploads/recipes/omelette_5.jpg",
+                "id_recipe" => 31,
+            ],
+
+            // images for recipe 32
+            [
+                "image" => "uploads/recipes/agneau_au_four_1.jpeg",
+                "id_recipe" => 32,
+            ],
+            [
+                "image" => "uploads/recipes/agneau_au_four_2.jpg",
+                "id_recipe" => 32,
+            ],
+            [
+                "image" => "uploads/recipes/agneau_au_four_3.jpg",
+                "id_recipe" => 32,
+            ],
+            [
+                "image" => "uploads/recipes/agneau_au_four_4.jpg",
+                "id_recipe" => 32,
+            ],
+            [
+                "image" => "uploads/recipes/agneau_au_four_5.jpg",
+                "id_recipe" => 33,
+            ],
+
+            // images for recipe 33
+            [
+                "image" => "uploads/recipes/gratin_1.jpg",
+                "id_recipe" => 33,
+            ],
+            [
+                "image" => "uploads/recipes/gratin_2.jpg",
+                "id_recipe" => 33,
+            ],
+            [
+                "image" => "uploads/recipes/gratin_3.jpg",
+                "id_recipe" => 33,
+            ],
+            [
+                "image" => "uploads/recipes/gratin_4.jpeg",
+                "id_recipe" => 33,
+            ],
+
+            // images for recipe 34
+            [
+                "image" => "uploads/recipes/riz-au-lait-a-la-cannelle_1.jpg",
+                "id_recipe" => 34,
+            ],
+            [
+                "image" => "uploads/recipes/riz-au-lait-a-la-cannelle_2.jpg",
+                "id_recipe" => 34,
+            ],
+            [
+                "image" => "uploads/recipes/riz-au-lait-a-la-cannelle_3.jpg",
+                "id_recipe" => 34,
+            ],
+            [
+                "image" => "uploads/recipes/riz-au-lait-a-la-cannelle_4.jpg",
+                "id_recipe" => 34,
+            ],
+            [
+                "image" => "uploads/recipes/riz-au-lait-a-la-cannelle_5.jpg",
+                "id_recipe" => 34,
+            ],
+
+            // images for recipe 35
+            [
+                "image" => "uploads/recipes/beignets_de_pommes_de_terre_1.jpg",
+                "id_recipe" => 35,
+            ],
+            [
+                "image" => "uploads/recipes/beignets_de_pommes_de_terre_2.jpeg",
+                "id_recipe" => 35,
+            ],
+            [
+                "image" => "uploads/recipes/beignets_de_pommes_de_terre_3.jpg",
+                "id_recipe" => 35,
+            ],
+            [
+                "image" => "uploads/recipes/beignets_de_pommes_de_terre_4.jpg",
+                "id_recipe" => 35,
+            ],
+            [
+                "image" => "uploads/recipes/beignets_de_pommes_de_terre_5.jpg",
+                "id_recipe" => 35,
+            ],
+            [
+                "image" => "uploads/recipes/beignets_de_pommes_de_terre_6.jpg",
+                "id_recipe" => 35,
+            ],
         ];
     }
-
 }

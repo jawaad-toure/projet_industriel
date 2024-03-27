@@ -30,7 +30,7 @@
                 <div class="carousel-inner border rounded">
                     @foreach ($recipeImages as $key => $recipeImage)
                     <div class="carousel-item @if ($key === 0) active @endif">
-                        <img src="{{ asset($recipeImage->image) }}" class="d-block w-100 object-fit-cover" height="700" alt="Image de recette de cuisine">
+                        <img src="{{ asset($recipeImage->image) }}" class="d-block w-100 object-fit-cover" height="500" alt="Image de recette de cuisine">
                     </div>
                     @endforeach
                 </div>

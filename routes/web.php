@@ -134,6 +134,13 @@ Route::delete('/users/{userId}/delete', [AuthController::class, 'deleteUser'])
 /** ------------------------------------------------------------------------------------------------ */
 /** recipe routes */
 
+Route::get('/recipes', [RecipeController::class, 'showRecipes'])
+    ->name('recipes.show');
+
+Route::get('/recipes/filtered', [RecipeController::class, 'filterByRating'])
+    ->name('filter.recipes');
+
+
 Route::get('/recipes/{recipeId}', [RecipeController::class, 'showRecipe'])
     ->where('recipeId', '[0-9]+')
     ->name('recipe.show');
@@ -243,7 +250,7 @@ Route::delete('/dashboard/{userId}/{starCommentId}/delete-comment', [StarComment
 
 
 /** ------------------------------------------------------------------------------------------------ */
-/** stars and comment routes */
+/** favorite routes */
 Route::post('/recipes/{recipeId}/add-to-favorites', [FavoriteController::class, 'addFavorite'])->name('favorite.post');
 
 Route::delete('/dashboard/{userId}/{favoriteId}/delete-from-favorite', [FavoriteController::class, 'deleteFavorite'])
@@ -254,5 +261,5 @@ Route::delete('/dashboard/{userId}/{favoriteId}/delete-from-favorite', [Favorite
 
 /** ------------------------------------------------------------------------------------------------ */
 /** search routes */
-Route::get('/recipes', [RecipeController::class, 'showSearchResults'])
+Route::get('/search', [RecipeController::class, 'showSearchResults'])
     ->name('searchResults.show');

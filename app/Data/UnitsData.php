@@ -67,6 +67,16 @@ class UnitsData
                 "unitname" => "gousse",
             ],
 
+            // #13
+            [
+                "unitname" => "tige",
+            ],
+
+            // #14
+            [
+                "unitname" => "feuille",
+            ],
+
         ];
     }
 }

@@ -28,6 +28,7 @@ class UsersData
                 "email" => "sophie.lefevre@example.com",
                 "phone" => "0652213344",
                 "password" => Hash::make("A1&zerty"),
+                "email_verified_at" => "2024-02-18 08:35:58",
                 "created_at" => now(),
             ],
             [
@@ -38,6 +39,7 @@ class UsersData
                 "email" => "jean.dupont@example.com",
                 "phone" => "0611223344",
                 "password" => Hash::make("A1&zerty"),
+                "email_verified_at" => "2024-01-18 08:35:58",
                 "created_at" => now(),
             ],
             [

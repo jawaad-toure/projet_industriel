@@ -478,7 +478,7 @@ class IngredientsData
             // #79
             [
                 "ingredientname" => "Sel",
-                "calorie" => 130,
+                "calorie" => 0,
             ],
 
             // #80
@@ -773,6 +773,66 @@ class IngredientsData
             [
                 "ingredientname" => "Jus d'orange",
                 "calorie" => 45,
+            ],
+            
+            // #129
+            [
+                "ingredientname" => "Eau",
+                "calorie" => 0,
+            ],
+            
+            // #130
+            [
+                "ingredientname" => "Safran",
+                "calorie" => 310,
+            ],
+            
+            // #131
+            [
+                "ingredientname" => "Pruneaux",
+                "calorie" => 240,
+            ],
+            
+            // #132
+            [
+                "ingredientname" => "Épaule d'agneau",
+                "calorie" => 294,
+            ],
+            
+            // #133
+            [
+                "ingredientname" => "Mérou",
+                "calorie" => 225,
+            ],
+            
+            // #134
+            [
+                "ingredientname" => "Tomate concentrée",
+                "calorie" => 90,
+            ],
+
+            // #135
+            [
+                "ingredientname" => "Tortillas",
+                "calorie" => 218,
+            ],
+
+            // #136
+            [
+                "ingredientname" => "Crème liquide",
+                "calorie" => 269,
+            ],
+
+            // #137
+            [
+                "ingredientname" => "Lait entier",
+                "calorie" => 65,
+            ],
+
+            // #138
+            [
+                "ingredientname" => "Café de cannelle",
+                "calorie" => 6,
             ],
         ];
     }

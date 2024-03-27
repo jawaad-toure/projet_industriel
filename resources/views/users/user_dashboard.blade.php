@@ -168,7 +168,7 @@
         </div>
 
         <!-- notifications -->
-        @if (session('recipe_warning'))
+        <!-- @if (session('recipe_warning'))
         <div class="alert alert-warning">
             {{ session('recipe_warning') }} &#9785;
         </div>
@@ -178,7 +178,7 @@
         <div class="alert alert-success">
             {{ session('recipe_success') }} &#128578;
         </div>
-        @endif
+        @endif -->
 
         @if (count($userRecipes) != 0)
         <div class="d-flex flex-column gap-2">
@@ -249,7 +249,7 @@
         </div>
 
         <!-- notifications -->
-        @if (session('favorite_warning'))
+        <!-- @if (session('favorite_warning'))
         <div class="alert alert-warning">
             {{ session('favorite_warning') }} &#9785;
         </div>
@@ -259,7 +259,7 @@
         <div class="alert alert-success">
             {{ session('favorite_success') }} &#128578;
         </div>
-        @endif
+        @endif -->
 
         @if (count($userFavoriteRecipes) != 0)
         <div class="d-flex flex-column gap-2">

@@ -66,7 +66,6 @@ class AuthController extends BaseController
         $userRecipes = $this->recipeRepository->getUserRecipes($userId);
         $userRecipesCommented = $this->starcommentRepository->getUserRecipesCommented($userId);
         $userFavoriteRecipes = $this->favoriteRepository->getUserFavoriteRecipes($userId);
-        // dump($userRecipes);
 
         return view('users/user_dashboard', [
             'user' => $user,
