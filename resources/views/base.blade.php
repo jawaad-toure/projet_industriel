@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="{{ asset('css/base.css') }}">
     <link rel="stylesheet" href="{{ asset('css/dashboard_switch_button.css') }}">
     <link rel="stylesheet" href="{{ asset('css/rating_stars.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/home.css') }}">
     
     <!-- jquery -->
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>

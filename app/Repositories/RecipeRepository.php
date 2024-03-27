@@ -2,7 +2,11 @@
 
 namespace App\Repositories;
 
+use App\Models\Image;
 use App\Models\Recipe;
+use App\Models\Quantity;
+use App\Models\Ingredient;
+use Illuminate\Support\Facades\DB;
 
 final class RecipeRepository
 {
@@ -26,6 +30,31 @@ final class RecipeRepository
     {
         return Recipe::where('id', $recipeId)
             ->first();
+    }
+
+    public function getRecipesForHome()
+    {
+        $imageSubquery = Image::select('id_recipe', DB::raw('MIN(id) as min_id'))
+            ->groupBy('id_recipe');
+
+        return Recipe::leftJoinSub($imageSubquery, 'imageSubquery', function ($join) {
+            $join->on('recipes.id', '=', 'imageSubquery.id_recipe');
+        })
+            ->leftJoin('images', function ($join) {
+                $join->on('imageSubquery.id_recipe', '=', 'images.id_recipe')
+                    ->on('imageSubquery.min_id', '=', 'images.id');
+            })
+            ->where('recipes.visibility', '=', true)
+            ->where('recipes.completed', '=', true)
+            ->inRandomOrder()
+            ->limit(4)
+            ->get([
+                'recipes.id as id',
+                'recipes.recipename as recipename',
+                'recipes.visibility as visibility',
+                'recipes.completed as completed',
+                'images.image as image',
+            ]);
     }
 
     public function getRecipeId(string $recipename): int
@@ -52,5 +81,34 @@ final class RecipeRepository
     {
         Recipe::where('id', $recipeId)
             ->delete();
+    }
+
+    public function getRecipesRelatedTo(string $search)
+    {
+        $imageSubquery = Image::select('id_recipe', DB::raw('MIN(id) as min_id'))
+            ->groupBy('id_recipe');
+
+        return Recipe::where('recipes.recipename', 'like', '%' . $search . '%')
+            ->orWhere('recipes.cookingtype', 'like', '%' . $search . '%')
+            ->orWhere('recipes.difficulty', 'like', '%' . $search . '%')
+            ->orWhere('recipes.category', 'like', '%' . $search . '%')
+            ->leftJoinSub($imageSubquery, 'imageSubquery', function ($join) {
+                $join->on('recipes.id', '=', 'imageSubquery.id_recipe');
+            })
+            ->leftJoin('images', function ($join) {
+                $join->on('imageSubquery.id_recipe', '=', 'images.id_recipe')
+                    ->on('imageSubquery.min_id', '=', 'images.id');
+            })
+            ->get([
+                'recipes.id as id',
+                'recipes.recipename as recipename',
+                'recipes.cookingtype as cookingtype',
+                'recipes.category as category',
+                'recipes.difficulty as difficulty',
+                'recipes.visibility as visibility',
+                'recipes.completed as completed',
+                'recipes.time as time',
+                'images.image as image',
+            ]);
     }
 }

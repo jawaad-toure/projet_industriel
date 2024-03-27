@@ -75,8 +75,12 @@ class RecipeController extends Controller
     public function showRecipe(Request $request, int $recipeId)
     {
         $recipe = $this->recipeRepository->getRecipe($recipeId);
+        
+        if ($recipe->completed === 0 || $recipe->visibility === 0) {
+            return redirect()->back();
+        }
 
-        $isRecipeInFavorites = $this->favoriteRepository->isRecipeInFavorites($request->session()->get('user')['id'], $recipeId);
+        $isRecipeInFavorites = $this->favoriteRepository->isRecipeInFavorites($recipe->id_user, $recipeId);
 
         $recipeForUnitname = $this->unitRepository->getUnit($recipe->id_unit)->unitname;
         $recipeSteps = $this->stepRepository->getRecipeSteps($recipeId);
@@ -127,6 +131,22 @@ class RecipeController extends Controller
             'recipeSteps' => $recipeSteps,
             'recipeQuantities' => $recipeQuantities,
         ]);
+    }
+
+
+    public function showSearchResults(Request $request)
+    {
+        $rules = [
+            'search' => 'required|string'
+        ];
+        
+        $validatedData = $request->validate($rules);
+        
+        $searchResults = $this->recipeRepository->getRecipesRelatedTo($validatedData['search']);
+        
+        // dump($searchResults);
+
+        return view('recipes/recipe_search_results', ['searchResults' => $searchResults]);
     }
 
     /** controllers functions */

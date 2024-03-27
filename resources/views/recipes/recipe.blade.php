@@ -46,12 +46,12 @@
 
             <div class="d-flex justify-content-around align-items-center">
                 <div class="d-flex gap-2">
-                    <i class="bi bi-alarm-fill"></i> {{ $recipe->time }}
+                    <i class="bi bi-alarm-fill"></i>{{ $recipe->time }}
                 </div>
                 <div class="d-flex gap-2">
                     <span class="material-symbols-outlined">
                         restaurant_menu
-                    </span></i>{{ $recipe->category }}
+                    </span>{{ $recipe->category }}
                 </div>
                 <div class="d-flex gap-2">
                     <form id="favoriteForm" method="POST" action="{{ route( 'favorite.post', ['recipeId' => $recipe->id] ) }}">
@@ -96,7 +96,7 @@
                         {{ $recipeQuantity->ingredientname }}
                     </div>
                     <div class="">
-                        {{ number_format($recipeQuantity->calorie * $recipe->for, $recipeQuantity->calorie == (int)$recipeQuantity->calorie ? 0 : 2) }} @if ($recipeQuantity->calorie > 1) calories @else calorie @endif
+                        {{ number_format($recipeQuantity->calorie, $recipeQuantity->calorie == (int)$recipeQuantity->calorie ? 0 : 2) }} @if ($recipeQuantity->calorie > 1) calories @else calorie @endif
                     </div>
                 </div>
                 @endforeach

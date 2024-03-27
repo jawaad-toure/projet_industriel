@@ -59,6 +59,12 @@ class StarCommentController extends Controller
         $validatedData = $request->validate($rules, $messages);
 
         try {
+            $userId = $this->recipeRepository->getRecipe($recipeId)->id_user;
+
+            if ($request->session()->get('user')['id'] === $userId) {
+                return redirect()->back()->withInput()->with("star_comment_warning", "Impossible de commenter sa propre recette. Action non autorisée");
+            }
+
             if (!isset($validatedData['rating']) || $validatedData['rating'] == 0) {
                 return redirect()->back()->withInput()->with("star_comment_info", "Vous devez sélectionner une note");
             }
@@ -67,7 +73,6 @@ class StarCommentController extends Controller
                 return redirect()->back()->withInput()->with("star_comment_info", "Vous avez déjà évalué cette recette");
             }
                 
-            $userId = $this->recipeRepository->getRecipe($recipeId)->id_user;
                 
             $this->starCommentRepository->addStarComment(
                 intval($validatedData['rating']),

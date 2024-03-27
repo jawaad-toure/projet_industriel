@@ -45,7 +45,8 @@ class AuthController extends BaseController
 
     public function showHome()
     {
-        return view('home');
+        // dump($this->recipeRepository->getRecipesForHome());
+        return view('home', ['recipes' => $this->recipeRepository->getRecipesForHome()]);
     }
 
 

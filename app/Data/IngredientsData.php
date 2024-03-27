@@ -690,6 +690,90 @@ class IngredientsData
                 "ingredientname" => "Poivre",
                 "calorie" => 251,
             ],
+
+            // #115
+            [
+                "ingredientname" => "Yaourt nature",
+                "calorie" => 5700,
+            ],
+
+            // #116
+            [
+                "ingredientname" => "Lardon",
+                "calorie" => 275000,
+            ],
+
+            // #117
+            [
+                "ingredientname" => "Spaghetti",
+                "calorie" => 158,
+            ],
+
+            // #118
+            [
+                "ingredientname" => "Herbes de provence",
+                "calorie" => 283000,
+            ],
+
+            // #119
+            [
+                "ingredientname" => "Crevette",
+                "calorie" => 94,
+            ],
+
+            // #120
+            [
+                "ingredientname" => "Riz",
+                "calorie" => 130,
+            ],
+
+            // #121
+            [
+                "ingredientname" => "Romarin",
+                "calorie" => 121,
+            ],
+
+            // #122
+            [
+                "ingredientname" => "Canelle",
+                "calorie" => 247,
+            ],
+
+            // #123
+            [
+                "ingredientname" => "Pâte brisée",
+                "calorie" => 505,
+            ],
+  
+            // #124
+            [
+                "ingredientname" => "Miel",
+                "calorie" => 304,
+            ],
+
+            // #125
+            [
+                "ingredientname" => "Quinoa",
+                "calorie" => 368,
+            ],
+            
+            // #126
+            [
+                "ingredientname" => "Jus de citron",
+                "calorie" => 15,
+            ],
+            
+            // #127
+            [
+                "ingredientname" => "Poulet fermier",
+                "calorie" => 206000,
+            ],
+            
+            // #128
+            [
+                "ingredientname" => "Jus d'orange",
+                "calorie" => 45,
+            ],
         ];
     }
 }

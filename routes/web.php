@@ -31,6 +31,7 @@ use App\Http\Controllers\StarCommentController;
 Route::get('/', [AuthController::class, 'showHome'])
     ->name('home.show');
 
+
 /** ------------------------------------------------------------------------------------------------ */
 /** signup password routes */
 Route::get('/signup', [AuthController::class, 'showSignupForm'])
@@ -129,6 +130,7 @@ Route::delete('/users/{userId}/delete', [AuthController::class, 'deleteUser'])
     ->where('userId', '[0-9]+')
     ->name('user.delete');
 
+
 /** ------------------------------------------------------------------------------------------------ */
 /** recipe routes */
 
@@ -169,6 +171,7 @@ Route::delete('/dashboard/{userId}/{recipeId}/delete-recipe', [RecipeController:
     ->where('recipeId', '[0-9]+')
     ->name('recipe.delete');
 
+
 /** ------------------------------------------------------------------------------------------------ */
 /** quantities routes */
 Route::post('/dashboard/{userId}/update-recipe/{recipeId}/quantity', [QuantityController::class, 'insertQuantity'])
@@ -188,9 +191,9 @@ Route::delete('/dashboard/{userId}/update-recipe/{recipeId}/quantity/{quantityId
     ->where('quantityId', '[0-9]+')
     ->name('quantity.delete');
 
+
 /** ------------------------------------------------------------------------------------------------ */
 /** steps routes */
-
 Route::post('/dashboard/{userId}/update-recipe/{recipeId}/step', [StepController::class, 'insertStep'])
     ->where('userId', '[0-9]+')
     ->where('recipeId', '[0-9]+')
@@ -208,9 +211,9 @@ Route::delete('/dashboard/{userId}/update-recipe/{recipeId}/step/{stepId}', [Ste
     ->where('stepId', '[0-9]+')
     ->name('step.delete');
 
+
 /** ------------------------------------------------------------------------------------------------ */
 /** image routes */
-
 Route::post('/dashboard/{userId}/update-recipe/{recipeId}/image', [ImageController::class, 'insertImages'])
     ->where('userId', '[0-9]+')
     ->where('recipeId', '[0-9]+')
@@ -222,9 +225,9 @@ Route::delete('/dashboard/{userId}/update-recipe/{recipeId}/image/{imageId}', [I
     ->where('imageId', '[0-9]+')
     ->name('image.delete');
 
+
 /** ------------------------------------------------------------------------------------------------ */
 /** stars and comment routes */
-
 Route::get('/recipes/{recipeId}/rate', [StarCommentController::class, 'showStarCommentForm'])
     ->where('recipeId', '[0-9]+')
     ->name('starCommentForm.show');
@@ -238,12 +241,18 @@ Route::delete('/dashboard/{userId}/{starCommentId}/delete-comment', [StarComment
     ->where('starCommentId', '[0-9]+')
     ->name('starComment.delete');
 
+
 /** ------------------------------------------------------------------------------------------------ */
 /** stars and comment routes */
-
 Route::post('/recipes/{recipeId}/add-to-favorites', [FavoriteController::class, 'addFavorite'])->name('favorite.post');
 
 Route::delete('/dashboard/{userId}/{favoriteId}/delete-from-favorite', [FavoriteController::class, 'deleteFavorite'])
     ->where('userId', '[0-9]+')
     ->where('favoriteId', '[0-9]+')
     ->name('favorite.delete');
+
+
+/** ------------------------------------------------------------------------------------------------ */
+/** search routes */
+Route::get('/recipes', [RecipeController::class, 'showSearchResults'])
+    ->name('searchResults.show');

@@ -56,6 +56,17 @@ class UnitsData
             [
                 "unitname" => "lamelle",
             ],
+
+            // #11
+            [
+                "unitname" => "millilitre",
+            ],
+
+            // #12
+            [
+                "unitname" => "gousse",
+            ],
+
         ];
     }
 }
